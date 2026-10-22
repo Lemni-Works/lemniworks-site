@@ -20,15 +20,15 @@
   --hair-soft: rgb(243 241 234 / 0.07);
   --glass: rgb(243 241 234 / 0.035);
 
-  /* the four lines: one ember scheme in four steps, sand to rust */
-  --l-scraping: #f1d08a;
-  --l-automation: #f2b03d;
-  --l-web: #e8783a;
-  --l-reports: #cf4b30;
+  /* the four lines: one green scheme in four steps, mint to pine */
+  --l-scraping: #b9ecc9;
+  --l-automation: #5ad49f;
+  --l-web: #2fa374;
+  --l-reports: #1c7a56;
   --l-depot: #8f8d86;
-  /* the one signal colour the interface itself uses: the amber step */
+  /* the one signal colour the interface itself uses: the jade step */
   --signal: var(--l-automation);
-  --signal-ink: #1a1203;
+  --signal-ink: #06281b;
 
   --measure: 1280px;
   --gutter: clamp(20px, 5vw, 72px);

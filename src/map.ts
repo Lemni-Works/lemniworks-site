@@ -38,8 +38,7 @@ export const lines: Line[] = [
     stations: [
       { name: 'Your site', x: 150, y: 520, side: 's' },
       { name: 'Customers', x: 800, y: 340, side: 'n' },
-      { name: 'Repeat orders', x: 1050, y: 240, side: 'n' },
-      { name: 'dinesense.app', x: 1160, y: 240, side: 'w', href: '/work/dinesense-site' },
+      { name: 'Repeat orders', x: 1080, y: 240, side: 'n' },
     ],
   },
   {
@@ -49,7 +48,7 @@ export const lines: Line[] = [
     color: 'var(--l-automation)',
     points: [[480, 60], [480, 220], [600, 340], [600, 480], [740, 620], [1000, 620]],
     stations: [
-      { name: 'An order comes in', x: 480, y: 140, side: 'e' },
+      { name: 'An order comes in', x: 480, y: 100, side: 'e' },
       { name: 'Spreadsheet', x: 670, y: 550, side: 'w' },
       { name: 'Your email', x: 820, y: 620, side: 's' },
       { name: 'Your team', x: 950, y: 620, side: 's' },
@@ -65,8 +64,7 @@ export const lines: Line[] = [
       { name: 'The sites you watch', x: 230, y: 600, side: 's' },
       { name: 'Every night', x: 450, y: 490, side: 'e' },
       { name: 'Clean rows', x: 600, y: 210, side: 'w' },
-      { name: 'Your files', x: 880, y: 60, side: 'n' },
-      { name: 'Keyword tools on Apify', x: 1120, y: 60, side: 'w', href: '/work/apify-tools' },
+      { name: 'Your files', x: 940, y: 60, side: 'n' },
     ],
   },
   {

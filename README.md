@@ -54,7 +54,7 @@ To add a case study, add an entry to `src/work.ts` and drop its images in `publi
 
 ## The Network Map
 
-The home page is a transit-style map of the studio. The tools a shop already pays for are stations, the four services are four lines in one ember scheme (Storefront, Automation, Data, Reports), and all four change trains at one hub, Lemni Works. Geometry lives in `src/map.ts` and must obey Beck's rules: every segment horizontal, vertical or 45°, every station on its line. `src/components/NetworkMap.astro` draws it; the lines draw themselves after the entrance lands, the legend beneath lights one line at a time, and a slow train runs on each.
+The home page is a transit-style map of the studio. The tools a shop already pays for are stations, the four services are four lines in one green scheme (Storefront, Automation, Data, Reports), and all four change trains at one hub, Lemni Works. Geometry lives in `src/map.ts` and must obey Beck's rules: every segment horizontal, vertical or 45°, every station on its line. `src/components/NetworkMap.astro` draws it; the lines draw themselves after the entrance lands, the legend beneath lights one line at a time, and a slow train runs on each.
 
 The home page opens, once per browser session, with the Open Path mark drawing itself and travelling into the header (`src/components/Intro.astro`, `src/scripts/intro.ts`). The decision to play it is made before first paint in `src/layouts/Base.astro`; any click, key or scroll skips it, reduced motion never shows it, and it does not replay on client-side navigation. Clear `sessionStorage` to see it again.
 

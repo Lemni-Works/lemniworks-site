@@ -62,9 +62,8 @@ const drawn = lines.map((L, i) => ({
 }));
 ---
 
-<svg class:list={['network', cls]} viewBox={`0 0 ${MAP_W} ${MAP_H}`} preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" data-map role="img" aria-labelledby="map-title map-desc">
-  <title id="map-title">The four lines Lemni Works runs</title>
-  <desc id="map-desc">A transit-style map. The Storefront line runs from your site through checkout and customers to repeat orders, ending at dinesense.app, a real site. The Automation line carries an incoming order into your spreadsheet, your email and your team. The Data line watches the sites you choose every night and delivers clean rows to your files, ending at the keyword tools on Apify. The Reports line takes sales, ad spend and bookkeeping to a weekly report in your inbox. All four meet at one hub, Lemni Works in Wichita. Destinations link to their case studies.</desc>
+<svg class:list={['network', cls]} viewBox={`0 0 ${MAP_W} ${MAP_H}`} preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" data-map role="img" aria-label="The four lines Lemni Works runs" aria-describedby="map-desc">
+  <desc id="map-desc">A transit-style map. The Storefront line runs from your site through customers to repeat orders. The Automation line carries an incoming order into your spreadsheet, your email and your team. The Data line watches the sites you choose every night and delivers clean rows to your files. The Reports line takes sales, ad spend and bookkeeping to a weekly report in your inbox. All four meet at one hub, Lemni Works in Wichita.</desc>
 
   {drawn.map((L) => (
     <g class="line-group" data-line={L.slug} style={`--ld: ${L.delay}ms`}>
@@ -112,7 +111,7 @@ const drawn = lines.map((L, i) => ({
   .line {
     fill: none;
     stroke: var(--c);
-    stroke-width: 9;
+    stroke-width: 8;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 1;
@@ -175,9 +174,9 @@ const drawn = lines.map((L, i) => ({
 
   .stn {
     fill: var(--ink);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.01em;
   }
 
   .hub {

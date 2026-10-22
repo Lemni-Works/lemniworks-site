@@ -10,12 +10,12 @@ colors:
   hair: "rgb(243 241 234 / 0.12)"
   hair-soft: "rgb(243 241 234 / 0.07)"
   glass: "rgb(243 241 234 / 0.035)"
-  storefront-tangerine: "#e8783a"
-  automation-amber: "#f2b03d"
-  data-sand: "#f1d08a"
-  reports-rust: "#cf4b30"
+  storefront-moss: "#2fa374"
+  automation-jade: "#5ad49f"
+  data-mint: "#b9ecc9"
+  reports-pine: "#1c7a56"
   depot-grey: "#8f8d86"
-  signal-ink: "#1a1203"
+  signal-ink: "#06281b"
   invalid-red: "#e0604f"
   white: "#ffffff"
 typography:
@@ -143,13 +143,13 @@ components:
 
 Lemni Works is a one-person studio drawn as a transit network. The tools a small shop already pays for are stations; the four services are four coloured lines; every line changes trains at one hub, the builder. The world is Harry Beck's: a warm graphite ground, bone ink, lines that run only horizontal, vertical or at 45° with rounded bends, white station ticks, rings for the destinations, a capsule for the interchange. The site is dark only. Nothing on it is a card; structure comes from hairlines, route strips, tables and the lines themselves.
 
-The ground is warm, never blue. Page ground is a warm graphite; the two service sections (the lines, the contact form) sit one step lighter on a raised graphite with a soft hairline above and below. Ink is bone, not white. The four line colours are loud on purpose and belong to the lines: tangerine for the Storefront line, amber for the Automation line, sand for the Data line, rust for the Reports line, with a dashed grey siding for the Depot. The interface itself uses one of them, the amber step, as its single signal colour for selection, the caret, focus rings and hover colour. Everything else is bone on graphite.
+The ground is warm, never blue. Page ground is a warm graphite; the two service sections (the lines, the contact form) sit one step lighter on a raised graphite with a soft hairline above and below. Ink is bone, not white. The four line colours are loud on purpose and belong to the lines: moss for the Storefront line, jade for the Automation line, mint for the Data line, pine for the Reports line, with a dashed grey siding for the Depot. The interface itself uses one of them, the jade step, as its single signal colour for selection, the caret, focus rings and hover colour. Everything else is bone on graphite.
 
 Motion is drawn, not animated. The Open Path mark draws itself once per session and travels into the header; the map's lines draw themselves after it lands, stations appearing in order along each line, the hub last; slow trains then run every line indefinitely. Sections rise 22px into place; images are uncovered; titles and shots travel between routes; instruments settle. Reduced motion shows every finished state and hides the trains. The craft of the motion is the proof that one person runs every line.
 
 **Key Characteristics:**
 - Dark only. Warm graphite ground (#121110), bone ink, one raised step for two sections.
-- Four line colours plus a dashed Depot grey; one signal colour (the amber step) for the interface.
+- Four line colours plus a dashed Depot grey; one signal colour (the jade step) for the interface.
 - Beck geometry everywhere a line appears: horizontal, vertical, 45°, rounded bends, stations on the line.
 - Manrope at weight 500 for every display size and label; 600 only on the hub name and destination labels. Body on the system sans.
 - Pill buttons and pill swatches, like stations. Hairlines, tables and route strips instead of cards.
@@ -157,16 +157,16 @@ Motion is drawn, not animated. The Open Path mark draws itself once per session 
 
 ## Colors
 
-A warm monochrome of graphite and bone carries the whole interface; four saturated line colours belong to the map and to anything that names a line, and one of them, the amber step, is borrowed as the interface's only signal.
+A warm monochrome of graphite and bone carries the whole interface; four saturated line colours belong to the map and to anything that names a line, and one of them, the jade step, is borrowed as the interface's only signal.
 
 ### Primary
-- **Relay Amber** (#f2b03d): the Automation line, and the interface's single signal colour. Text selection (amber on signal ink), the caret, the 1.5px focus ring at 4px offset, the hover colour of text links and destination names, the arrow in the header's contact link, the stroke of the "sent" mark on the contact panel, the dash before each list item on a case study. It is never a fill behind a button.
-- **Signal Ink** (#1a1203): the text colour on an amber selection. Nowhere else.
+- **Automation Jade** (#5ad49f): the Automation line, and the interface's single signal colour. Text selection (jade on signal ink), the caret, the 1.5px focus ring at 4px offset, the hover colour of text links and destination names, the arrow in the header's contact link, the stroke of the "sent" mark on the contact panel, the dash before each list item on a case study. It is never a fill behind a button.
+- **Signal Ink** (#06281b): the text colour on an jade selection. Nowhere else.
 
 ### Secondary
-- **Storefront Vermilion** (#e8783a): the Storefront line (websites and e-commerce). Line stroke, route strip, swatch, dot, table header on that line's instrument.
-- **Collector Jade** (#f1d08a): the Data line (web scraping and data collection). Same uses.
-- **Dashboard Orchid** (#cf4b30): the Reports line (reports and dashboards). Same uses, and the bars of the report instrument.
+- **Storefront Vermilion** (#2fa374): the Storefront line (websites and e-commerce). Line stroke, route strip, swatch, dot, table header on that line's instrument.
+- **Data Mint** (#b9ecc9): the Data line (web scraping and data collection). Same uses.
+- **Dashboard Orchid** (#1c7a56): the Reports line (reports and dashboards). Same uses, and the bars of the report instrument.
 - **Depot Grey** (#8f8d86): the Depot siding, product work shown as proof. Drawn dashed and at a narrower stroke; it is not a service line and never lights up.
 
 Each line colour reaches its elements through one custom property, `--c`, set by `data-line="<slug>"` on an ancestor. Components never hardcode a line colour; they read `--c`.
@@ -184,7 +184,7 @@ Each line colour reaches its elements through one custom property, `--c`, set by
 - **Invalid Red** (#e0604f): the underline of a field the user has left invalid. No other red exists.
 
 ### Named Rules
-**The One Signal Rule.** The interface borrows exactly one line colour, the amber step, for selection, focus, caret and hover. No second accent; no line colour is promoted to a button fill or a background.
+**The One Signal Rule.** The interface borrows exactly one line colour, the jade step, for selection, focus, caret and hover. No second accent; no line colour is promoted to a button fill or a background.
 
 **The Line Owns Its Colour Rule.** A line colour appears only on things that stand for that line: its stroke on the map, its route strip, its swatch, its dot, its table head, its bars. Colour is read from `--c` under `data-line`, never hardcoded.
 
@@ -234,7 +234,7 @@ Flat by default, with tonal layering. Depth is one step of ground (graphite to r
 - **Frosted header** (`background: rgb(18 17 16 / 0.72); backdrop-filter: blur(18px) saturate(150%)`): the fixed header; whatever scrolls beneath stays legible.
 
 ### Named Rules
-**The Nothing Floats Rule.** Surfaces are flat at rest. A shadow appears only under a hovered button, under a real screenshot, or inside the glass panel. No card shadows, no glows except the blurred amber copy of the mark during the entrance.
+**The Nothing Floats Rule.** Surfaces are flat at rest. A shadow appears only under a hovered button, under a real screenshot, or inside the glass panel. No card shadows, no glows except the blurred jade copy of the mark during the entrance.
 
 ## Shapes
 
@@ -248,7 +248,7 @@ The station marker (`.dot`) is a 12px disc in the line colour (10–11px inside 
 Pill buttons are stations: a bone capsule with a 16px arrow that nudges on hover.
 - **Shape:** full pill (999px), 1px border in the fill colour.
 - **Primary:** bone fill, graphite text, Manrope 500 16px, padding 17px 26px 17px 28px, 14px gap to a 16px arrow. Small variant (service offers, instrument actions) 12px 18px 12px 20px at 14px.
-- **Hover / Focus:** fill to white with the button lift shadow and a 1px rise; the arrow travels 3px right. Active cancels the rise. Disabled is 60% opacity with a wait cursor. Focus is the amber ring.
+- **Hover / Focus:** fill to white with the button lift shadow and a 1px rise; the arrow travels 3px right. Active cancels the rise. Disabled is 60% opacity with a wait cursor. Focus is the jade ring.
 - **Ghost:** transparent with a hair border and bone text; hover inverts to the primary.
 
 ### Chips
@@ -267,11 +267,11 @@ Proof on a line (a site capture, the relay, the collector table, the dashboard) 
 
 ### Inputs / Fields
 - **Style:** underline only. Transparent, no border except a 1px hair bottom, no radius, padding 12px 0, 17px inherited font, bone text. Labels are Manrope 500 13.5px in muted bone, 8px above. Selects strip the native chevron and draw a 16px one in muted bone; their menus are raised graphite.
-- **Focus:** the underline turns amber; hover turns it muted bone. No outline, no glow.
-- **Error / Disabled:** a field the user has left invalid underlines in invalid red. On success the panel shows the Open Path mark at 84px in amber drawing itself (1300ms) beside "Got it."
+- **Focus:** the underline turns jade; hover turns it muted bone. No outline, no glow.
+- **Error / Disabled:** a field the user has left invalid underlines in invalid red. On success the panel shows the Open Path mark at 84px in jade drawing itself (1300ms) beside "Got it."
 
 ### Navigation
-- **Style:** fixed frosted header, 80px tall, the Open Path mark at 20px beside the Manrope wordmark at 15px, three links right. Links are Manrope 500 14.5px in muted bone with a 1px bone underline that scales in from the left on hover and on the current section; the contact link is bone with a 13px amber diagonal arrow. On phones the header is 64px and the links 12–14px; the arrow hides below 420px.
+- **Style:** fixed frosted header, 80px tall, the Open Path mark at 20px beside the Manrope wordmark at 15px, three links right. Links are Manrope 500 14.5px in muted bone with a 1px bone underline that scales in from the left on hover and on the current section; the contact link is bone with a 13px jade diagonal arrow. On phones the header is 64px and the links 12–14px; the arrow hides below 420px.
 - **Entrance:** while the intro plays the header mark is hidden and the wordmark is clipped; the mark lands by a FLIP transform and the wordmark wipes in (760ms) behind it.
 
 ### The Network Map
@@ -285,14 +285,14 @@ Legend selection: hovering or focusing a legend entry sets the map's focus to th
 Each line entry opens with a route strip: a 7px bar in the line colour with its deliverables as station dots and labels spaced along it; below 860px the bar turns vertical down the left. The journey is the same strip in bone with four stops. Proof beside each line is real work or a working example: the Storefront line shows the real dinesense.app capture; the Automation line is a straight stretch of track whose test order (a pulse, 2.6s linear, lighting each stop and writing a status line) runs in the page and sends nothing; the Data line is a table of 3 fictional rows with a CSV download; the Reports line is seven bars scaling to their values over 500ms, switching between a week and a month. Every example says it is an example in its status line.
 
 ### Timetable
-Work in service is a table, not a showcase: a bone rule under the Manrope 13px header, hair rules between rows, a line swatch and name in the first cell, the destination name at clamp(20px, 2vw, 26px) with a diagonal arrow that nudges and turns amber on hover, the kind beneath in dim bone, the year right-aligned in tabular numerals.
+Work in service is a table, not a showcase: a bone rule under the Manrope 13px header, hair rules between rows, a line swatch and name in the first cell, the destination name at clamp(20px, 2vw, 26px) with a diagonal arrow that nudges and turns jade on hover, the kind beneath in dim bone, the year right-aligned in tabular numerals.
 
 ### Case studies
-Title at display size with the kind and year as a meta line beneath, the one-line pitch in muted bone, the hero shot centred (tall shots at 420px with a large radius, wide at full width with a 6px radius), then four blocks under uppercase meta headings: overview, what was built, stack chips, what to notice. List items carry a 10px amber dash. The page ends with a hair rule and the next project's name at clamp(28px, 4vw, 52px). Title and hero shot travel between routes by view transition (`title-<slug>`, `shot-<slug>`); the rest crossfades in 420ms.
+Title at display size with the kind and year as a meta line beneath, the one-line pitch in muted bone, the hero shot centred (tall shots at 420px with a large radius, wide at full width with a 6px radius), then four blocks under uppercase meta headings: overview, what was built, stack chips, what to notice. List items carry a 10px jade dash. The page ends with a hair rule and the next project's name at clamp(28px, 4vw, 52px). Title and hero shot travel between routes by view transition (`title-<slug>`, `shot-<slug>`); the rest crossfades in 420ms.
 
 ### Motion
 Five verbs, one placement easing (`cubic-bezier(0.16, 1, 0.3, 1)`), two draw easings.
-- **Draw:** the entrance (`src/components/Intro.astro`, `src/scripts/intro.ts`): once per session on the home page, decided before first paint, the mark draws itself along its path over 1150ms with `cubic-bezier(0.7, 0, 0.18, 1)` and a blurred amber copy beneath as a glow, then flies into the header slot over 900ms while the hero rises in with a 90ms stagger. Any input skips it; a 3.4s timer and the router guarantee the page is never left covered. The footer mark (56px, dim bone) draws itself on entering view (1400ms). The map draws as described above. Every drawn path uses `pathLength="1"` so the dash is normalised.
+- **Draw:** the entrance (`src/components/Intro.astro`, `src/scripts/intro.ts`): once per session on the home page, decided before first paint, the mark draws itself along its path over 1150ms with `cubic-bezier(0.7, 0, 0.18, 1)` and a blurred jade copy beneath as a glow, then flies into the header slot over 900ms while the hero rises in with a 90ms stagger. Any input skips it; a 3.4s timer and the router guarantee the page is never left covered. The footer mark (56px, dim bone) draws itself on entering view (1400ms). The map draws as described above. Every drawn path uses `pathLength="1"` so the dash is normalised.
 - **Rise:** `.reveal` fades and lifts 22px (900ms opacity, 1100ms transform), staggered with `--d`. Hidden only under `html.js`.
 - **Uncover:** `.img-reveal` hides an image under a page-coloured cover that shrinks upward (1100ms) while the image settles from 1.06 to 1 (1400ms).
 - **Travel:** view transitions carry a project's title and hero shot; the root crossfades in 420ms.
@@ -305,7 +305,7 @@ Five verbs, one placement easing (`cubic-bezier(0.16, 1, 0.3, 1)`), two draw eas
 - **Do** keep every map segment horizontal, vertical or 45°, bent with the 28-unit rounded corner `linePath` draws; new geometry goes in `src/map.ts`.
 - **Do** place every station on its line; the scratch checker (`scripts/check-map.mjs`) enforces it and must stay green.
 - **Do** read a line's colour from `--c` under `data-line="<slug>"`; never write a line hex into a component.
-- **Do** use the amber step alone for selection, focus (1.5px ring, 4px offset), caret and hover colour.
+- **Do** use the jade step alone for selection, focus (1.5px ring, 4px offset), caret and hover colour.
 - **Do** set Manrope at 500 for every heading, label, button and station; 600 only for the hub name and destination labels.
 - **Do** put the line name below its heading as a meta line with a 28×7 swatch.
 - **Do** structure with hairlines, route strips and tables; proof sits plain on the ground.
