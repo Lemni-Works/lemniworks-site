@@ -42,7 +42,7 @@ const week = [42, 68, 54, 85, 72, 96, 82];
               <p class="desc">{s.description}</p>
               <div class="line-actions">
                 <a class="btn small" href="#contact">{s.offer}<Arrow /></a>
-                <span class="price">{s.price}</span>
+                <span class="price">{s.from ? `From ${s.from}` : s.price}</span>
               </div>
               <details>
                 <summary>Optional upkeep<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M8 3v10" /></svg></summary>
