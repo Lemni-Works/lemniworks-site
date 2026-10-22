@@ -16,9 +16,11 @@ export interface Project {
   link?: { label: string; href: string };
   /** Marks a featured project; homepage composition lives in components/Work.astro. */
   featured: boolean;
+  /** Drafts are never built or linked. Flip to false only once every field is true and approved. */
+  draft?: boolean;
 }
 
-export const projects: Project[] = [
+const all: Project[] = [
   {
     slug: 'dinesense',
     name: 'DineSense',
@@ -75,30 +77,22 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    slug: 'programmed',
-    name: 'Programmed',
-    kind: 'iOS app · in development',
+    // DRAFT: the first client store. Fill in every TODO from the real project (and get the
+    // client's OK to name them and quote them), add a screenshot to public/work/, then set
+    // draft: false. Until then it does not appear anywhere on the site.
+    slug: 'first-store',
+    name: 'TODO store name',
+    kind: 'Online store · client work',
     year: '2026',
-    line: 'A lifting log where your coach’s program, your sets and your food live together.',
-    summary:
-      'Phase one is the personal log: programs, active-workout logging with a rest timer and a Live Activity on the Lock Screen, nutrition against coach-style targets, bodyweight from Apple Health, and sync through Supabase.',
-    built: [
-      'A native SwiftUI app for iOS 26.1 in Swift 6, split into a core package and one module per tab.',
-      'A Live Activity and a Today widget that keep the current set one glance away.',
-      'Food logging on USDA data with an on-device natural-language parser.',
-      'A design system with its own tokens, fonts and gallery, and CI that builds and tests the app on every push.',
-    ],
-    stack: ['Swift 6', 'SwiftUI', 'SwiftData', 'HealthKit', 'ActivityKit', 'Supabase', 'GitHub Actions'],
-    notice: [
-      'The in-progress card is the whole Today screen.',
-      'Macros are three bars and three numbers, nothing else.',
-    ],
-    images: [
-      { src: '/work/programmed-workout.jpg', alt: 'Programmed: a workout in progress', w: 460, h: 1000 },
-      { src: '/work/programmed-today.jpg', alt: 'Programmed: the Today screen mid-session', w: 460, h: 1000 },
-      { src: '/work/programmed-fuel.jpg', alt: 'Programmed: nutrition against the day’s targets', w: 460, h: 1000 },
-    ],
-    featured: true,
+    line: 'TODO one line: what the store does for the owner.',
+    summary: 'TODO: who the client is (with their OK), what they needed, what was built, how it is going.',
+    built: ['TODO: what was built, one item per line.'],
+    stack: ['TODO'],
+    notice: ['TODO: optional client quote, word for word, only with their permission.'],
+    images: [],
+    link: undefined,
+    featured: false,
+    draft: true,
   },
   {
     slug: 'apify-tools',
@@ -120,5 +114,6 @@ export const projects: Project[] = [
   },
 ];
 
+export const projects: Project[] = all.filter((p) => !p.draft);
 export const featured = projects.filter((p) => p.featured);
 export const bySlug = (slug: string) => projects.find((p) => p.slug === slug);

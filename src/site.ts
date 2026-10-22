@@ -27,10 +27,12 @@ export const hero = {
   lede:
     'Built for your business by one person in Wichita, and connected so they actually talk to each other. Fixed price. Written quote within two business days.',
   cta: 'Tell me what you need',
-  quoteLine: 'Written quote within two business days. Fixed price. Payment on delivery.',
+  quoteLine: 'Written quote within two business days. Fixed price. Half to start, half on delivery.',
   note: `I reply within ${site.replyWindow}. Calls are by appointment, evenings Central.`,
 } as const;
 
+// PLACEHOLDER: starting prices. Set `from` to a real figure (e.g. '$750') and the card shows
+// "From $750"; while it is null the card keeps saying "Quoted per project". Never guess these.
 export const services = [
   {
     slug: 'web',
@@ -40,6 +42,7 @@ export const services = [
       'A fast site or online store, designed and built to fit the business, then handed over with the keys. Shopify where it fits, hand-built where it does not.',
     offer: 'Launch site or store',
     price: 'Quoted per project',
+    from: null as string | null,
     upkeep: 'Optional upkeep, quoted separately: updates, new pages, and someone to call.',
   },
   {
@@ -50,6 +53,7 @@ export const services = [
       'Two tools you already pay for, made to talk to each other without someone copying and pasting. Orders into the sheet, form entries into the CRM, the weekly email that writes itself.',
     offer: 'First automation',
     price: 'Quoted per project',
+    from: null as string | null,
     upkeep: 'Optional upkeep, quoted separately: monitoring and fixes when an API changes.',
   },
   {
@@ -60,6 +64,7 @@ export const services = [
       'A scraper that runs on a schedule and lands clean rows in a spreadsheet, a database or a file you can open. Built to survive small changes to the site it reads.',
     offer: 'Starter scraper',
     price: 'Quoted per project',
+    from: null as string | null,
     upkeep: 'Optional upkeep, quoted separately: I fix it when the source site changes.',
   },
   {
@@ -70,6 +75,7 @@ export const services = [
       'The numbers you keep rebuilding by hand, pulled from the source and laid out once. A page or a scheduled PDF, with the queries behind it handed over.',
     offer: 'One-page report',
     price: 'Quoted per project',
+    from: null as string | null,
     upkeep: 'Optional upkeep, quoted separately: new fields and sources as you need them.',
   },
 ] as const;
@@ -86,11 +92,11 @@ export const steps = [
   },
   {
     title: 'Written quote within two business days',
-    body: 'Fixed price, delivery date, what is included and what is not. If it is not a fit, I say so.',
+    body: 'Fixed price, delivery date, what is included and what is not. Half up front books the work. If it is not a fit, I say so.',
   },
   {
     title: 'Delivery, with everything that makes it yours',
-    body: 'Source code, a handover note and a short walkthrough. Payment on delivery.',
+    body: 'Source code, a handover note and a short walkthrough. The second half is due on delivery.',
   },
   {
     title: 'Optional upkeep plan',

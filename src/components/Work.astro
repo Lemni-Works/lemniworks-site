@@ -1,13 +1,15 @@
 ---
 /* In service. The destinations on the map, listed as a timetable: line, destination, what runs,
    since when. No showcase; the proof is the map and the case studies. */
-import { bySlug } from '../work';
+import { bySlug, type Project } from '../work';
 import Arrow from './Arrow.astro';
-const rows = [
+// The client store row appears automatically once its case study is published (draft: false in src/work.ts).
+const clientStore = bySlug('first-store');
+const rows: { line: string; lineName: string; p: Project; runs: string }[] = [
+  ...(clientStore ? [{ line: 'web', lineName: 'Storefront', p: clientStore, runs: clientStore.line }] : []),
   { line: 'web', lineName: 'Storefront', p: bySlug('dinesense-site')!, runs: 'A product site that lets the product do the talking.' },
   { line: 'scraping', lineName: 'Data', p: bySlug('apify-tools')!, runs: 'Keyword lists in. Clean datasets out, from the Apify store.' },
   { line: 'depot', lineName: 'Product work', p: bySlug('dinesense')!, runs: 'An iOS app that turns one meal’s numbers into the exact order nearby.' },
-  { line: 'depot', lineName: 'Product work', p: bySlug('programmed')!, runs: 'A lifting log where the program, the sets and the food live together.' },
 ];
 ---
 
@@ -34,7 +36,7 @@ const rows = [
       </tbody>
     </table>
 
-    <p class="work-note">The apps are product work shown as proof. Custom mobile apps are not currently offered as a service.</p>
+    <p class="work-note">The app is product work shown as proof. Custom mobile apps are not currently offered as a service.</p>
   </div>
 </section>
 

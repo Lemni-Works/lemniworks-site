@@ -26,8 +26,8 @@ One builder who ships the whole thing and hands it over: the store, the automati
 
 - Visitors compare against agency sites, Upwork profiles and template-shop storefronts.
 - First contact is the form; calls are by appointment, evenings Central.
-- Quotes are fixed price with delivery date, inclusions and exclusions. Payment on delivery. Optional monthly upkeep plans.
-- Shipped work: DineSense (iOS app, on the App Store since 2026-10-22), public data tools on the Apify store, and websites. Custom mobile apps are not offered as a service.
+- Quotes are fixed price with delivery date, inclusions and exclusions. Half up front to book the work, half on delivery. Optional monthly upkeep plans.
+- Shipped work: DineSense (iOS app, on the App Store since 2026-10-22), public data tools on the Apify store, websites, and a first client store (case study in draft). Custom mobile apps are not offered as a service.
 - Not offered: custom mobile apps, Microsoft 365 / SharePoint, architecture and construction software.
 
 ## Capabilities and Constraints
@@ -36,7 +36,7 @@ One builder who ships the whole thing and hands it over: the store, the automati
 - Zero third-party scripts, no analytics at launch, no cookie banner, no chat widget. Fonts self-hosted. Form works without JavaScript.
 - One H1, headings in order, visible labels, 4.5:1 body contrast, visible focus.
 - Target under 150 KB page weight and Lighthouse 95+ on all categories at 375px and 1280px.
-- Prices, DineSense description and link, Apify link, reply window, domain and Worker origin are undecided; placeholders live in src/site.ts.
+- Starting prices (`from` on each service) and the Worker origin are undecided; placeholders live in src/site.ts. The first client case study is a draft in src/work.ts.
 
 ## Brand Commitments
 
@@ -49,7 +49,7 @@ One builder who ships the whole thing and hands it over: the store, the automati
 
 - Final identity package at /Users/zandere/Documents/Research/lemni-works-open-path-final (outlined lockups, favicons, social images, Manrope source).
 - Build Kit spec with section copy and tone rules (DESIGN section mirrored in this repo's history).
-- Real captures and case-study copy for DineSense, dinesense.app, Programmed and the Apify tools live in `src/work.ts` and `public/work/`. DineSense links to its App Store listing (id6816440061) and the data tools to https://apify.com/lemniworks/keyword-search-volume, both confirmed on 2026-10-22. Do not fabricate clients, testimonials, metrics or prices.
+- Real captures and case-study copy for DineSense, dinesense.app and the Apify tools live in `src/work.ts` and `public/work/`. DineSense links to its App Store listing (id6816440061) and the data tools to https://apify.com/lemniworks/keyword-search-volume, both confirmed on 2026-10-22. Do not fabricate clients, testimonials, metrics or prices.
 
 ## Product Principles
 

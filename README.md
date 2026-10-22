@@ -60,11 +60,11 @@ The home page opens, once per browser session, with the Open Path mark drawing i
 
 Each line has an entry in `src/components/Services.astro` with a route strip of what it covers, the copy from `src/site.ts`, and its proof: the real dinesense.app capture for the Storefront line, a test order that travels the Relay line in the page, three fictional rows and a CSV download for the Collector line, and a week/month example for the Dashboard line. Nothing in these examples sends a request. Without JavaScript everything is visible and the examples simply sit still.
 
-`src/components/Work.astro` shows shipped work plainly: the website feature, the two apps, the data tools. Every project gets a page at `/work/<slug>` from `src/pages/work/[slug].astro` and `src/layouts/CaseStudy.astro`, with shared image and title transitions.
+`src/components/Work.astro` shows shipped work plainly: the client store (once its case study is published), the website feature, the app, the data tools. Every project gets a page at `/work/<slug>` from `src/pages/work/[slug].astro` and `src/layouts/CaseStudy.astro`, with shared image and title transitions.
 
 ## Work images
 
-`public/work/` holds real captures copied on 2026-10-21: DineSense app previews from the DineSense-Website project, a desktop render of dinesense.app, and a Programmed workout screen from the Portfolio project. Programmed is labelled in development; remove it from the homepage selection in `src/components/Work.astro` if it should not be public yet. Refresh the captures when those apps change.
+`public/work/` holds real captures copied on 2026-10-21: DineSense app previews from the DineSense-Website project, a desktop render of dinesense.app, and a Programmed workout screen from the Portfolio project. Programmed was removed from the site on 2026-10-22 (the project is paused); its entry and captures are in git history. Refresh the captures when those apps change.
 
 Existing project images are reused unchanged. The adjacent `.json` files record their provenance.
 
@@ -86,7 +86,10 @@ Everything below is in `src/site.ts` unless noted.
 - [ ] Build the contact Worker, configure `PUBLIC_WORKER_ORIGIN`, redeploy, and verify real delivery
 - [x] `hello@lemniworks.com` receives email (confirmed by the owner)
 - [ ] Service names, descriptions and entry-offer names are drafts to review, including the new websites and e-commerce service
-- [ ] Programmed is shown as an in-development app in the work section; remove it from the homepage selection in `src/components/Work.astro` if it should not be public yet
+- [x] Programmed removed from the site (project paused)
+- [x] Payment terms: half up front, half on delivery
+- [ ] Starting prices: set `from` on each service in `src/site.ts` (shows "From $X"; stays "Quoted per project" while null)
+- [ ] First client case study: fill in the `first-store` draft in `src/work.ts`, add a screenshot, get the client's OK, set `draft: false`
 - [ ] Work images were copied from the DineSense-Website and Portfolio projects on 2026-10-21; refresh them when those apps change
 - [x] Privacy commitments confirmed: inquiries that do not become work are deleted within 12 months; deletion requests are fulfilled within one week
 - [x] Final outlined logo, optical favicons and social images integrated
