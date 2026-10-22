@@ -76,5 +76,5 @@ Everything below is in `src/site.ts` unless noted.
 - [ ] Build the contact Worker, configure `PUBLIC_WORKER_ORIGIN`, redeploy, and verify real delivery
 - [x] `hello@lemniworks.com` receives email (confirmed by the owner)
 - [ ] Service names, descriptions and entry-offer names are drafts to review
-- [ ] Confirm an inquiry retention period and deletion response window before adding those commitments to the privacy notice
+- [x] Privacy commitments confirmed: inquiries that do not become work are deleted within 12 months; deletion requests are fulfilled within one week
 - [x] Final outlined logo, optical favicons and social images integrated
