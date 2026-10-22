@@ -1,5 +1,6 @@
 ---
 import Mark from './Mark.astro';
+import Arrow from './Arrow.astro';
 import { site } from '../site';
 ---
 
@@ -12,7 +13,7 @@ import { site } from '../site';
     <nav aria-label="Primary">
       <a href="/#services">Services</a>
       <a href="/#work">Work</a>
-      <a href="/#contact">Contact</a>
+      <a href="/#contact" class="nav-contact">Let’s talk <Arrow diagonal /></a>
     </nav>
   </div>
 </header>
@@ -25,13 +26,15 @@ import { site } from '../site';
     right: 0;
     z-index: 20;
     pointer-events: none;
-    /* a scrim so the rail stays legible over whatever scrolls beneath it */
-    background: linear-gradient(to bottom, rgb(6 7 10 / 0.92) 0%, rgb(6 7 10 / 0.6) 55%, transparent 100%);
-    padding-bottom: 28px;
+    /* frosted scrim: whatever scrolls beneath stays legible, and the rail reads as glass */
+    background: rgb(8 11 16 / 0.72);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(18px) saturate(150%);
+    border-bottom: 1px solid var(--hair-soft);
   }
 
   .header-inner {
-    height: 84px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -60,11 +63,32 @@ import { site } from '../site';
     height: 15px;
     width: auto;
     display: block;
+    clip-path: inset(-4px 0 -4px 0);
+    transition: clip-path 760ms var(--ease-out) 80ms;
+  }
+
+  /* While the entrance plays, the real mark stays out of sight: the intro's copy lands in its slot.
+     The wordmark wipes in from behind the mark once it has landed. */
+  :global(html.intro) .brand :global(.brand-mark),
+  :global(html.intro-mark) .brand :global(.brand-mark) {
+    visibility: hidden;
+  }
+
+  :global(html.intro) .brand-name,
+  :global(html.intro-mark) .brand-name {
+    clip-path: inset(-4px 100% -4px 0);
+    transition: none;
   }
 
   nav {
     display: flex;
     gap: clamp(18px, 3vw, 36px);
+    transition: opacity 700ms ease 200ms;
+  }
+
+  :global(html.intro) nav {
+    opacity: 0;
+    transition: none;
   }
 
   nav a {
@@ -72,7 +96,7 @@ import { site } from '../site';
     font: 500 14.5px/1 var(--font-display);
     color: var(--muted);
     text-decoration: none;
-    padding-block: 8px;
+    padding-block: 12px;
     transition: color var(--t-fast) ease;
   }
 
@@ -100,6 +124,17 @@ import { site } from '../site';
     transform: scaleX(1);
   }
 
+  .nav-contact {
+    color: var(--ink);
+  }
+
+  .nav-contact :global(svg) {
+    color: var(--cobalt-light);
+    margin-left: 5px;
+    width: 13px;
+    height: 13px;
+  }
+
   @media (max-width: 719px) {
     .header-inner {
       height: 64px;
@@ -109,5 +144,30 @@ import { site } from '../site';
       font-size: 14px;
     }
   }
-</style>
 
+  @media (max-width: 420px) {
+    .brand {
+      gap: 7px;
+    }
+
+    .brand :global(.brand-mark) {
+      height: 17px;
+    }
+
+    .brand-name {
+      height: 12px;
+    }
+
+    nav {
+      gap: 16px;
+    }
+
+    nav a {
+      font-size: 12px;
+    }
+
+    .nav-contact :global(svg) {
+      display: none;
+    }
+  }
+</style>

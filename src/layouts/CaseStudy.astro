@@ -21,8 +21,8 @@ const ext = p.link && p.link.href.startsWith('http') ? { target: '_blank', rel: 
   <main id="main" class="study">
     <div class="wrap">
       <header class="study-head">
-        <p class="label reveal">{p.kind} · {p.year}</p>
         <h1 transition:name={`title-${p.slug}`}>{p.name}</h1>
+        <p class="label">{p.kind} · {p.year}</p>
         <p class="line reveal" style="--d: 100ms">{p.line}</p>
       </header>
 

@@ -6,7 +6,7 @@ import { site, email, budgets, contactEndpoint } from '../site';
 <section id="contact" class="section" aria-labelledby="contact-title">
   <div class="wrap contact">
     <div class="intro reveal">
-      <h2 id="contact-title">Tell me what you need.</h2>
+      <h2 id="contact-title">Let’s put it<br />to work.</h2>
       <p class="muted">In your own words. I read every message myself and reply within {site.replyWindow}.</p>
       {contactEndpoint && <p class="small dim alt">Prefer email? <a href={`mailto:${email}`}>{email}</a></p>}
     </div>
@@ -62,7 +62,7 @@ import { site, email, budgets, contactEndpoint } from '../site';
     </div> : <div class="panel glass reveal mail">
       <p class="mail-line">Email a few sentences about the problem and your rough budget. I reply within {site.replyWindow}.</p>
       <a class="btn" href={`mailto:${email}`}>
-        Email {email}
+        {email}
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
       </a>
     </div>}
@@ -70,6 +70,15 @@ import { site, email, budgets, contactEndpoint } from '../site';
 </section>
 
 <style>
+  #contact {
+    background: #111a2b;
+    border-block: 1px solid #293751;
+  }
+
+  #contact .muted {
+    color: #b8c4dc;
+  }
+
   .contact {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -82,6 +91,11 @@ import { site, email, budgets, contactEndpoint } from '../site';
     gap: 20px;
     position: sticky;
     top: 120px;
+  }
+
+  .intro h2 {
+    font-size: clamp(44px, 5.3vw, 72px);
+    line-height: 1.06;
   }
 
   .intro .muted {
@@ -109,10 +123,16 @@ import { site, email, budgets, contactEndpoint } from '../site';
   }
 
   .mail-line {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.5;
     max-width: 40ch;
-    color: var(--muted);
+    color: #bbc7dd;
+  }
+
+  .mail .btn {
+    max-width: 100%;
+    font-size: clamp(13px, 1.5vw, 18px);
+    padding-inline: clamp(14px, 2vw, 26px);
   }
 
   .row.two {
@@ -259,4 +279,3 @@ import { site, email, budgets, contactEndpoint } from '../site';
     }
   }
 </style>
-

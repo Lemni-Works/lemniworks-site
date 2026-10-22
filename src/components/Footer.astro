@@ -1,19 +1,32 @@
 ---
 import { site } from '../site';
+import Arrow from './Arrow.astro';
+import Mark from './Mark.astro';
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="wrap footer-inner small dim">
-    <span class="num">© {year} {site.name}</span>
-    <span>{site.city}</span>
-    <a href="/privacy">Privacy</a>
+  <div class="wrap">
+    <Mark class="footer-mark draw-mark" />
+    <div class="footer-inner small dim">
+      <span class="num">© {year} {site.name}</span>
+      <span>{site.city}</span>
+      <a class="back-top" href="#main">Back to top <Arrow /></a>
+      <a href="/privacy">Privacy</a>
+    </div>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    padding-block: 32px 44px;
+    padding-block: 48px 44px;
+  }
+
+  /* The signature: the mark draws itself once the footer comes into view. */
+  .site-footer :global(.footer-mark) {
+    width: 56px;
+    color: var(--dim);
+    margin-bottom: 28px;
   }
 
   .footer-inner {
@@ -30,5 +43,23 @@ const year = new Date().getFullYear();
 
   .footer-inner a:hover {
     color: var(--ink);
+  }
+
+  .back-top {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .back-top :global(svg) {
+    width: 13px;
+    transform: rotate(-90deg);
+  }
+
+  @media (max-width: 520px) {
+    .back-top {
+      margin-left: 0;
+    }
   }
 </style>

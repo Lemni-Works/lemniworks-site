@@ -8,15 +8,17 @@ import Work from '../components/Work.astro';
 import About from '../components/About.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Footer from '../components/Footer.astro';
+import Intro from '../components/Intro.astro';
 ---
 
 <Base>
+  <Intro />
   <Header />
   <main id="main">
     <Hero />
+    <Work />
     <Services />
     <Steps />
-    <Work />
     <About />
     <ContactForm />
   </main>

@@ -1,98 +1,73 @@
 ---
 import { hero, services } from '../site';
+import Arrow from './Arrow.astro';
+import StudioDemo from './StudioDemo.astro';
 ---
-
 <section class="hero" aria-labelledby="hero-title">
-  <div class="wrap hero-inner">
-    <div class="hero-copy">
-      <h1 id="hero-title" class="reveal">{hero.headline}</h1>
-      <p class="lede reveal" style="--d: 120ms">{hero.lede}</p>
-      <div class="hero-cta reveal" style="--d: 240ms">
-        <a class="btn" href="#contact">
-          {hero.cta}
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
-        </a>
-        <p class="small muted note">{hero.note}</p>
+  <div class="wrap">
+    <div class="hero-main">
+      <div class="hero-copy">
+        <h1 id="hero-title">One studio.<br />The whole <br /><span>shop.</span></h1>
+        <p class="lede" style="--i: 90ms">I build the website, connect the tools, collect the data, and make the numbers useful.</p>
+        <div class="hero-cta" style="--i: 180ms">
+          <a class="btn" href="#contact">{hero.cta}<Arrow /></a>
+          <a class="text-link" href="#work">View the work<Arrow diagonal /></a>
+        </div>
+        <p class="promise" style="--i: 270ms">One person. Fixed price. Yours when it ships.</p>
       </div>
+      <div class="hero-demo" style="--i: 140ms"><StudioDemo /></div>
     </div>
-    <ul class="doors reveal" style="--d: 360ms" aria-label="Services">
-      {services.map((s) => <li><a href={`#svc-${s.slug}`}>{s.short}</a></li>)}
-    </ul>
+    <div class="doors" style="--i: 420ms">
+      <p>From the front door <br />to the work behind it.</p>
+      <ul aria-label="Services">{services.map((s) => <li><a href={`#svc-${s.slug}`}><span>{s.name}</span><Arrow diagonal /></a></li>)}</ul>
+    </div>
   </div>
 </section>
-
 <style>
-  .hero {
-    min-height: 100svh;
-    display: flex;
-    align-items: flex-end;
-    padding-top: 120px;
-    padding-bottom: clamp(40px, 6vw, 72px);
+  .hero { position: relative; padding-block: clamp(130px, 15vh, 170px) 0; overflow: clip; }
+  /* a quiet cobalt cast behind the demo, so the slab reads as lit rather than pasted on */
+  .hero::before { content: ''; position: absolute; top: -10%; right: -12%; width: 58vw; height: 70vh; max-width: 900px; background: radial-gradient(closest-side, rgb(42 91 215 / 0.22), transparent 70%); pointer-events: none; }
+  .hero-main { position: relative; display: grid; grid-template-columns: 0.92fr 1.08fr; align-items: center; gap: clamp(30px, 5vw, 80px); padding-bottom: 70px; }
+  .hero-copy { position: relative; z-index: 1; }
+  .hero-demo { min-width: 0; }
+  @media (max-width: 860px) { .hero-demo { display: grid; justify-items: center; } }
+
+  /* Entrance. Everything waits, hidden, while the mark draws; when html.intro comes off, it rises in
+     with a stagger set by --i. Returning visitors and reduced motion never see the hidden state. */
+  .hero-copy > *, .hero-demo, .doors { transition: opacity 900ms ease, transform 1200ms var(--ease-out); transition-delay: var(--i, 0ms); }
+  :global(html.intro) .hero-copy > *, :global(html.intro) .hero-demo, :global(html.intro) .doors { opacity: 0; transform: translateY(28px); transition: none; }
+  h1 { font-size: clamp(60px, 6.7vw, 96px); line-height: 1.04; letter-spacing: -0.04em; font-weight: 500; }
+  h1 span { color: var(--cobalt-light); }
+  .lede { margin-top: 28px; max-width: 35ch; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.6; color: var(--muted); }
+  .hero-cta { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; margin-top: 32px; }
+  .hero-cta .btn { padding-inline: 22px; }
+  .promise { margin-top: 24px; color: var(--dim); font-size: 13px; }
+  .doors { border-block: 1px solid var(--hair); display: grid; grid-template-columns: 1fr 3fr; gap: 32px; padding-block: 26px; }
+  .doors > p { font-size: 13px; color: var(--dim); line-height: 1.5; }
+  .doors ul { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; list-style: none; padding: 0; margin: 0; }
+  .doors a { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 13px; text-decoration: none; height: 100%; color: var(--muted); }
+  .doors a:hover { color: var(--cobalt-light); }
+  .doors a :global(svg) { width: 18px; flex: none; }
+  @media (max-width: 1050px) and (min-width: 861px) { .hero-cta { gap: 18px; } .hero-cta .text-link { font-size: 13px; } }
+  @media (max-width: 860px) {
+    .hero { padding-top: 120px; }
+    .hero-main { grid-template-columns: 1fr; gap: 50px; padding-bottom: 50px; }
+    h1 { font-size: clamp(60px, 10vw, 88px); }
+    h1 br:last-of-type { display: none; }
+    .hero-copy { max-width: 640px; }
+    .lede { max-width: 42ch; }
+    .doors { grid-template-columns: 1fr; gap: 20px; }
+    .doors > p br { display: none; }
   }
-
-  .hero-inner {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(40px, 6vw, 80px);
-  }
-
-  .hero-copy {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(22px, 3vw, 36px);
-  }
-
-  h1 {
-    max-width: 11ch;
-  }
-
-  .lede {
-    max-width: 46ch;
-    font-size: clamp(17px, 1.6vw, 21px);
-    line-height: 1.5;
-    color: var(--muted);
-  }
-
-  .hero-cta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 20px 32px;
-  }
-
-  .note {
-    max-width: 34ch;
-  }
-
-  .doors {
-    list-style: none;
-    margin: 0;
-    padding: 24px 0 0;
-    border-top: 1px solid var(--hair);
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 8px 24px;
-  }
-
-  .doors a {
-    font: 500 15px/1.4 var(--font-display);
-    color: var(--muted);
-    text-decoration: none;
-    transition: color var(--t-fast) ease;
-  }
-
-  .doors a:hover {
-    color: var(--ink);
-  }
-
-  @media (max-width: 719px) {
-    .hero {
-      padding-top: 96px;
-    }
-
-    .doors {
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
+  @media (max-width: 560px) {
+    .hero { padding-top: 104px; }
+    h1 { font-size: clamp(42px, 11.8vw, 60px); }
+    .hero-main { gap: 44px; }
+    .hero-cta { gap: 16px; margin-top: 24px; }
+    .lede { margin-top: 22px; }
+    .promise { margin-top: 18px; }
+    .hero-cta .btn { font-size: 14px; padding: 16px 18px; }
+    .hero-cta .text-link { font-size: 13px; }
+    .doors ul { grid-template-columns: 1fr 1fr; gap: 22px; }
   }
 </style>

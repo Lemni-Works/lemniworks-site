@@ -30,7 +30,7 @@ const og = new URL(image, canonical);
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={og} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#06070a" />
+    <meta name="theme-color" content="#080b10" />
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
@@ -38,29 +38,36 @@ const og = new URL(image, canonical);
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="preload" href="/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="generator" content={Astro.generator} />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      (function (d) {
+        d.classList.add('js');
+        /* The Open Path entrance plays once per session on the home page, and never under reduced motion.
+           Deciding here, before first paint, is what keeps the page from flashing before the intro. */
+        try {
+          if (location.pathname === '/' && !sessionStorage.getItem('lw-intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            d.classList.add('intro', 'intro-mark');
+          }
+        } catch (e) {}
+      })(document.documentElement);
+    </script>
     <ClientRouter />
   </head>
   <body>
     <!--
-      DIRECTION
-      THESIS: A black gallery. The work is the only picture; type and hairlines do the rest. It refuses the
-      dark agency landing (glow hero, icon cards, thumbnail grid), the box grid, and abstract atmosphere.
-      OWN-WORLD: #06070A black with generous empty space; white Manrope 500 at display scale; hairlines at
-      12% white; real screens with a thin rim of light and deep shadow; one cobalt used sparingly for
-      numerals and focus. No containers except the glass the form sits on.
-      STORY: "This studio ships finished, specific things; here they are, large, and I can read exactly
-      what was built." Then: send the form.
-      FIRST VIEWPORT: black. Wordmark top-left, three links top-right. Headline "One studio for the whole
-      shop." lower-left at 8vw rising into place line by line, the lede and one white pill button under it,
-      the four services as a quiet line. Below the fold the first project uncovers from the bottom.
-      SIGNATURE: the pinned showcase. A sticky frame holds a large screen that crossfades as each project's
-      name scrolls past; clicking carries the screen and the title into the case-study page as shared
-      elements. Motion grammar: rise, uncover, crossfade, travel. Nothing slides sideways, nothing bounces.
-      FORM: user-pinned (minimalist, clean animations, black space, a better showcase) after Ink in Water
-      was judged too abstract; round four; seed 61058b97.
-      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review,
-      the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+      DIRECTION · Connected Studio · code-led, design choice delegated by the user.
+      THESIS: Make the studio's four services tangible through an interactive working display.
+      OWN-WORLD: Ink #080b10, cobalt #2a5bd7, pale-blue accents, Manrope, precise seams,
+      purposeful browser and device frames. Real projects carry the photography.
+      STORY: Try the services, inspect real work, identify a problem, contact the builder.
+      FIRST VIEWPORT: Large three-line headline left; a cobalt-backed service demo right;
+      two actions beneath the copy, four equal service doors across the lower edge.
+      FORM: Connected workbench; grounded candidate 3; seed 1359107d. User requested a
+      balanced mix of all four services and delegated visual decisions. Signature: switch
+      website, workflow, data and report views; run a sample workflow and export sample data.
+      ENTRANCE: once per session the Open Path mark draws itself, then travels into the header
+      while the hero rises. Skippable, reduced-motion aware, never replays on client navigation.
+      FINISH: reviewed in the browser at desktop and phone widths; DESIGN.md records the decisions;
+      every shipping raster carries its provenance in an adjacent .json.
     -->
     <a class="skip" href="#main">Skip to content</a>
     <slot />

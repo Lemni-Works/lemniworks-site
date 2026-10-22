@@ -1,0 +1,157 @@
+---
+import Arrow from './Arrow.astro';
+const tabs = [ ['web', 'Websites'], ['automation', 'Automation'], ['scraping', 'Data'], ['reports', 'Reports'] ];
+const rows = [ ['Canvas tote', 'Field Supply', '24.00', 'In stock'], ['Desk tray', 'North Studio', '38.00', 'In stock'], ['Travel flask', 'Field Supply', '32.00', 'In stock'] ];
+const csv = 'Product,Source,Price,Availability\n' + rows.map(row => row.join(',')).join('\n');
+const week = [42, 68, 54, 85, 72, 96, 82];
+---
+<div class="studio-demo" data-studio-demo>
+  <div class="demo-stage">
+    <div class="demo-mast"><span class="demo-mark" aria-hidden="true"></span><span>A little of what I build.</span><span class="demo-count" aria-hidden="true">01 / 04</span></div>
+    <div class="demo-panels">
+      <section id="demo-web" class="demo-panel" data-demo-panel="web" aria-label="Website example">
+        <div class="browser-bar"><span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>dinesense.app</span><Arrow diagonal /></div>
+        <a class="website-preview" href="/work/dinesense-site" aria-label="Read the DineSense website case study">
+          <img src="/work/dinesense-site.jpg" alt="DineSense website, featuring the real app and its meal-to-order flow" width="1400" height="1006" fetchpriority="high" decoding="async" />
+          <span class="preview-link">Explore this project<Arrow diagonal /></span>
+        </a>
+        <div class="panel-caption"><div><h2>A front door worth opening.</h2><p>Custom websites and online stores.</p></div><span class="evidence">Real project</span></div>
+      </section>
+      <section id="demo-automation" class="demo-panel" data-demo-panel="automation" aria-label="Automation example" hidden>
+        <div class="example-top"><span>Order → spreadsheet → email</span><span>Example workflow</span></div>
+        <div class="workflow">
+          <div class="flow-step" data-flow-step><span class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Zm4 0V6a3 3 0 0 1 6 0v2" /></svg></span><div><strong>A new order comes in</strong><span>Store · Order #1042</span></div><span class="flow-state">Ready</span></div>
+          <div class="flow-connector" aria-hidden="true"><span></span></div>
+          <div class="flow-step" data-flow-step><span class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M4 9h16M4 14h16M10 9v11" /></svg></span><div><strong>The sheet updates itself</strong><span>Orders · Add a clean row</span></div><span class="flow-state">Ready</span></div>
+          <div class="flow-connector" aria-hidden="true"><span></span></div>
+          <div class="flow-step" data-flow-step><span class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 6 9 7 9-7" /></svg></span><div><strong>Your team gets the details</strong><span>Email · Order summary</span></div><span class="flow-state">Ready</span></div>
+        </div>
+        <div class="demo-action"><button class="demo-button" type="button" data-run-example>Run example<Arrow /></button><span class="run-result" role="status" data-run-result>Try a sample run.</span></div>
+        <div class="panel-caption"><div><h2>Less copying. More getting on.</h2><p>The tools you use, working together.</p></div></div>
+      </section>
+      <section id="demo-scraping" class="demo-panel" data-demo-panel="scraping" aria-label="Data collection example" hidden>
+        <div class="example-top"><span>Products → clean rows</span><span>Sample data</span></div>
+        <div class="data-preview">
+          <div class="data-summary"><svg class="data-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3" /><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" /></svg><div><strong>Ready for your spreadsheet.</strong><span>Collected. Structured. Exportable.</span></div></div>
+          <div class="data-scroll"><table><caption class="visually-hidden">Fictional product data demonstrating a scraper output</caption><thead><tr><th>Product</th><th>Source</th><th>Price</th></tr></thead><tbody>{rows.map(row => <tr><td>{row[0]}</td><td>{row[1]}</td><td>${row[2]}</td></tr>)}</tbody></table></div>
+          <div class="data-format"><span>3 sample rows</span><span>CSV / JSON / Database</span></div>
+        </div>
+        <div class="demo-action"><a class="demo-button" href={`data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`} download="lemni-works-sample.csv">Download sample CSV<Arrow /></a></div>
+        <div class="panel-caption"><div><h2>The data you need, on repeat.</h2><p>Scheduled collection. Useful output.</p></div></div>
+      </section>
+      <section id="demo-reports" class="demo-panel" data-demo-panel="reports" aria-label="Report example" hidden>
+        <div class="example-top"><span>Orders at a glance</span><span>Sample data</span></div>
+        <div class="report-preview">
+          <div class="report-top"><div><span class="report-label">Orders</span><strong class="report-total" data-report-total>499</strong></div><div class="report-range" aria-label="Example report period"><button type="button" aria-pressed="true" data-report-period="week">Week</button><button type="button" aria-pressed="false" data-report-period="month">Month</button></div></div>
+          <div class="chart" role="img" aria-label="Sample orders for Monday through Sunday: 42, 68, 54, 85, 72, 96, 82" data-report-chart>{week.map((value, i) => <div class="chart-column"><span class="bar-value" data-bar-value>{value}</span><div class="bar" style={`--bar-scale: ${value / 100}`} data-bar></div><span class="bar-label" data-bar-label>{['M','T','W','T','F','S','S'][i]}</span></div>)}</div>
+          <p class="report-note">One view of the numbers behind the business.</p>
+        </div>
+        <div class="panel-caption"><div><h2>See the story in the numbers.</h2><p>Reports that start with your sources.</p></div></div>
+      </section>
+    </div>
+    <div class="demo-tabs" aria-label="Explore a service">{tabs.map(([slug, name], i) => <a href={`#svc-${slug}`} id={`tab-${slug}`} data-demo-tab={slug} class:list={{'is-selected': i === 0}}>{name}</a>)}</div>
+  </div>
+  <div class="demo-foot"><span>Choose a service. See it in action.</span><Arrow diagonal /></div>
+</div>
+<style>
+  .studio-demo { position: relative; min-width: 0; padding: 20px 0 0 20px; }
+  .studio-demo::before { content: ''; position: absolute; top: 0; left: 0; right: -60px; bottom: 66px; background: var(--cobalt); border-radius: 4px; transform: rotate(-3deg); }
+  .demo-stage { position: relative; background: #11151e; border: 1px solid #30394b; border-radius: 12px; box-shadow: 0 30px 70px -24px #000a; overflow: hidden; }
+  .demo-mast { display: flex; align-items: center; gap: 9px; padding: 19px 22px; font-size: 12px; color: #bbc5dc; border-bottom: 1px solid #30394b; }
+  .demo-mark { width: 7px; height: 7px; background: var(--cobalt-light); border-radius: 50%; }
+  .demo-count { margin-left: auto; font-variant-numeric: tabular-nums; color: #98a8c8; }
+  .demo-panel { height: 440px; display: flex; flex-direction: column; }
+  .demo-panel[hidden] { display: none; }
+  .demo-panel.is-entering { animation: panel-arrive 450ms var(--ease-out); }
+  @keyframes panel-arrive { from { opacity: 0.6; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+  .browser-bar { height: 40px; display: flex; align-items: center; justify-content: space-between; padding-inline: 18px; font-size: 10px; color: #aab3c6; background: #191e29; }
+  .browser-bar :global(svg) { width: 13px; }
+  .browser-dots { display: flex; gap: 4px; }
+  .browser-dots i { width: 5px; height: 5px; border: 1px solid #7c879e; border-radius: 50%; }
+  .website-preview { display: block; position: relative; overflow: hidden; }
+  .website-preview img { display: block; width: 100%; height: 310px; object-fit: cover; }
+  .preview-link { position: absolute; right: 16px; bottom: 14px; display: flex; align-items: center; gap: 8px; background: #11151e; border: 1px solid #485674; border-radius: 4px; padding: 8px 11px; font-size: 11px; transition: background var(--t-base); }
+  .preview-link :global(svg) { width: 14px; }
+  .website-preview:hover .preview-link { background: var(--cobalt); }
+  .panel-caption { display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 20px 22px; margin-top: auto; border-top: 1px solid #30394b; }
+  .panel-caption h2 { font-size: 17px; line-height: 1.4; letter-spacing: -0.02em; }
+  .panel-caption p { margin-top: 3px; font-size: 12px; color: #aab6cc; }
+  .evidence { color: #b7c9f4; font-size: 10px; white-space: nowrap; }
+  .demo-tabs { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #30394b; background: #0c1018; }
+  .demo-tabs a { text-align: center; padding: 17px 4px; font-size: 12px; text-decoration: none; color: #aab6cc; position: relative; }
+  .demo-tabs a:hover { color: #fff; background: #172036; }
+  .demo-tabs a.is-selected { color: #fff; background: #1c2947; }
+  .demo-tabs a.is-selected::after { content: ''; height: 2px; background: var(--cobalt-light); position: absolute; inset: auto 16px 0; }
+  .demo-tabs a:focus-visible { outline-offset: -4px; }
+  .demo-foot { position: relative; display: flex; justify-content: space-between; padding-top: 17px; font-size: 11px; color: var(--dim); }
+  .demo-foot :global(svg) { width: 15px; }
+  .example-top { display: flex; flex-wrap: wrap; gap: 5px 12px; justify-content: space-between; padding: 19px 22px; font-size: 11px; color: #aab6cc; }
+  .example-top span:first-child { color: #e2e9f8; }
+  .workflow { padding: 2px 22px 10px; }
+  .flow-step { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #30394b; border-radius: 6px; transition: background 250ms, border-color 250ms; }
+  .flow-step.is-complete { background: #1c2947; border-color: #6b93ff; }
+  .flow-icon { width: 29px; flex: none; color: #abc0f4; }
+  .flow-icon svg { display: block; width: 100%; }
+  .flow-step > div { flex: 1; }
+  .flow-step strong, .flow-step div span { display: block; }
+  .flow-step strong { font-size: 12px; font-weight: 500; }
+  .flow-step div span { color: #aab6cc; font-size: 10px; margin-top: 3px; }
+  .flow-state { color: #b5c5e8; font-size: 10px; }
+  .flow-connector { height: 17px; margin-left: 27px; width: 1px; background: #405276; position: relative; overflow: hidden; }
+  .flow-connector span { display: block; width: 1px; height: 100%; background: #a3bfff; transform: translateY(-100%); }
+  .is-running .flow-connector span { animation: flow 600ms ease-in-out 3; }
+  @keyframes flow { to { transform: translateY(100%); } }
+  .demo-action { min-height: 58px; display: flex; align-items: center; gap: 12px; padding: 6px 22px 16px; }
+  .demo-button { border: 1px solid #53678f; color: #e3ebff; background: #1c2947; padding: 9px 12px; border-radius: 4px; font: inherit; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+  .demo-button :global(svg) { width: 13px; }
+  .demo-button:hover { border-color: #a4bfff; }
+  .demo-button:disabled { cursor: wait; opacity: 0.65; }
+  .run-result { font-size: 10px; color: #aab6cc; }
+  .data-preview { padding: 9px 22px 16px; }
+  .data-summary { display: flex; align-items: center; gap: 14px; padding: 8px 0 24px; }
+  .data-symbol { color: #8faeff; width: 30px; height: 30px; flex: none; }
+  .data-summary strong, .data-summary div span { display: block; }
+  .data-summary strong { font-size: 14px; font-weight: 500; }
+  .data-summary div span { font-size: 11px; color: #aab6cc; margin-top: 4px; }
+  .data-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 11px; white-space: nowrap; }
+  th, td { text-align: left; padding: 12px 8px; border-bottom: 1px solid #30394b; }
+  th { color: #aab6cc; font-weight: 400; background: #1a2232; }
+  td:last-child, th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  .data-format { display: flex; justify-content: space-between; gap: 10px; padding-top: 14px; font-size: 10px; color: #aab6cc; }
+  .report-preview { padding: 0 22px 18px; }
+  .report-top { display: flex; justify-content: space-between; align-items: center; }
+  .report-label { display: block; color: #aab6cc; font-size: 11px; }
+  .report-total { font: 500 42px/1.4 var(--font-display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .report-range { display: flex; gap: 4px; }
+  .report-range button { color: #b7c6e5; background: transparent; border: 1px solid transparent; padding: 7px 10px; border-radius: 4px; font: inherit; font-size: 11px; cursor: pointer; }
+  .report-range button[aria-pressed='true'] { background: #253552; border-color: #405276; color: #fff; }
+  .chart { height: 174px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; margin-top: 10px; border-bottom: 1px solid #405276; }
+  .chart-column[hidden] { display: none; }
+  .chart-column { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; min-width: 0; }
+  .bar { width: 100%; max-width: 35px; height: 132px; transform: scaleY(var(--bar-scale)); transform-origin: bottom; background: #6b93ff; border-radius: 3px 3px 0 0; transition: transform 500ms var(--ease-out); }
+  .chart-column:nth-child(even) .bar { background: #3f65c6; }
+  .bar-value { color: #b7c6e5; font-size: 10px; padding-bottom: 6px; font-variant-numeric: tabular-nums; }
+  .bar-label { font-size: 10px; color: #aab6cc; padding-block: 8px; }
+  .report-note { color: #aab6cc; font-size: 11px; margin-top: 17px; }
+  @media (max-width: 860px) { .demo-stage { display: flex; flex-direction: column; } .demo-mast { order: -2; } .demo-tabs { order: -1; border-top: 0; border-bottom: 1px solid #30394b; } .studio-demo { max-width: 610px; width: 100%; justify-self: center; } .studio-demo::before { right: -15px; } .website-preview img { height: 300px; } }
+  @media (max-width: 560px) {
+    .studio-demo { padding: 12px 0 0 8px; }
+    .studio-demo::before { right: -6px; }
+    .demo-mast { padding: 16px; }
+    .website-preview img { height: 242px; }
+    .panel-caption { padding: 18px 16px; }
+    .panel-caption h2 { font-size: 15px; }
+    .panel-caption p { font-size: 11px; }
+    .evidence { font-size: 9px; }
+    .workflow { padding-inline: 12px; }
+    .example-top, .demo-action { padding-inline: 16px; }
+    .flow-step { gap: 8px; padding: 11px 9px; }
+    .flow-step strong { font-size: 11px; }
+    .flow-icon { width: 24px; }
+    .demo-panel { height: 420px; }
+    .data-preview, .report-preview { padding-inline: 16px; }
+    .chart { gap: 8px; }
+    .run-result { font-size: 9px; }
+  }
+</style>

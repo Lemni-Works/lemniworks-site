@@ -14,7 +14,7 @@ export interface Project {
   /** First image is the hero. Phone screens are 880x1912 or 460x1000; the site render is 1400x1006. */
   images: { src: string; alt: string; w: number; h: number }[];
   link?: { label: string; href: string };
-  /** Shown in the pinned showcase on the home page. */
+  /** Marks a featured project; homepage composition lives in components/Work.astro. */
   featured: boolean;
 }
 

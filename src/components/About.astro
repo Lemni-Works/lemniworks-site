@@ -8,13 +8,18 @@ import { about } from '../site';
       <img src={about.portrait.src} alt={about.portrait.alt} width="599" height="900" loading="lazy" decoding="async" />
     </div>
     <div class="text reveal">
-      <h2 id="about-title">About</h2>
+      <h2 id="about-title">One point of contact.<br />Me, Zander.</h2>
       <p class="body">{about.text}</p>
+      <p class="about-signoff">Based in Wichita, Kansas. Built for your business.</p>
     </div>
   </div>
 </section>
 
 <style>
+  #about {
+    padding-top: 0;
+  }
+
   .about {
     display: grid;
     grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
@@ -22,12 +27,17 @@ import { about } from '../site';
     align-items: center;
   }
 
+  .portrait {
+    max-width: 330px;
+    border-radius: 6px;
+  }
+
   .portrait img {
     display: block;
     width: 100%;
-    max-width: 380px;
     height: auto;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 5;
+    border-radius: 6px;
     object-fit: cover;
     object-position: center 20%;
     filter: saturate(0.85);
@@ -41,10 +51,20 @@ import { about } from '../site';
     gap: clamp(22px, 3vw, 36px);
   }
 
+  .text h2 {
+    font-size: clamp(32px, 3.7vw, 50px);
+    line-height: 1.14;
+  }
+
   .body {
     max-width: 52ch;
-    font-size: clamp(18px, 1.7vw, 22px);
+    font-size: clamp(16px, 1.5vw, 19px);
     line-height: 1.55;
+  }
+
+  .about-signoff {
+    color: var(--cobalt-light);
+    font-size: 13px;
   }
 
   @media (max-width: 719px) {
@@ -52,7 +72,7 @@ import { about } from '../site';
       grid-template-columns: 1fr;
     }
 
-    .portrait img {
+    .portrait {
       max-width: 240px;
     }
   }

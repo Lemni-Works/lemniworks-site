@@ -1,0 +1,83 @@
+---
+/* The Open Path entrance. Once per session on the home page, the mark draws itself in the
+   centre of the viewport, then travels into the header while the hero rises beneath it.
+   The html classes `intro` and `intro-mark` are set before first paint by Base.astro, so
+   nothing flashes; src/scripts/intro.ts runs the choreography and removes them. */
+import { MARK_PATH, MARK_VIEWBOX, MARK_STROKE } from '../mark';
+---
+
+<div class="site-intro" data-intro aria-hidden="true">
+  <svg class="intro-mark" viewBox={MARK_VIEWBOX} xmlns="http://www.w3.org/2000/svg" focusable="false">
+    <path class="intro-track" d={MARK_PATH} pathLength="1" fill="none" stroke-width={MARK_STROKE} stroke-linecap="round" stroke-linejoin="round" />
+    <path class="intro-glow" d={MARK_PATH} pathLength="1" fill="none" stroke-width={MARK_STROKE + 2} stroke-linecap="round" stroke-linejoin="round" />
+    <path class="intro-line" d={MARK_PATH} pathLength="1" fill="none" stroke-width={MARK_STROKE} stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+</div>
+
+<script>
+  import '../scripts/intro';
+</script>
+
+<style>
+  .site-intro {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    place-items: center;
+    background: var(--water);
+    pointer-events: none;
+    transition: background-color 700ms ease;
+  }
+
+  :global(html.intro) .site-intro,
+  :global(html.intro-mark) .site-intro {
+    display: grid;
+  }
+
+  .site-intro.is-clearing {
+    background: transparent;
+  }
+
+  .intro-mark {
+    display: block;
+    width: min(52vw, 380px);
+    height: auto;
+    overflow: visible;
+    transform-origin: 0 0;
+    will-change: transform;
+  }
+
+  .intro-track {
+    stroke: var(--ink);
+    opacity: 0.09;
+  }
+
+  .intro-glow,
+  .intro-line {
+    stroke-dasharray: 1 2;
+    stroke-dashoffset: 1.03;
+    animation: intro-draw 1150ms cubic-bezier(0.7, 0, 0.18, 1) 180ms forwards;
+  }
+
+  .intro-glow {
+    stroke: var(--cobalt-light);
+    filter: blur(14px);
+    opacity: 0.75;
+    transition: opacity 600ms ease;
+  }
+
+  .is-clearing .intro-glow {
+    opacity: 0;
+  }
+
+  .intro-line {
+    stroke: var(--ink);
+  }
+
+  @keyframes intro-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+</style>

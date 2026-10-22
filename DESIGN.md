@@ -2,61 +2,62 @@
 
 Written from the built site. Tokens live in `src/styles/global.css`; this file explains the decisions.
 
-## World: Black Gallery
+## World: Connected Studio
 
-Black space, white Manrope, hairlines, and real screens. The work is the only picture. Nothing has a visible container except the glass panel the contact form sits on. Dark only.
+Ink, cobalt, Manrope, precise seams, and real screens inside purposeful browser and phone frames. The thesis is that the studio's four services should be tangible: the first viewport holds a working demonstration of them, and the rest of the page is evidence. Dark only.
 
-Chosen on 2026-10-22 as round four of the redesign, after the user judged Ink in Water too abstract and asked for something minimalist with clean animations, the black space kept, and a better way to show projects.
+Chosen on 2026-10-22 as round five of the redesign, after Black Gallery read as too quiet about what the studio actually does. The user asked for a balanced mix of all four services and delegated the visual decisions.
 
 ## Colour
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--water` | #06070A | page ground |
-| `--ink` | #ECECF0 | text |
-| `--muted` | #9A9EA8 | secondary text |
-| `--dim` | #5F626B | tertiary text, labels, indices |
-| `--hair` | white at 12% | hairlines |
-| `--hair-soft` | white at 7% | quieter hairlines |
-| `--glass` | white at 3.5% | the form panel |
-| `--cobalt` | #2A5BD7 | selection |
-| `--cobalt-light` | #6B93FF | step numerals, list ticks, focus |
+| `--water` | #080b10 | page ground |
+| `--ink` | #f0f2f7 | text |
+| `--muted` | #a7aebb | secondary text |
+| `--dim` | #8f99ab | tertiary text, labels, indices |
+| `--hair` | ink at 12% | hairlines |
+| `--hair-soft` | ink at 7% | quieter hairlines |
+| `--glass` | ink at 3.5% | the form panel |
+| `--cobalt` | #2a5bd7 | the hero slab, selection, hover fills |
+| `--cobalt-light` | #6b93ff | icons, numerals, the `shop.` in the headline, the glow behind the entrance |
 
-Buttons are white pills, the one solid shape on the page. Links underline in a hairline and darken to full on hover.
+Section grounds step up from the page: services sit on #0d1016, contact on #111a2b with a #293751 seam. The hero carries a soft cobalt radial behind the demo so the slab reads as lit rather than pasted on. Buttons are ink rectangles with a 5px radius; text links carry an arrow that nudges on hover.
 
 ## Type
 
-Manrope, self-hosted variable latin subset, weight 500 for all display sizes. H1 `clamp(46px, 8.4vw, 112px)` at −0.045em, line-height 0.98. H2 `clamp(32px, 4.6vw, 60px)`. Project titles in the showcase `clamp(30px, 3.4vw, 44px)`; case-study H1 `clamp(44px, 7vw, 96px)`. Body 17px/1.55 on the system stack. Labels 12.5px tracked caps in `--dim`. Numerals tabular.
+Manrope, self-hosted variable latin subset, weight 500 for all display sizes. H1 `clamp(60px, 6.7vw, 96px)` at −0.04em, line-height 1.04. H2 `clamp(32px, 4.6vw, 60px)`. H3 `clamp(22px, 2.4vw, 30px)`. Body 17px/1.55 on the system stack; the demo's own chrome runs 10px to 12px so it reads as an interface, not copy. Labels 12.5px tracked caps in `--dim`. Numerals tabular.
 
 ## Layout
 
-1200px measure, gutters `clamp(20px, 5vw, 72px)`, sections `clamp(96px, 14vw, 180px)` apart. The hero fills the viewport with its copy at the bottom-left. Services are hairline rows. Steps are four columns, then two, then one. The header is fixed and transparent over a short scrim.
+1280px measure, gutters `clamp(20px, 5vw, 72px)`, sections `clamp(80px, 10vw, 140px)` apart. The header is fixed, frosted (72% ink with an 18px backdrop blur) and hairlined.
 
-## The showcase
+Hero: a two-column grid, copy left and the studio demo right on a cobalt slab rotated −3°, with four service doors across the lower edge. Work: the website feature in a wide card, the two apps as paired phones on tinted grounds, and the data tools in a quiet row. Services: a sticky intro beside hairline rows, each with an icon, an outcome line, the description, an inquiry link and a disclosure for upkeep. Steps: four columns, then two, then one. About: portrait and text. Contact: the glass panel.
 
-`src/components/Work.astro`. On desktop a sticky frame (76vh, top 12vh) in a 7/5 grid holds one large screen per featured project; each project's name, line and link take a viewport of scroll on the right, and the frame crossfades to that project's screen when its text crosses the middle 10% of the viewport (`src/scripts/motion.ts`). Phone screens show at natural aspect up to 76vh with a large radius; the site render fills the frame width. Below 860px the frame is hidden and each project stacks its own image above its text. Non-featured projects sit in a quiet "Also" row.
+## The studio demo
 
-Case studies live at `/work/<slug>` from `src/work.ts`, rendered by `src/layouts/CaseStudy.astro`: kind and year, title, one line, the hero screen, then Overview, What was built, Stack and What to notice in two columns, a gallery of the remaining screens, and a link to the next project.
+`src/components/StudioDemo.astro`, wired in `src/scripts/motion.ts`. Four tabs (Websites, Automation, Data, Reports). The website view is the real DineSense site capture. The automation runs a three-step example locally; the data view shows three fictional rows and downloads them as CSV; the report switches between week and month and updates both the bars and the chart's accessible description. Without JavaScript the tabs are links to the matching service rows. Nothing in the demo sends a request.
 
 ## Motion
 
-Four verbs and nothing else: rise, uncover, crossfade, travel.
+Five verbs: draw, rise, uncover, travel, settle.
 
-- Rise: `.reveal` elements fade and rise 26px into place when they enter the viewport, staggered with `--d`.
-- Uncover: `.img-reveal` images are hidden by a page-coloured cover that slides up, while the image settles from 1.06 to 1. A sliding cover is used rather than `clip-path` because a clipped element reports as never intersecting.
-- Crossfade: the showcase frame swaps screens with opacity and a 0.97 scale.
-- Travel: Astro view transitions carry the showcase screen (`shot-<slug>`) and the title (`title-<slug>`) into the case-study page as shared elements; the rest of the page crossfades in 420ms.
+- Draw: the entrance. Once per session on the home page, `src/components/Intro.astro` covers the viewport in the page colour and the Open Path mark draws itself along its path (1150ms, pathLength-normalised dash, a blurred cobalt copy underneath as the glow). It then travels, by a FLIP transform, into the header's brand slot (900ms) while the backdrop clears and the hero rises in with a stagger; when it lands, the wordmark wipes in beside it. The decision to play it is made in the head of `src/layouts/Base.astro` before first paint, so nothing flashes. Any input skips it, reduced motion never shows it, and a 3.4s timer and the router's before-swap hook guarantee the page is never left covered. The footer carries the same signature at 56px, drawing itself when it enters view.
+- Rise: `.reveal` elements fade and lift 22px into place when they enter the viewport, staggered with `--d`. The hidden state only exists under `html.js`, so content is never missing without JavaScript; without IntersectionObserver everything is marked in at once.
+- Uncover: `.img-reveal` images are hidden by a page-coloured cover that shrinks upward while the image settles from 1.06 to 1.
+- Travel: Astro view transitions carry a project's screen (`shot-<slug>`) and title (`title-<slug>`) into its case study; the rest of the page crossfades in 420ms.
+- Settle: demo panels arrive with a 7px lift, the report bars scale to their new values, the workflow connectors pulse while a run is in progress.
 
-Easing `cubic-bezier(0.16, 1, 0.3, 1)`; feedback 150ms, state 280ms, reveals 900–1400ms. Reduced motion shows finished states. Nothing slides sideways, nothing bounces.
+Easing `cubic-bezier(0.16, 1, 0.3, 1)` for everything that moves into place; the draw uses `cubic-bezier(0.7, 0, 0.18, 1)` so it accelerates through the crossing. Feedback 150ms, state 280ms, reveals 900–1400ms. Reduced motion shows finished states.
 
 ## Browser surfaces
 
-Selection is cobalt on white. Caret is cobalt-light. Focus rings are a 1.5px cobalt-light outline at 4px offset. Form fields are underline-only on the glass panel; the select menu is dark.
+Selection is cobalt on white. Caret is cobalt-light. Focus rings are a 1.5px cobalt-light outline at 4px offset. Form fields are underline-only on the glass panel; the select menu is dark. The header blur means whatever scrolls beneath it stays legible.
 
 ## Voice
 
-First person singular, no exclamation marks, numbers over adjectives, name the thing. Copy lives in `src/site.ts`; case-study copy in `src/work.ts`, drafted from each project's own repository and never from imagination.
+First person singular, no exclamation marks, numbers over adjectives, name the thing. Headlines state outcomes (`What needs to work better?`, `A clear path to done.`, `Let’s put it to work.`). Copy lives in `src/site.ts`; case-study copy in `src/work.ts`, drafted from each project's own repository and never from imagination. Every example in the demo is labelled as one.
 
 ## Mark
 
-The final Open Path identity in `src/mark.ts`; the header uses the outlined white wordmark from `public/logo-wordmark-white.svg`; icons, manifest and social images in `public/` come from the identity package.
+The Open Path identity in `src/mark.ts`: a continuous open lemniscate, round terminals, larger right lobe. The header uses the outlined white wordmark from `public/logo-wordmark-white.svg`; icons, manifest and social images in `public/` come from the identity package. The mark is drawn with `pathLength="1"` everywhere so the same dash animation serves the entrance, the footer and the form's sent state.

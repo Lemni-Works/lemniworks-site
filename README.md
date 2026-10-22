@@ -38,11 +38,12 @@ Custom domains: `lemniworks.com` and `www.lemniworks.com`. Canonical URLs use th
 src/site.ts              copy, prices, links: every placeholder is here
 src/mark.ts              the lemniscate path data shared by all marks
 src/work.ts              case studies: copy, stack, images, featured flag
-src/scripts/motion.ts    reveals, the pinned showcase, nav marker, sent handler
+src/scripts/motion.ts    service demos, reveals, nav marker, sent handler
+src/scripts/intro.ts     the entrance: the mark draws itself, then travels into the header
 src/styles/global.css    design tokens (dark only), base type, controls
 src/layouts/Base.astro   head, meta, Open Graph, direction contract
 src/layouts/CaseStudy.astro   layout for /work/<slug>
-src/components/          Header, Hero, Services, Steps, Work, About, ContactForm, Footer, Mark
+src/components/          Intro, Header, Hero, StudioDemo, Services, Steps, Work, About, ContactForm, Footer, Mark, Arrow
 src/pages/index.astro    the one-page pitch
 src/pages/privacy.astro  privacy notice
 public/                  favicon, logo files, og-image, robots.txt, the Manrope subset
@@ -50,13 +51,23 @@ public/                  favicon, logo files, og-image, robots.txt, the Manrope 
 
 To add a case study, add an entry to `src/work.ts` and drop its images in `public/work/`.
 
-## The showcase and case studies
+## Connected Studio theme
 
-Projects live in `src/work.ts`. Each has a slug, copy, a stack list and images, and `featured: true` puts it in the pinned showcase on the home page. Every project gets a page at `/work/<slug>` from `src/pages/work/[slug].astro` and `src/layouts/CaseStudy.astro`. Clicking a project carries its screen and title into the page with a view transition. Motion lives in `src/scripts/motion.ts` and runs again after every client-side navigation.
+The homepage opens, once per browser session, with the Open Path mark drawing itself and travelling into the header while the hero rises (`src/components/Intro.astro`, `src/scripts/intro.ts`). The decision to play it is made before first paint in `src/layouts/Base.astro`; any click, key or scroll skips it, reduced motion never shows it, and it does not replay on client-side navigation. Clear `sessionStorage` to see it again.
+
+The homepage opens with four interactive service demonstrations. The website view uses the real DineSense site capture; the automation, scraper output, and report use explicitly labeled examples. The workflow runs locally, the CSV download contains the visible sample rows, and report period buttons update both the bars and their accessible description. Nothing in a demo sends requests or submits an inquiry.
+
+The selectors support mouse, touch, arrow keys, Home, and End. Without JavaScript, they link to the corresponding service descriptions. Content remains visible by default, reduced motion removes animation, and page-owned observers, listeners, and timers are cleaned up during Astro navigation.
+
+`src/components/Work.astro` composes the website feature, two app presentations, and the data-tools link using the projects in `src/work.ts`. Every project gets a page at `/work/<slug>` from `src/pages/work/[slug].astro` and `src/layouts/CaseStudy.astro`. Shared image and title transitions carry into the case studies. Update the homepage composition when changing the selected projects.
+
+Service inquiry links open an email with the service in the subject. The main contact section retains the configured Worker form or the email fallback described above. No contact-backend configuration is changed by the theme.
 
 ## Work images
 
-`public/work/` holds real captures copied on 2026-10-21: DineSense app previews from the DineSense-Website project, a desktop render of dinesense.app, and a Programmed workout screen from the Portfolio project. Programmed is labelled in development; remove it from `work` in `src/site.ts` if it should not be public yet. Refresh the captures when those apps change.
+`public/work/` holds real captures copied on 2026-10-21: DineSense app previews from the DineSense-Website project, a desktop render of dinesense.app, and a Programmed workout screen from the Portfolio project. Programmed is labelled in development; remove it from the homepage selection in `src/components/Work.astro` if it should not be public yet. Refresh the captures when those apps change.
+
+Existing project images are reused unchanged. The adjacent `.json` files record their provenance.
 
 ## Identity
 
@@ -76,7 +87,7 @@ Everything below is in `src/site.ts` unless noted.
 - [ ] Build the contact Worker, configure `PUBLIC_WORKER_ORIGIN`, redeploy, and verify real delivery
 - [x] `hello@lemniworks.com` receives email (confirmed by the owner)
 - [ ] Service names, descriptions and entry-offer names are drafts to review, including the new websites and e-commerce service
-- [ ] Programmed is shown as an in-development app in the work section; remove it from `work` in `src/site.ts` if it should not be public yet
+- [ ] Programmed is shown as an in-development app in the work section; remove it from the homepage selection in `src/components/Work.astro` if it should not be public yet
 - [ ] Work images were copied from the DineSense-Website and Portfolio projects on 2026-10-21; refresh them when those apps change
 - [x] Privacy commitments confirmed: inquiries that do not become work are deleted within 12 months; deletion requests are fulfilled within one week
 - [x] Final outlined logo, optical favicons and social images integrated
