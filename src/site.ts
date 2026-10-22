@@ -1,9 +1,7 @@
-// Single place for values the spec marks as placeholders.
-// Everything here is listed in README.md under "Placeholders".
+// Shared site copy, links and deployment configuration.
 
 export const site = {
   name: 'Lemni Works',
-  // PLACEHOLDER: confirm the domain once bought.
   domain: 'lemniworks.com',
   // PLACEHOLDER: the Worker that receives the contact form.
   workerOrigin: import.meta.env.PUBLIC_WORKER_ORIGIN ?? '{WORKER_ORIGIN}',
@@ -17,6 +15,11 @@ export const site = {
 
 export const email = `hello@${site.domain}`;
 
+// A placeholder must never leave visitors with a form that cannot deliver.
+export const contactEndpoint = /^https:\/\/[^/{}\s]+\/?$/.test(site.workerOrigin)
+  ? `${site.workerOrigin.replace(/\/$/, '')}/api/contact`
+  : null;
+
 export const services = [
   {
     slug: 'scraping',
@@ -24,8 +27,8 @@ export const services = [
     description:
       'A scraper that runs on a schedule and lands clean rows in a spreadsheet, a database or a file you can open. Built to survive small changes to the site it reads.',
     offer: 'Starter scraper',
-    price: '$TBD', // PLACEHOLDER
-    upkeep: 'Optional upkeep plan from $TBD a month: I fix it when the source site changes.', // PLACEHOLDER price
+    price: 'Quoted per project',
+    upkeep: 'Optional upkeep, quoted separately: I fix it when the source site changes.',
   },
   {
     slug: 'automation',
@@ -33,8 +36,8 @@ export const services = [
     description:
       'Two tools you already pay for, made to talk to each other without someone copying and pasting. Orders into the sheet, form entries into the CRM, the weekly email that writes itself.',
     offer: 'First automation',
-    price: '$TBD', // PLACEHOLDER
-    upkeep: 'Optional upkeep plan from $TBD a month: monitoring and fixes when an API changes.', // PLACEHOLDER price
+    price: 'Quoted per project',
+    upkeep: 'Optional upkeep, quoted separately: monitoring and fixes when an API changes.',
   },
   {
     slug: 'reports',
@@ -42,8 +45,8 @@ export const services = [
     description:
       'The numbers you keep rebuilding by hand, pulled from the source and laid out once. A page or a scheduled PDF, with the queries behind it handed over.',
     offer: 'One-page report',
-    price: '$TBD', // PLACEHOLDER
-    upkeep: 'Optional upkeep plan from $TBD a month: new fields and sources as you need them.', // PLACEHOLDER price
+    price: 'Quoted per project',
+    upkeep: 'Optional upkeep, quoted separately: new fields and sources as you need them.',
   },
 ] as const;
 
@@ -53,7 +56,9 @@ export const notOffered =
 export const steps = [
   {
     title: 'Send the problem',
-    body: 'Use the form below. A few sentences and a rough budget are enough. No call needed to start.',
+    body: contactEndpoint
+      ? 'Use the form below. A few sentences and a rough budget are enough. No call needed to start.'
+      : 'Email a few sentences about the problem and your rough budget. No call needed to start.',
   },
   {
     title: 'Written quote within two business days',
@@ -73,17 +78,16 @@ export const work = [
   {
     name: 'DineSense',
     kind: 'iOS app · beta',
-    // PLACEHOLDER: one-line description.
-    line: '[DineSense one-line description TBD]',
-    linkLabel: 'TestFlight',
-    href: '#', // PLACEHOLDER: App Store or TestFlight link
+    line: 'An iPhone app that helps you choose restaurant dishes around your meal targets and adjust your order.',
+    linkLabel: 'Explore DineSense',
+    href: 'https://dinesense.app/',
   },
   {
     name: 'Data tools on Apify',
     kind: 'Public Actors',
-    line: 'Scrapers anyone can run from the Apify store. Each listing links back here for a custom version.',
-    linkLabel: 'Apify store',
-    href: '#', // PLACEHOLDER: Apify creator or Actor link
+    line: 'Data tools you can run from the Apify store, including bulk keyword volume, difficulty and search intent.',
+    linkLabel: 'View on Apify',
+    href: 'https://apify.com/liquify/keyword-search-volume',
   },
 ] as const;
 

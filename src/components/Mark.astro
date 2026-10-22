@@ -1,15 +1,15 @@
 ---
-import { MARK_PATH, MARK_VIEWBOX } from "../mark";
+import { MARK_PATH, MARK_VIEWBOX, MARK_STROKE } from "../mark";
 
 interface Props {
   class?: string;
   /** Accessible name. Omit to mark decorative. */
   title?: string;
-  /** Stroke width in viewBox units (1/8 of the mark height ≈ 10). */
+  /** Stroke width in viewBox units; the final identity uses 14. */
   stroke?: number;
   id?: string;
 }
-const { class: cls = '', title, stroke = 10, id } = Astro.props;
+const { class: cls = '', title, stroke = MARK_STROKE, id } = Astro.props;
 ---
 
 <svg

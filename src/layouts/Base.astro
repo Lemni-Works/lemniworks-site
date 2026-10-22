@@ -33,9 +33,10 @@ const og = new URL('/og-image.png', canonical);
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfbfc" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121317" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="preload" href="/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="generator" content={Astro.generator} />
@@ -51,7 +52,7 @@ const og = new URL('/og-image.png', canonical);
       Motion material is one idea everywhere: a stroke drawing itself, and data moving along it.
       STORY: "This person builds precise, finished things and will quote me a number." Then: send the form.
       FIRST VIEWPORT: header hairline; the open lemniscate at 640px on faint dot grid, drawn in once, with
-      data particles entering lower-left, pulsing at the crossing, leaving at the upper-right gap;
+      data particles following the final Open Path geometry and leaving through its upper-right gap;
       H1 below-left, 40-word lede, one blue button, one quiet line about reply time.
       FORM: single column, 860px measure, cards only where the brief asks for cards. Seed: lemni-bench-01.
       FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review,

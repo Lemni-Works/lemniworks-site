@@ -7,7 +7,10 @@ import { site } from '../site';
   <div class="wrap header-inner">
     <a class="brand" href="/" aria-label={`${site.name}, home`}>
       <Mark class="brand-mark" />
-      <span class="brand-name">Lemni Works</span>
+      <picture class="brand-name" aria-hidden="true">
+        <source srcset="/logo-wordmark-white.svg" media="(prefers-color-scheme: dark)" />
+        <img src="/logo-wordmark.svg" alt="" width="809" height="115" />
+      </picture>
     </a>
     <nav aria-label="Primary">
       <a href="#services">Services</a>
@@ -46,13 +49,13 @@ import { site } from '../site';
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
+    gap: 8.4px;
     color: var(--ink);
     text-decoration: none;
   }
 
   .brand :global(.brand-mark) {
-    height: 22px;
+    height: 18px;
     width: auto;
     color: var(--ink);
   }
@@ -72,35 +75,37 @@ import { site } from '../site';
   }
 
   .brand-name {
-    font: 600 17px/1 var(--font-display);
-    letter-spacing: -0.02em;
-    white-space: nowrap;
+    display: block;
+    flex: none;
+    width: 119.4px;
     transition: transform 900ms var(--ease-out);
+  }
+
+  .brand-name img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   /* While the big mark is on screen the small one is absent; the name sits at the gutter edge. */
   @media (min-width: 720px) {
     :global(html.js.hero-visible) .brand-name {
-      transform: translateX(-61px);
+      transform: translateX(-43.2px);
       transition-duration: 300ms;
     }
   }
 
   @media (max-width: 719px) {
     .brand {
-      gap: 8px;
+      gap: 7.3px;
     }
 
     .brand-name {
-      font-size: 16px;
+      width: 104px;
     }
 
-    nav {
-      gap: 12px;
-    }
-
-    nav a {
-      font-size: 14px;
+    .brand :global(.brand-mark) {
+      height: 15.6px;
     }
   }
 
@@ -139,5 +144,11 @@ import { site } from '../site';
   nav a:hover::after,
   nav a:focus-visible::after {
     transform: scaleX(1);
+  }
+
+  @media (max-width: 719px) {
+    .header-inner { gap: 12px; }
+    nav { gap: 12px; }
+    nav a { font-size: 14px; }
   }
 </style>

@@ -1,5 +1,5 @@
 ---
-import { MARK_PATH, MARK_VIEWBOX } from '../mark';
+import { MARK_PATH, MARK_VIEWBOX, MARK_STROKE } from '../mark';
 import { site } from '../site';
 ---
 
@@ -24,17 +24,17 @@ import { site } from '../site';
             <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
           </radialGradient>
           <mask id="grid-mask">
-            <rect x="-114" y="-48" width="236" height="96" fill="url(#grid-fade)"></rect>
+            <rect width="232" height="120" fill="url(#grid-fade)"></rect>
           </mask>
         </defs>
-        <rect class="grid" x="-114" y="-48" width="236" height="96" fill="url(#grid-dots)" mask="url(#grid-mask)"></rect>
+        <rect class="grid" width="232" height="120" fill="url(#grid-dots)" mask="url(#grid-mask)"></rect>
         <path
           class="mark-stroke"
           d={MARK_PATH}
           pathLength="1"
           fill="none"
           stroke="currentColor"
-          stroke-width="10"
+          stroke-width={MARK_STROKE}
           stroke-linecap="round"
           stroke-linejoin="round"
         ></path>
@@ -251,7 +251,7 @@ import { site } from '../site';
         } else if (q.p > 1) {
           // ...and leaves through the gap, fading as it goes.
           const k = (q.p - 1) / TAIL;
-          const d = k * L * 0.6;
+          const d = k * 24;
           x = end.x + dirOut.x * d;
           y = end.y + dirOut.y * d;
           o = 1 - k;

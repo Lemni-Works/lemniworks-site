@@ -8,13 +8,13 @@ A one-person engineering shop's workbench: drafting-paper white or lamp-black, o
 
 ## Mark
 
-An open, asymmetric lemniscate drawn as one monoline stroke with round terminals. Enters lower-left, crosses once, exits upper-right leaving a gap on the right lobe. The right lobe is 8% larger. Stroke weight is 1/8 of the mark height. Path data lives in `src/mark.ts` and is generated from the Bernoulli lemniscate (a = 100, t from π/2 + 0.16 to 5π/2 − 0.62).
+The final Open Path identity is an open, asymmetric lemniscate drawn as one continuous cubic path with round terminals and a larger right lobe. Both terminals frame an opening at the upper right. Path data lives in `src/mark.ts`; the standard stroke is 14 units in a `0 0 232 120` viewBox. The favicon uses an optical version with an 18-unit stroke and wider opening so the gap remains visible at 16 px.
 
 The mark is always `--ink` or `--accent`, never both. The data particles in the hero are not part of the mark.
 
 Files in `public/`: `logo-mark.svg`, `logo-mark-white.svg`, `logo-wordmark.svg`, `logo-wordmark-white.svg`, `logo-lockup.svg`, `logo-lockup-white.svg`, `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`, `og-image.png`.
 
-Lockup: mark at cap height, gap equal to four stroke widths. The wordmark is Manrope 600, tracking −0.02em, both words the same weight and colour.
+Lockup: mark at cap height, gap equal to four stroke widths. The wordmark is Manrope 500, tracking −0.005em, both words the same weight and colour. Production SVG lettering is outlined; the header uses the final outlined wordmark too.
 
 ## Colour
 
@@ -32,7 +32,7 @@ Derived: `--accent-soft` (accent at 12–16%) for focus rings and pulses, `--acc
 
 ## Type
 
-Display: Manrope, self-hosted variable latin subset (24 KB), weight 600 for headings and the wordmark. Body: the system stack. Sizes: H1 `clamp(34px, 5.5vw, 52px)` at −0.025em; H2 26px; H3 18px; body 17px/1.55; small 14.5px. Headings are 600, never 700. Prices and dates use tabular numerals.
+Display: Manrope, self-hosted variable latin subset (24 KB), weight 600 for headings and 500 for the outlined wordmark. Body: the system stack. Sizes: H1 `clamp(34px, 5.5vw, 52px)` at −0.025em; H2 26px; H3 18px; body 17px/1.55; small 14.5px. Headings are 600, never 700. Prices and dates use tabular numerals.
 
 ## Layout
 

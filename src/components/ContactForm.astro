@@ -1,7 +1,6 @@
 ---
 import Mark from './Mark.astro';
-import { site, email, budgets } from '../site';
-const action = `${site.workerOrigin}/api/contact`;
+import { site, email, budgets, contactEndpoint } from '../site';
 ---
 
 <section id="contact" class="section" aria-labelledby="contact-title">
@@ -11,15 +10,15 @@ const action = `${site.workerOrigin}/api/contact`;
       <p>Tell me what you need in your own words. I read every message myself.</p>
     </div>
 
-    <div id="sent" class="card sent" role="status" hidden>
+    {contactEndpoint && <div id="sent" class="card sent" role="status" hidden>
       <Mark class="sent-mark" />
       <div>
         <p class="sent-title">Got it.</p>
         <p class="muted">I will reply within {site.replyWindow}.</p>
       </div>
-    </div>
+    </div>}
 
-    <form class="card form" method="post" action={action}>
+    {contactEndpoint ? <form class="card form" method="post" action={contactEndpoint}>
       <div class="row two">
         <div class="field">
           <label for="f-name">Name <span class="muted">(optional)</span></label>
@@ -61,9 +60,12 @@ const action = `${site.workerOrigin}/api/contact`;
           </svg>
         </button>
       </div>
-    </form>
+    </form> : <div class="card form">
+      <p>Email a few sentences about the problem and your rough budget. I reply within {site.replyWindow}.</p>
+      <div class="actions"><a class="btn" href={`mailto:${email}`}>Email {email}</a></div>
+    </div>}
 
-    <p class="small muted alt">Prefer email? <a href={`mailto:${email}`}>{email}</a></p>
+    {contactEndpoint && <p class="small muted alt">Prefer email? <a href={`mailto:${email}`}>{email}</a></p>}
   </div>
 </section>
 
