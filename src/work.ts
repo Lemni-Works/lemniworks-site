@@ -22,7 +22,7 @@ export const projects: Project[] = [
   {
     slug: 'dinesense',
     name: 'DineSense',
-    kind: 'iOS app · beta',
+    kind: 'iOS app · on the App Store',
     year: '2026',
     line: 'Turns one meal’s numbers into the exact order at a place nearby.',
     summary:
@@ -48,7 +48,7 @@ export const projects: Project[] = [
       { src: '/work/dinesense-lockscreen.webp', alt: 'DineSense: the order kept on the Lock Screen', w: 880, h: 1912 },
       { src: '/work/dinesense-source.webp', alt: 'DineSense: the published source behind a dish’s figures', w: 880, h: 1912 },
     ],
-    link: { label: 'Explore DineSense', href: 'https://dinesense.app/' },
+    link: { label: 'Get it on the App Store', href: 'https://apps.apple.com/us/app/dinesense/id6816440061' },
     featured: true,
   },
   {

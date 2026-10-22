@@ -27,7 +27,7 @@ One builder who ships the whole thing and hands it over: the store, the automati
 - Visitors compare against agency sites, Upwork profiles and template-shop storefronts.
 - First contact is the form; calls are by appointment, evenings Central.
 - Quotes are fixed price with delivery date, inclusions and exclusions. Payment on delivery. Optional monthly upkeep plans.
-- Shipped work: DineSense (iOS app, beta), public data tools on the Apify store, and websites. Custom mobile apps are not offered as a service.
+- Shipped work: DineSense (iOS app, on the App Store since 2026-10-22), public data tools on the Apify store, and websites. Custom mobile apps are not offered as a service.
 - Not offered: custom mobile apps, Microsoft 365 / SharePoint, architecture and construction software.
 
 ## Capabilities and Constraints
