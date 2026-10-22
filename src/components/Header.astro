@@ -10,9 +10,9 @@ import { site } from '../site';
       <img class="brand-name" src="/logo-wordmark-white.svg" alt="" width="809" height="115" />
     </a>
     <nav aria-label="Primary">
-      <a href="#services">Services</a>
-      <a href="#work">Work</a>
-      <a href="#contact">Contact</a>
+      <a href="/#services">Services</a>
+      <a href="/#work">Work</a>
+      <a href="/#contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -111,20 +111,3 @@ import { site } from '../site';
   }
 </style>
 
-<script>
-  const links = [...document.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]')];
-  const targets = links.map((l) => document.getElementById(l.hash.slice(1))).filter(Boolean) as HTMLElement[];
-  if (targets.length) {
-    const ratios = new Map<Element, number>();
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) ratios.set(e.target, e.isIntersecting ? e.intersectionRatio : 0);
-        let best: Element | null = null, bestR = 0;
-        for (const [el, r] of ratios) if (r > bestR) { bestR = r; best = el; }
-        for (const l of links) l.classList.toggle('is-current', !!best && l.hash.slice(1) === (best as HTMLElement).id);
-      },
-      { threshold: [0, 0.2, 0.4, 0.6], rootMargin: '-30% 0px -50% 0px' }
-    );
-    targets.forEach((t) => io.observe(t));
-  }
-</script>

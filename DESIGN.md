@@ -2,24 +2,11 @@
 
 Written from the built site. Tokens live in `src/styles/global.css`; this file explains the decisions.
 
-## World: Ink in Water
+## World: Black Gallery
 
-A dark tank. Cobalt ink diffuses through black water in a real-time fluid simulation, and the page sits on the glass above it. Nothing on the page has a visible container except the glass panel the form sits on. Hierarchy comes from scale and space, never from boxes. Dark only.
+Black space, white Manrope, hairlines, and real screens. The work is the only picture. Nothing has a visible container except the glass panel the contact form sits on. Dark only.
 
-Chosen on 2026-10-21 after a concept round (seed 61058b97): two dealt hands failed the qualities the user pinned (fluid and organic, technical wow, luxury minimal), so this direction was derived from those qualities directly.
-
-## The tank
-
-`src/scripts/fluid.ts` is a compact stable-fluids solver on WebGL2: curl and vorticity confinement, divergence, twenty Jacobi pressure iterations, gradient subtraction, then advection of velocity and dye. Simulation grid 128 (96 on phones), dye 1024 (512 on phones), half-float textures. `src/components/Tank.astro` drives it:
-
-- At load, one injection of ink traces the lemniscate from `src/mark.ts`, then dissolves.
-- The pointer stirs the ink; speed sets how much ink it leaves.
-- Scrolling pushes the ink vertically.
-- A hovered service row breathes a little ink behind it (`data-ink`).
-- A faint idle splat every 2.2 seconds keeps the water alive.
-- It pauses when the tab is hidden. Without WebGL2, or with reduced motion, a still CSS version of the ink shows instead (`html.no-fluid`).
-
-Ink is always the one colour. The display shader rolls dense ink off with a soft shoulder so it stays cobalt rather than blowing out to white.
+Chosen on 2026-10-22 as round four of the redesign, after the user judged Ink in Water too abstract and asked for something minimalist with clean animations, the black space kept, and a better way to show projects.
 
 ## Colour
 
@@ -28,26 +15,39 @@ Ink is always the one colour. The display shader rolls dense ink off with a soft
 | `--water` | #06070A | page ground |
 | `--ink` | #ECECF0 | text |
 | `--muted` | #9A9EA8 | secondary text |
-| `--dim` | #5F626B | tertiary text, labels |
+| `--dim` | #5F626B | tertiary text, labels, indices |
 | `--hair` | white at 12% | hairlines |
 | `--hair-soft` | white at 7% | quieter hairlines |
 | `--glass` | white at 3.5% | the form panel |
-| `--cobalt` | #2A5BD7 | the ink; selection |
-| `--cobalt-light` | #6B93FF | ink highlights, step numerals, focus |
+| `--cobalt` | #2A5BD7 | selection |
+| `--cobalt-light` | #6B93FF | step numerals, list ticks, focus |
 
-Buttons are white on the water, the one solid shape on the page. Links underline in a hairline and darken to full on hover.
+Buttons are white pills, the one solid shape on the page. Links underline in a hairline and darken to full on hover.
 
 ## Type
 
-Manrope, self-hosted variable latin subset, weight 500 for all display sizes. H1 `clamp(46px, 8.4vw, 112px)` at −0.045em and line-height 0.98, the label-on-glass scale. H2 `clamp(32px, 4.6vw, 60px)`. H3 `clamp(22px, 2.4vw, 30px)`. Body 17px/1.55 on the system stack. Small labels are 12.5px tracked caps in `--dim`. Prices and dates use tabular numerals.
+Manrope, self-hosted variable latin subset, weight 500 for all display sizes. H1 `clamp(46px, 8.4vw, 112px)` at −0.045em, line-height 0.98. H2 `clamp(32px, 4.6vw, 60px)`. Project titles in the showcase `clamp(30px, 3.4vw, 44px)`; case-study H1 `clamp(44px, 7vw, 96px)`. Body 17px/1.55 on the system stack. Labels 12.5px tracked caps in `--dim`. Numerals tabular.
 
 ## Layout
 
-1200px measure, gutters `clamp(20px, 5vw, 72px)`, sections `clamp(96px, 14vw, 180px)` apart. The hero fills the viewport and sits its copy at the bottom-left. Services are four rows separated by hairlines with the index, the description and the offer in three columns. Steps are four columns on desktop, two on tablets, one on phones. Work shows real screens large with a thin wet rim of light and a deep shadow, captions beneath. The header is fixed and transparent over a short scrim.
+1200px measure, gutters `clamp(20px, 5vw, 72px)`, sections `clamp(96px, 14vw, 180px)` apart. The hero fills the viewport with its copy at the bottom-left. Services are hairline rows. Steps are four columns, then two, then one. The header is fixed and transparent over a short scrim.
+
+## The showcase
+
+`src/components/Work.astro`. On desktop a sticky frame (76vh, top 12vh) in a 7/5 grid holds one large screen per featured project; each project's name, line and link take a viewport of scroll on the right, and the frame crossfades to that project's screen when its text crosses the middle 10% of the viewport (`src/scripts/motion.ts`). Phone screens show at natural aspect up to 76vh with a large radius; the site render fills the frame width. Below 860px the frame is hidden and each project stacks its own image above its text. Non-featured projects sit in a quiet "Also" row.
+
+Case studies live at `/work/<slug>` from `src/work.ts`, rendered by `src/layouts/CaseStudy.astro`: kind and year, title, one line, the hero screen, then Overview, What was built, Stack and What to notice in two columns, a gallery of the remaining screens, and a link to the next project.
 
 ## Motion
 
-Diffusion is the only material. The fluid carries the hero; everything else surfaces from blur as it enters the viewport (`.surface`, CSS scroll-driven, static fallback) and nothing slides in from the side. Easing `cubic-bezier(0.16, 1, 0.3, 1)`; feedback 150ms, state 280ms, surfacing 900ms. Reduced motion shows finished states and the still ink.
+Four verbs and nothing else: rise, uncover, crossfade, travel.
+
+- Rise: `.reveal` elements fade and rise 26px into place when they enter the viewport, staggered with `--d`.
+- Uncover: `.img-reveal` images are hidden by a page-coloured cover that slides up, while the image settles from 1.06 to 1. A sliding cover is used rather than `clip-path` because a clipped element reports as never intersecting.
+- Crossfade: the showcase frame swaps screens with opacity and a 0.97 scale.
+- Travel: Astro view transitions carry the showcase screen (`shot-<slug>`) and the title (`title-<slug>`) into the case-study page as shared elements; the rest of the page crossfades in 420ms.
+
+Easing `cubic-bezier(0.16, 1, 0.3, 1)`; feedback 150ms, state 280ms, reveals 900–1400ms. Reduced motion shows finished states. Nothing slides sideways, nothing bounces.
 
 ## Browser surfaces
 
@@ -55,8 +55,8 @@ Selection is cobalt on white. Caret is cobalt-light. Focus rings are a 1.5px cob
 
 ## Voice
 
-First person singular, no exclamation marks, numbers over adjectives, name the thing. Copy lives in `src/site.ts`.
+First person singular, no exclamation marks, numbers over adjectives, name the thing. Copy lives in `src/site.ts`; case-study copy in `src/work.ts`, drafted from each project's own repository and never from imagination.
 
 ## Mark
 
-The final Open Path identity: a continuous cubic-curve lemniscate with round terminals and an open right lobe, stroke 14 on a 232×120 box, in `src/mark.ts`. The header uses the outlined white wordmark from `public/logo-wordmark-white.svg`; icons, manifest and social images in `public/` come from the identity package.
+The final Open Path identity in `src/mark.ts`; the header uses the outlined white wordmark from `public/logo-wordmark-white.svg`; icons, manifest and social images in `public/` come from the identity package.

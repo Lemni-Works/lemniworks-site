@@ -4,13 +4,13 @@ import { steps } from '../site';
 
 <section id="how" class="section" aria-labelledby="how-title">
   <div class="wrap">
-    <div class="section-head surface">
+    <div class="section-head reveal">
       <h2 id="how-title">How it works</h2>
     </div>
     <ol class="steps">
       {
         steps.map((s, i) => (
-          <li class="step surface">
+          <li class="step reveal">
             <span class="step-n num">{String(i + 1).padStart(2, '0')}</span>
             <h3>{s.title}</h3>
             <p class="muted">{s.body}</p>

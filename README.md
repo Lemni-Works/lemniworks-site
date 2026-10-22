@@ -37,22 +37,22 @@ Custom domains: `lemniworks.com` and `www.lemniworks.com`. Canonical URLs use th
 ```
 src/site.ts              copy, prices, links: every placeholder is here
 src/mark.ts              the lemniscate path data shared by all marks
-src/scripts/fluid.ts     the WebGL2 ink simulation
-src/components/Tank.astro  drives the ink: load injection, pointer, scroll, hover
+src/work.ts              case studies: copy, stack, images, featured flag
+src/scripts/motion.ts    reveals, the pinned showcase, nav marker, sent handler
 src/styles/global.css    design tokens (dark only), base type, controls
 src/layouts/Base.astro   head, meta, Open Graph, direction contract
-src/layouts/CaseStudy.astro   layout for /work/<slug>; no pages ship yet
+src/layouts/CaseStudy.astro   layout for /work/<slug>
 src/components/          Header, Hero, Services, Steps, Work, About, ContactForm, Footer, Mark
 src/pages/index.astro    the one-page pitch
 src/pages/privacy.astro  privacy notice
 public/                  favicon, logo files, og-image, robots.txt, the Manrope subset
 ```
 
-To add a case study, create `src/pages/work/<slug>.astro` that wraps its content in `CaseStudy.astro`.
+To add a case study, add an entry to `src/work.ts` and drop its images in `public/work/`.
 
-## The ink
+## The showcase and case studies
 
-The page sits over a WebGL2 fluid simulation (`src/scripts/fluid.ts`, driven by `src/components/Tank.astro`). One injection of ink draws the lemniscate at load and dissolves; the pointer stirs it, scrolling pushes it, hovered service rows breathe a little ink. Without WebGL2 or with reduced motion a still CSS version shows instead. See DESIGN.md for the parameters.
+Projects live in `src/work.ts`. Each has a slug, copy, a stack list and images, and `featured: true` puts it in the pinned showcase on the home page. Every project gets a page at `/work/<slug>` from `src/pages/work/[slug].astro` and `src/layouts/CaseStudy.astro`. Clicking a project carries its screen and title into the page with a view transition. Motion lives in `src/scripts/motion.ts` and runs again after every client-side navigation.
 
 ## Work images
 
@@ -63,6 +63,8 @@ The page sits over a WebGL2 fluid simulation (`src/scripts/fluid.ts`, driven by 
 The final Open Path package replaces the original approximation. The mark has a 14-unit stroke and a `0 0 232 120` viewBox. The Manrope 500 wordmark is outlined in the SVG exports, including the header. The favicon has its own wider-gap, 18-unit optical variant. Public assets include light/dark and white variants, 16/32/48 PNG and ICO favicons, Apple/Android icons, and 1200×630 social images. The font license is in `public/fonts/OFL-Manrope.txt`.
 
 ## Remaining launch decisions
+
+- The Apify listing URL in `src/work.ts` returned 404 on 2026-10-22; confirm the live Actor link before relying on it.
 
 Everything below is in `src/site.ts` unless noted.
 

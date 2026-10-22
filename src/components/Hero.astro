@@ -5,9 +5,9 @@ import { hero, services } from '../site';
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero-inner">
     <div class="hero-copy">
-      <h1 id="hero-title">{hero.headline}</h1>
-      <p class="lede">{hero.lede}</p>
-      <div class="hero-cta">
+      <h1 id="hero-title" class="reveal">{hero.headline}</h1>
+      <p class="lede reveal" style="--d: 120ms">{hero.lede}</p>
+      <div class="hero-cta reveal" style="--d: 240ms">
         <a class="btn" href="#contact">
           {hero.cta}
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
@@ -15,7 +15,7 @@ import { hero, services } from '../site';
         <p class="small muted note">{hero.note}</p>
       </div>
     </div>
-    <ul class="doors" aria-label="Services">
+    <ul class="doors reveal" style="--d: 360ms" aria-label="Services">
       {services.map((s) => <li><a href={`#svc-${s.slug}`}>{s.short}</a></li>)}
     </ul>
   </div>
@@ -69,9 +69,9 @@ import { hero, services } from '../site';
     margin: 0;
     padding: 24px 0 0;
     border-top: 1px solid var(--hair);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 40px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px 24px;
   }
 
   .doors a {
@@ -91,7 +91,7 @@ import { hero, services } from '../site';
     }
 
     .doors {
-      flex-direction: column;
+      grid-template-columns: 1fr;
       gap: 10px;
     }
   }

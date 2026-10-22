@@ -98,42 +98,6 @@ export const steps = [
   },
 ] as const;
 
-export const work = {
-  dinesense: {
-    name: 'DineSense',
-    kind: 'iOS app · beta',
-    line: 'An iPhone app that helps you choose restaurant dishes around your meal targets and adjust your order.',
-    linkLabel: 'Explore DineSense',
-    href: 'https://dinesense.app/',
-    screens: [
-      { src: '/work/dinesense-target.webp', alt: 'DineSense screen: setting a target for this meal' },
-      { src: '/work/dinesense-results.webp', alt: 'DineSense screen: dishes nearby ranked against the target' },
-      { src: '/work/dinesense-order.webp', alt: 'DineSense screen: an edited order with its calories and macros' },
-    ],
-  },
-  dinesenseSite: {
-    name: 'dinesense.app',
-    kind: 'Marketing site',
-    line: 'Designed, written and built as a static site: real app captures, guided scroll, no frameworks, no trackers.',
-    linkLabel: 'Visit the site',
-    href: 'https://dinesense.app',
-    image: { src: '/work/dinesense-site.jpg', alt: 'The DineSense website at desktop width' },
-  },
-  programmed: {
-    name: 'Programmed',
-    kind: 'iOS app · in development',
-    line: 'A lifting log with a Live Activity on the Lock Screen, so the next set is one glance away.',
-    image: { src: '/work/programmed-workout.jpg', alt: 'Programmed screen: a workout in progress' },
-  },
-  apify: {
-    name: 'Data tools on Apify',
-    kind: 'Public Actors',
-    line: 'Data tools you can run from the Apify store, including bulk keyword volume, difficulty and search intent.',
-    linkLabel: 'View on Apify',
-    href: 'https://apify.com/liquify/keyword-search-volume',
-  },
-} as const;
-
 export const workNote =
   'These are shipped products shown as proof of work. Custom app builds are not currently offered.';
 

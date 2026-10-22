@@ -1,33 +1,92 @@
 ---
-/**
- * Layout for /work/<slug> case studies. No pages use it at launch; add
- * src/pages/work/<slug>.astro files that wrap their content in this layout.
- */
 import Base from './Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../site';
+import { projects, type Project } from '../work';
 
 interface Props {
-  title: string;
-  description: string;
-  client?: string;
-  year?: string;
+  project: Project;
 }
-const { title, description, client, year } = Astro.props;
+const { project: p } = Astro.props;
+const i = projects.findIndex((x) => x.slug === p.slug);
+const next = projects[(i + 1) % projects.length];
+const hero = p.images[0];
+const rest = p.images.slice(1);
+const ext = p.link && p.link.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {};
 ---
 
-<Base title={`${title} · ${site.name}`} description={description}>
+<Base title={`${p.name} · ${site.name}`} description={p.line} image={hero?.src}>
   <Header />
-  <main id="main" class="wrap section study">
-    <p class="small muted meta num">
-      {client && <span>{client}</span>}
-      {year && <span>{year}</span>}
-    </p>
-    <h1>{title}</h1>
-    <p class="lede muted">{description}</p>
-    <div class="body">
-      <slot />
+  <main id="main" class="study">
+    <div class="wrap">
+      <header class="study-head">
+        <p class="label reveal">{p.kind} · {p.year}</p>
+        <h1 transition:name={`title-${p.slug}`}>{p.name}</h1>
+        <p class="line reveal" style="--d: 100ms">{p.line}</p>
+      </header>
+
+      {
+        hero && (
+          <div class:list={['hero-shot', hero.w > hero.h ? 'wide' : 'tall']}>
+            <img src={hero.src} alt={hero.alt} width={hero.w} height={hero.h} decoding="async" transition:name={`shot-${p.slug}`} />
+          </div>
+        )
+      }
+
+      <div class="body">
+        <section class="block reveal">
+          <h2>Overview</h2>
+          <p class="prose">{p.summary}</p>
+          {
+            p.link && (
+              <a class="btn ghost" href={p.link.href} {...ext}>
+                {p.link.label}
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10" /></svg>
+              </a>
+            )
+          }
+        </section>
+
+        <section class="block reveal">
+          <h2>What was built</h2>
+          <ul class="list">
+            {p.built.map((b) => <li>{b}</li>)}
+          </ul>
+        </section>
+
+        <section class="block reveal">
+          <h2>Stack</h2>
+          <ul class="stack" role="list">
+            {p.stack.map((s) => <li>{s}</li>)}
+          </ul>
+        </section>
+
+        <section class="block reveal">
+          <h2>What to notice</h2>
+          <ul class="list">
+            {p.notice.map((n) => <li>{n}</li>)}
+          </ul>
+        </section>
+      </div>
+
+      {
+        rest.length > 0 && (
+          <div class:list={['gallery', rest[0].w > rest[0].h ? 'wide' : 'tall']}>
+            {rest.map((img, k) => (
+              <figure class="img-reveal" style={`--d: ${(k % 3) * 120}ms`}>
+                <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" decoding="async" />
+              </figure>
+            ))}
+          </div>
+        )
+      }
+
+      <a class="next reveal" href={`/work/${next.slug}`}>
+        <span class="label">Next</span>
+        <span class="next-name">{next.name}</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
+      </a>
     </div>
   </main>
   <Footer />
@@ -35,31 +94,191 @@ const { title, description, client, year } = Astro.props;
 
 <style>
   .study {
-    max-width: calc(680px + 2 * var(--gutter));
+    padding-top: clamp(130px, 18vh, 190px);
+    padding-bottom: var(--section);
   }
 
-  .meta {
+  .study-head {
+    display: grid;
+    gap: 18px;
+    max-width: 60ch;
+    margin-bottom: clamp(40px, 6vw, 72px);
+  }
+
+  .study-head h1 {
+    font-size: clamp(44px, 7vw, 96px);
+  }
+
+  .line {
+    font-size: clamp(18px, 1.8vw, 24px);
+    line-height: 1.4;
+    color: var(--muted);
+    max-width: 40ch;
+  }
+
+  .hero-shot {
     display: flex;
-    gap: 16px;
-    margin-bottom: 12px;
+    justify-content: center;
+    margin-bottom: clamp(56px, 9vw, 120px);
   }
 
-  .lede {
-    margin-top: 16px;
-    font-size: 19px;
+  .hero-shot img {
+    display: block;
+    height: auto;
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.09),
+      0 60px 120px -50px rgb(0 0 0 / 0.9);
+  }
+
+  .hero-shot.tall img {
+    width: min(100%, 420px);
+    border-radius: clamp(18px, 2.4vw, 34px);
+  }
+
+  .hero-shot.wide img {
+    width: 100%;
+    border-radius: 6px;
   }
 
   .body {
-    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(40px, 6vw, 96px) clamp(32px, 6vw, 96px);
+    max-width: 1040px;
   }
 
-  .body :global(h2) {
-    font-size: 22px;
-    margin-top: 36px;
-    margin-bottom: 8px;
+  .block {
+    display: grid;
+    gap: 18px;
+    align-content: start;
   }
 
-  .body :global(p + p) {
-    margin-top: 12px;
+  .block h2 {
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dim);
+    font-weight: 500;
+  }
+
+  .prose {
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 52ch;
+  }
+
+  .block .btn {
+    justify-self: start;
+    margin-top: 6px;
+  }
+
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 14px;
+  }
+
+  .list li {
+    padding-left: 22px;
+    position: relative;
+    line-height: 1.5;
+    max-width: 48ch;
+  }
+
+  .list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.75em;
+    width: 10px;
+    height: 1px;
+    background: var(--cobalt-light);
+  }
+
+  .stack {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stack li {
+    padding: 7px 12px;
+    border: 1px solid var(--hair);
+    border-radius: 999px;
+    font: 500 13.5px/1 var(--font-display);
+    color: var(--muted);
+  }
+
+  .gallery {
+    margin-top: clamp(64px, 10vw, 140px);
+    display: grid;
+    gap: clamp(16px, 2.4vw, 32px);
+  }
+
+  .gallery.tall {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .gallery figure {
+    margin: 0;
+  }
+
+  .gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.09),
+      0 40px 80px -40px rgb(0 0 0 / 0.9);
+  }
+
+  .gallery.tall img {
+    border-radius: clamp(14px, 1.8vw, 28px);
+  }
+
+  .next {
+    margin-top: clamp(72px, 12vw, 160px);
+    padding-top: 28px;
+    border-top: 1px solid var(--hair);
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .next-name {
+    font: 500 clamp(28px, 4vw, 52px) / 1 var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .next svg {
+    width: 22px;
+    height: 22px;
+    align-self: center;
+    transition: transform var(--t-base) var(--ease-out);
+  }
+
+  .next:hover svg {
+    transform: translateX(6px);
+  }
+
+  @media (max-width: 719px) {
+    .body {
+      grid-template-columns: 1fr;
+    }
+
+    .gallery.tall {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero-shot.tall img {
+      width: min(80%, 320px);
+    }
   }
 </style>

@@ -5,13 +5,13 @@ import { site, email, budgets, contactEndpoint } from '../site';
 
 <section id="contact" class="section" aria-labelledby="contact-title">
   <div class="wrap contact">
-    <div class="intro surface">
+    <div class="intro reveal">
       <h2 id="contact-title">Tell me what you need.</h2>
       <p class="muted">In your own words. I read every message myself and reply within {site.replyWindow}.</p>
       {contactEndpoint && <p class="small dim alt">Prefer email? <a href={`mailto:${email}`}>{email}</a></p>}
     </div>
 
-    {contactEndpoint ? <div class="panel glass surface">
+    {contactEndpoint ? <div class="panel glass reveal">
       <div id="sent" class="sent" role="status" hidden>
         <Mark class="sent-mark" />
         <div>
@@ -59,7 +59,7 @@ import { site, email, budgets, contactEndpoint } from '../site';
           </button>
         </div>
       </form>
-    </div> : <div class="panel glass surface mail">
+    </div> : <div class="panel glass reveal mail">
       <p class="mail-line">Email a few sentences about the problem and your rough budget. I reply within {site.replyWindow}.</p>
       <a class="btn" href={`mailto:${email}`}>
         Email {email}
@@ -260,16 +260,3 @@ import { site, email, budgets, contactEndpoint } from '../site';
   }
 </style>
 
-<script>
-  const params = new URLSearchParams(location.search);
-  if (params.get('sent') === '1') {
-    const box = document.getElementById('sent');
-    if (box) {
-      box.hidden = false;
-      box.scrollIntoView({ block: 'center' });
-      params.delete('sent');
-      const q = params.toString();
-      history.replaceState(null, '', location.pathname + (q ? `?${q}` : '') + '#contact');
-    }
-  }
-</script>

@@ -1,6 +1,6 @@
-/* Lemni Works — Ink in Water.
-   A dark tank. Cobalt ink diffuses through black water; the page sits on the glass.
-   Dark only. Luxury-minimal: scale and space carry the hierarchy, not boxes. */
+/* Lemni Works — Black Gallery.
+   Black space, white Manrope, hairlines, real screens. Motion is a clean reveal:
+   text rises into place, images uncover from the bottom, nothing bounces. Dark only. */
 
 @font-face {
   font-family: 'Manrope';
@@ -149,43 +149,6 @@ small,
   color: var(--dim);
 }
 
-/* ---------- Tank and page ---------- */
-
-.tank {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.tank canvas,
-.tank .still {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* Without WebGL (or with reduced motion) the ink is still there, still. */
-.tank .still {
-  background:
-    radial-gradient(60% 50% at 38% 42%, rgb(42 91 215 / 0.55), transparent 70%),
-    radial-gradient(45% 40% at 62% 50%, rgb(107 147 255 / 0.35), transparent 70%),
-    radial-gradient(30% 30% at 50% 46%, rgb(107 147 255 / 0.3), transparent 70%);
-  filter: blur(40px);
-  opacity: 0;
-}
-
-html.no-fluid .tank .still {
-  opacity: 1;
-}
-
-.page {
-  position: relative;
-  z-index: 1;
-}
-
 .wrap {
   width: 100%;
   max-width: calc(var(--measure) + 2 * var(--gutter));
@@ -211,32 +174,71 @@ html.no-fluid .tank .still {
   color: var(--muted);
 }
 
-/* Things surface as the ink clears. */
-.surface {
+/* ---------- Reveals ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 900ms ease,
+    transform 1000ms var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+
+.reveal.in {
   opacity: 1;
+  transform: none;
 }
 
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .surface {
-      animation: surface linear both;
-      animation-timeline: view(block);
-      animation-range: entry 0% entry 55%;
-    }
-  }
+/* A cover in the page colour slides up to uncover the image. (A clip-path here would
+   make IntersectionObserver report the element as never visible.) */
+.img-reveal {
+  position: relative;
+  overflow: hidden;
 }
 
-@keyframes surface {
-  from {
-    opacity: 0;
-    filter: blur(16px);
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0);
-    transform: none;
-  }
+.img-reveal::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: var(--water);
+  transform-origin: top;
+  transition: transform 1100ms var(--ease-out);
+  transition-delay: var(--d, 0ms);
+  pointer-events: none;
+}
+
+.img-reveal img {
+  transform: scale(1.06);
+  transition: transform 1400ms var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+
+.img-reveal.in::after {
+  transform: scaleY(0);
+}
+
+.img-reveal.in img {
+  transform: none;
+}
+
+html:not(.js) .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+html:not(.js) .img-reveal::after {
+  display: none;
+}
+
+html:not(.js) .img-reveal img {
+  transform: none;
+}
+
+/* The page itself crossfades between routes; images and titles travel. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 420ms;
 }
 
 /* ---------- Controls ---------- */

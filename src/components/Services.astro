@@ -4,7 +4,7 @@ import { services, notOffered } from '../site';
 
 <section id="services" class="section" aria-labelledby="services-title">
   <div class="wrap">
-    <div class="section-head surface">
+    <div class="section-head reveal">
       <h2 id="services-title">Services</h2>
       <p>Four things I build. Each has a fixed-price starting point and an optional plan to keep it running.</p>
     </div>
@@ -12,7 +12,7 @@ import { services, notOffered } from '../site';
     <ol class="rows">
       {
         services.map((s, i) => (
-          <li id={`svc-${s.slug}`} class="row surface" data-ink>
+          <li id={`svc-${s.slug}`} class="row reveal" data-ink>
             <span class="idx num dim">{String(i + 1).padStart(2, '0')}</span>
             <div class="row-main">
               <h3>{s.name}</h3>
@@ -28,7 +28,7 @@ import { services, notOffered } from '../site';
       }
     </ol>
 
-    <p class="small dim not-offered surface">{notOffered}</p>
+    <p class="small dim not-offered reveal">{notOffered}</p>
   </div>
 </section>
 
