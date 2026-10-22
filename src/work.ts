@@ -115,7 +115,7 @@ export const projects: Project[] = [
     stack: ['Node.js', 'Apify SDK', 'Crawlee'],
     notice: ['Each listing links back here for a custom version.'],
     images: [],
-    link: { label: 'View on Apify', href: 'https://apify.com/liquify/keyword-search-volume' }, // PLACEHOLDER: this URL returned 404 on 2026-10-22; confirm the live listing
+    link: { label: 'View on Apify', href: 'https://apify.com/lemniworks/keyword-search-volume' }, // confirmed live on 2026-10-22 under the Lemniworks account
     featured: false,
   },
 ];

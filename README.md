@@ -74,7 +74,7 @@ The final Open Path package replaces the original approximation. The mark has a 
 
 ## Remaining launch decisions
 
-- The Apify listing URL in `src/work.ts` returned 404 on 2026-10-22; confirm the live Actor link before relying on it.
+- The Apify account was renamed from Liquify to Lemniworks; the listing in `src/work.ts` points at https://apify.com/lemniworks/keyword-search-volume, confirmed live on 2026-10-22.
 
 Everything below is in `src/site.ts` unless noted.
 
