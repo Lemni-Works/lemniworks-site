@@ -5,7 +5,6 @@ import { site } from '../site';
 interface Props {
   title?: string;
   description?: string;
-  /** Pass false on pages that should not be indexed. */
   index?: boolean;
 }
 const { title = site.title, description = site.description, index = true } = Astro.props;
@@ -31,8 +30,7 @@ const og = new URL('/og-image.png', canonical);
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfbfc" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121317" />
+    <meta name="theme-color" content="#06070a" />
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
@@ -45,20 +43,30 @@ const og = new URL('/og-image.png', canonical);
   <body>
     <!--
       DIRECTION
-      THESIS: A one-person engineering shop should look like its own workbench, not a SaaS landing page.
-      The page refuses floating gradient blobs and screenshot mockups; the mark is the only picture.
-      OWN-WORLD: drafting-paper white (or lamp-black), one ink, one pen-blue accent, hairlines, Manrope
-      headings on a system body, a monoline mark with round terminals that is also the pictogram language.
-      Motion material is one idea everywhere: a stroke drawing itself, and data moving along it.
-      STORY: "This person builds precise, finished things and will quote me a number." Then: send the form.
-      FIRST VIEWPORT: header hairline; the open lemniscate at 640px on faint dot grid, drawn in once, with
-      data particles following the final Open Path geometry and leaving through its upper-right gap;
-      H1 below-left, 40-word lede, one blue button, one quiet line about reply time.
-      FORM: single column, 860px measure, cards only where the brief asks for cards. Seed: lemni-bench-01.
+      THESIS: A dark tank. Cobalt ink diffuses through black water in a real fluid simulation and the page
+      sits on the glass above it. It refuses the dark agency landing (glow hero, icon cards, thumbnail grid)
+      and the box grid: nothing on this page has a visible container except the glass the form sits on.
+      OWN-WORLD: near-black water; one cobalt ink with a bright core; white Manrope 500 at label-on-glass
+      scale, hairlines instead of boxes, generous vertical space; motion is diffusion, never sliding boxes.
+      Objects surface from blur as the ink clears.
+      STORY: "This studio has craft I can see, builds stores, automations and reports, and will quote a
+      number." Then: send the form.
+      FIRST VIEWPORT: the whole viewport is water. At load a single injection of ink draws the lemniscate
+      and begins to dissolve. Headline "One studio for the whole shop." sits lower-left at 8vw, the lede
+      under it, one white pill button, the four services as a quiet line of text. Wordmark top-left,
+      three links top-right. The pointer stirs the ink.
+      FORM: brief-pinned (fluid, technical, luxury minimal) after two bolder re-rolls failed the pin;
+      candidate 2 of 3 presented; seed 61058b97.
       FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review,
       the verdict, DESIGN.md, and every shipping raster carrying its provenance.
     -->
     <a class="skip" href="#main">Skip to content</a>
-    <slot />
+    <div class="tank" aria-hidden="true">
+      <canvas id="tank"></canvas>
+      <div class="still"></div>
+    </div>
+    <div class="page">
+      <slot />
+    </div>
   </body>
 </html>

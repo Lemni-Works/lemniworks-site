@@ -1,14 +1,16 @@
-// Shared site copy, links and deployment configuration.
+// Single place for copy and for values the spec marks as placeholders.
+// Everything marked PLACEHOLDER is listed in README.md.
 
 export const site = {
   name: 'Lemni Works',
+  // PLACEHOLDER: confirm the domain once bought.
   domain: 'lemniworks.com',
   // PLACEHOLDER: the Worker that receives the contact form.
   workerOrigin: import.meta.env.PUBLIC_WORKER_ORIGIN ?? '{WORKER_ORIGIN}',
   city: 'Wichita, Kansas',
-  title: 'Lemni Works · Data and automation for small businesses',
+  title: 'Lemni Works · One studio for the whole shop',
   description:
-    'Scheduled scrapers, automations between the tools you already use, and reports that read from them. Fixed price, written quote within two business days, source code handed over.',
+    'Stores, websites, automations and the reports behind them, built by one person in Wichita and handed over with the source. Fixed price, written quote within two business days.',
   // PLACEHOLDER: first-reply window. Spec fixes the quote window at two business days.
   replyWindow: 'one business day',
 } as const;
@@ -20,19 +22,30 @@ export const contactEndpoint = /^https:\/\/[^/{}\s]+\/?$/.test(site.workerOrigin
   ? `${site.workerOrigin.replace(/\/$/, '')}/api/contact`
   : null;
 
+export const hero = {
+  headline: 'One studio for the whole shop.',
+  lede:
+    'Stores, websites, automations and the reports behind them, built by one person and handed over with the source. Fixed price, written quote within two business days.',
+  cta: 'Tell me what you need',
+  quoteLine: 'Written quote within two business days. Fixed price. Payment on delivery.',
+  note: `I reply within ${site.replyWindow}. Calls are by appointment, evenings Central.`,
+} as const;
+
 export const services = [
   {
-    slug: 'scraping',
-    name: 'Web scraping and data collection',
+    slug: 'web',
+    name: 'Websites and e-commerce',
+    short: 'A store or site that is yours',
     description:
-      'A scraper that runs on a schedule and lands clean rows in a spreadsheet, a database or a file you can open. Built to survive small changes to the site it reads.',
-    offer: 'Starter scraper',
+      'A fast site or online store, designed and built to fit the business, then handed over with the keys. Shopify where it fits, hand-built where it does not.',
+    offer: 'Launch site or store',
     price: 'Quoted per project',
-    upkeep: 'Optional upkeep, quoted separately: I fix it when the source site changes.',
+    upkeep: 'Optional upkeep, quoted separately: updates, new pages, and someone to call.',
   },
   {
     slug: 'automation',
     name: 'Workflow automation',
+    short: 'Two tools, made to talk',
     description:
       'Two tools you already pay for, made to talk to each other without someone copying and pasting. Orders into the sheet, form entries into the CRM, the weekly email that writes itself.',
     offer: 'First automation',
@@ -40,8 +53,19 @@ export const services = [
     upkeep: 'Optional upkeep, quoted separately: monitoring and fixes when an API changes.',
   },
   {
+    slug: 'scraping',
+    name: 'Web scraping and data collection',
+    short: 'Data collected on a schedule',
+    description:
+      'A scraper that runs on a schedule and lands clean rows in a spreadsheet, a database or a file you can open. Built to survive small changes to the site it reads.',
+    offer: 'Starter scraper',
+    price: 'Quoted per project',
+    upkeep: 'Optional upkeep, quoted separately: I fix it when the source site changes.',
+  },
+  {
     slug: 'reports',
     name: 'Reports and dashboards',
+    short: 'The numbers, laid out once',
     description:
       'The numbers you keep rebuilding by hand, pulled from the source and laid out once. A page or a scheduled PDF, with the queries behind it handed over.',
     offer: 'One-page report',
@@ -74,27 +98,48 @@ export const steps = [
   },
 ] as const;
 
-export const work = [
-  {
+export const work = {
+  dinesense: {
     name: 'DineSense',
     kind: 'iOS app · beta',
     line: 'An iPhone app that helps you choose restaurant dishes around your meal targets and adjust your order.',
     linkLabel: 'Explore DineSense',
     href: 'https://dinesense.app/',
+    screens: [
+      { src: '/work/dinesense-target.webp', alt: 'DineSense screen: setting a target for this meal' },
+      { src: '/work/dinesense-results.webp', alt: 'DineSense screen: dishes nearby ranked against the target' },
+      { src: '/work/dinesense-order.webp', alt: 'DineSense screen: an edited order with its calories and macros' },
+    ],
   },
-  {
+  dinesenseSite: {
+    name: 'dinesense.app',
+    kind: 'Marketing site',
+    line: 'Designed, written and built as a static site: real app captures, guided scroll, no frameworks, no trackers.',
+    linkLabel: 'Visit the site',
+    href: 'https://dinesense.app',
+    image: { src: '/work/dinesense-site.jpg', alt: 'The DineSense website at desktop width' },
+  },
+  programmed: {
+    name: 'Programmed',
+    kind: 'iOS app · in development',
+    line: 'A lifting log with a Live Activity on the Lock Screen, so the next set is one glance away.',
+    image: { src: '/work/programmed-workout.jpg', alt: 'Programmed screen: a workout in progress' },
+  },
+  apify: {
     name: 'Data tools on Apify',
     kind: 'Public Actors',
     line: 'Data tools you can run from the Apify store, including bulk keyword volume, difficulty and search intent.',
     linkLabel: 'View on Apify',
     href: 'https://apify.com/liquify/keyword-search-volume',
   },
-] as const;
+} as const;
 
 export const workNote =
   'These are shipped products shown as proof of work. Custom app builds are not currently offered.';
 
-export const about =
-  'I am Zander Erwin. I live in Wichita, have a computer science degree with a math minor, and I like the problems where the data exists but nobody has made it usable yet: a site that needs collecting on a schedule, two tools that should talk to each other, a spreadsheet that has outgrown itself.';
+export const about = {
+  text: 'I am Zander Erwin. I live in Wichita, have a computer science degree with a math minor, and I like the problems where the thing exists but nobody has made it usable yet: a store that needs building, a site that needs collecting on a schedule, two tools that should talk to each other, a spreadsheet that has outgrown itself.',
+  portrait: { src: '/about/portrait.jpg', alt: 'Zander Erwin' },
+} as const;
 
 export const budgets = ['Not sure yet', 'Under $500', '$500 to $2,000', '$2,000 to $5,000', '$5,000+'] as const;

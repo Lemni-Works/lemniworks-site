@@ -1,5 +1,6 @@
-/* Lemni Works — design tokens and base styles.
-   Tokens follow DESIGN.md. Light and dark from prefers-color-scheme only. */
+/* Lemni Works — Ink in Water.
+   A dark tank. Cobalt ink diffuses through black water; the page sits on the glass.
+   Dark only. Luxury-minimal: scale and space carry the hierarchy, not boxes. */
 
 @font-face {
   font-family: 'Manrope';
@@ -11,61 +12,33 @@
 }
 
 :root {
-  --ink: #1b1b1f;
-  --muted: #5d6068;
-  --bg: #fbfbfc;
-  --card: #ffffff;
-  --line: #e4e4e8;
-  --accent: #2a5bd7;
-  --accent-ink: #ffffff;
-  --accent-soft: rgb(42 91 215 / 0.12);
-  --accent-line: rgb(42 91 215 / 0.4);
-  --grid-dot: rgb(27 27 31 / 0.16);
-  --shadow-card: 0 1px 2px rgb(27 27 31 / 0.04), 0 12px 32px -16px rgb(27 27 31 / 0.22);
-  --shadow-btn: 0 6px 16px -8px rgb(42 91 215 / 0.6);
+  --water: #06070a;
+  --ink: #ececf0;
+  --muted: #9a9ea8;
+  --dim: #5f626b;
+  --hair: rgb(236 236 240 / 0.12);
+  --hair-soft: rgb(236 236 240 / 0.07);
+  --glass: rgb(236 236 240 / 0.035);
+
+  --cobalt: #2a5bd7;
+  --cobalt-light: #6b93ff;
+  --cobalt-ink: #ffffff;
+  --cobalt-soft: rgb(107 147 255 / 0.18);
+
+  --measure: 1200px;
+  --gutter: clamp(20px, 5vw, 72px);
+  --section: clamp(96px, 14vw, 180px);
 
   --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
   --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
 
-  --measure: 860px;
-  --gutter: 20px;
-  --section: 72px;
-  --radius: 12px;
-  --header-h: 64px;
-
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --t-fast: 150ms;
-  --t-base: 260ms;
+  --t-base: 280ms;
+  --t-slow: 900ms;
 
-  color-scheme: light;
+  color-scheme: dark;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ink: #ececf0;
-    --muted: #a0a3ab;
-    --bg: #121317;
-    --card: #1a1b20;
-    --line: #2a2b31;
-    --accent: #6b93ff;
-    --accent-ink: #0d1526;
-    --accent-soft: rgb(107 147 255 / 0.16);
-    --accent-line: rgb(107 147 255 / 0.45);
-    --grid-dot: rgb(236 236 240 / 0.14);
-    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -16px rgb(0 0 0 / 0.6);
-    --shadow-btn: 0 6px 16px -8px rgb(107 147 255 / 0.5);
-    color-scheme: dark;
-  }
-}
-
-@media (max-width: 719px) {
-  :root {
-    --section: 48px;
-    --header-h: 56px;
-  }
-}
-
-/* ---------- Reset and base ---------- */
 
 *,
 *::before,
@@ -75,7 +48,8 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: calc(var(--header-h) + 16px);
+  scroll-padding-top: 96px;
+  background: var(--water);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -86,53 +60,52 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--water);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 17px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  caret-color: var(--accent);
+  caret-color: var(--cobalt-light);
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--cobalt);
+  color: var(--cobalt-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline: 1.5px solid var(--cobalt-light);
+  outline-offset: 4px;
 }
 
 h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--ink);
   margin: 0;
   text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(34px, 5.5vw, 52px);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-size: clamp(46px, 8.4vw, 112px);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
 }
 
 h2 {
-  font-size: 26px;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
+  font-size: clamp(32px, 4.6vw, 60px);
+  line-height: 1;
+  letter-spacing: -0.035em;
 }
 
 h3 {
-  font-size: 18px;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
 }
 
 p {
@@ -140,12 +113,12 @@ p {
 }
 
 a {
-  color: var(--accent);
+  color: var(--ink);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
-  text-decoration-color: var(--accent-line);
-  transition: text-decoration-color var(--t-fast) ease;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--hair);
+  transition: text-decoration-color var(--t-fast) ease, color var(--t-fast) ease;
 }
 
 a:hover {
@@ -161,11 +134,57 @@ small,
   color: var(--muted);
 }
 
+.dim {
+  color: var(--dim);
+}
+
 .num {
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- Layout ---------- */
+.label {
+  font: 500 12.5px/1.3 var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* ---------- Tank and page ---------- */
+
+.tank {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.tank canvas,
+.tank .still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Without WebGL (or with reduced motion) the ink is still there, still. */
+.tank .still {
+  background:
+    radial-gradient(60% 50% at 38% 42%, rgb(42 91 215 / 0.55), transparent 70%),
+    radial-gradient(45% 40% at 62% 50%, rgb(107 147 255 / 0.35), transparent 70%),
+    radial-gradient(30% 30% at 50% 46%, rgb(107 147 255 / 0.3), transparent 70%);
+  filter: blur(40px);
+  opacity: 0;
+}
+
+html.no-fluid .tank .still {
+  opacity: 1;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+}
 
 .wrap {
   width: 100%;
@@ -178,18 +197,100 @@ small,
   padding-block: var(--section);
 }
 
-.section + .section {
-  padding-top: 0;
-}
-
 .section-head {
-  margin-bottom: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 40px;
+  margin-bottom: clamp(40px, 6vw, 72px);
 }
 
 .section-head p {
-  margin-top: 8px;
+  max-width: 44ch;
   color: var(--muted);
-  max-width: 60ch;
+}
+
+/* Things surface as the ink clears. */
+.surface {
+  opacity: 1;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .surface {
+      animation: surface linear both;
+      animation-timeline: view(block);
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+@keyframes surface {
+  from {
+    opacity: 0;
+    filter: blur(16px);
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* ---------- Controls ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 17px 26px 17px 28px;
+  background: var(--ink);
+  color: var(--water);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font: 500 16px/1 var(--font-display);
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--t-base) ease,
+    color var(--t-base) ease,
+    box-shadow var(--t-base) ease,
+    transform var(--t-base) var(--ease-out);
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--t-base) var(--ease-out);
+}
+
+.btn:hover {
+  background: #ffffff;
+  box-shadow: 0 10px 40px -10px rgb(107 147 255 / 0.5);
+  transform: translateY(-1px);
+}
+
+.btn:hover svg {
+  transform: translateX(3px);
+}
+
+.btn:active {
+  transform: none;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--hair);
+}
+
+.btn.ghost:hover {
+  background: var(--ink);
+  color: var(--water);
+  border-color: var(--ink);
 }
 
 .skip {
@@ -197,9 +298,8 @@ small,
   left: var(--gutter);
   top: 8px;
   padding: 8px 12px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  background: var(--ink);
+  color: var(--water);
   transform: translateY(-200%);
   transition: transform var(--t-fast) ease;
   z-index: 100;
@@ -219,65 +319,20 @@ small,
   white-space: nowrap;
 }
 
-/* ---------- Controls ---------- */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 13px 20px 13px 22px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  border: 0;
-  border-radius: 10px;
-  font: 600 16px/1 var(--font-display);
-  letter-spacing: -0.005em;
-  text-decoration: none;
-  cursor: pointer;
-  box-shadow: 0 0 0 0 transparent;
-  transition:
-    transform var(--t-base) var(--ease-out),
-    box-shadow var(--t-base) var(--ease-out),
-    filter var(--t-fast) ease;
-}
-
-.btn svg {
-  width: 16px;
-  height: 16px;
-  transition: transform var(--t-base) var(--ease-out);
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-btn);
-  filter: brightness(1.05);
-}
-
-.btn:hover svg {
-  transform: translateX(3px);
-}
-
-.btn:active {
-  transform: translateY(0);
-  box-shadow: none;
-  transition-duration: 60ms;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-}
-
-/* ---------- Mark ---------- */
-
 .mark {
   display: block;
   color: currentColor;
   overflow: visible;
 }
 
-/* ---------- Reduced motion ---------- */
+/* ---------- Glass: the one surface that sits in front of the water ---------- */
+
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow: inset 0 0 0 1px var(--hair-soft), inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -1,103 +1,174 @@
 ---
 import { work, workNote } from '../site';
+const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {});
+const Arrow = () =>
+  `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg>`;
 ---
 
 <section id="work" class="section" aria-labelledby="work-title">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head surface">
       <h2 id="work-title">Built by Lemni Works</h2>
+      <p>Real screens from shipped and in-progress work, shown as they are.</p>
     </div>
-    <ul class="work" role="list">
-      {
-        work.map((w) => (
-          <li class="card item">
-            <div class="item-top">
-              <h3>{w.name}</h3>
-              <span class="kind small muted">{w.kind}</span>
-            </div>
-            <p class="line">{w.line}</p>
-            <a class="ext" href={w.href} target="_blank" rel="noopener">
-              {w.linkLabel}
-              <span class="visually-hidden"> (opens in a new tab)</span>
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M4.5 11.5l7-7M6 4.5h5.5V10" />
-              </svg>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-    <p class="small muted note">{workNote}</p>
+
+    <div class="piece">
+      <div class="media phones surface">
+        {
+          work.dinesense.screens.map((s, i) => (
+            <img src={s.src} alt={s.alt} width="880" height="1912" loading="lazy" decoding="async" class={`phone p${i}`} />
+          ))
+        }
+      </div>
+      <div class="caption surface">
+        <p class="label">{work.dinesense.kind}</p>
+        <h3>{work.dinesense.name}</h3>
+        <p class="muted">{work.dinesense.line}</p>
+        <a class="ext" href={work.dinesense.href} {...ext(work.dinesense.href)}>
+          {work.dinesense.linkLabel}<span class="visually-hidden"> (opens in a new tab)</span>
+          <Fragment set:html={Arrow()} />
+        </a>
+      </div>
+    </div>
+
+    <div class="piece">
+      <div class="media site surface">
+        <img src={work.dinesenseSite.image.src} alt={work.dinesenseSite.image.alt} width="1400" height="1006" loading="lazy" decoding="async" />
+      </div>
+      <div class="caption surface">
+        <p class="label">{work.dinesenseSite.kind}</p>
+        <h3>{work.dinesenseSite.name}</h3>
+        <p class="muted">{work.dinesenseSite.line}</p>
+        <a class="ext" href={work.dinesenseSite.href} {...ext(work.dinesenseSite.href)}>
+          {work.dinesenseSite.linkLabel}<span class="visually-hidden"> (opens in a new tab)</span>
+          <Fragment set:html={Arrow()} />
+        </a>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="piece small-piece">
+        <div class="media single surface">
+          <img src={work.programmed.image.src} alt={work.programmed.image.alt} width="720" height="1565" loading="lazy" decoding="async" class="phone" />
+        </div>
+        <div class="caption surface">
+          <p class="label">{work.programmed.kind}</p>
+          <h3>{work.programmed.name}</h3>
+          <p class="muted">{work.programmed.line}</p>
+        </div>
+      </div>
+      <div class="piece small-piece apify">
+        <div class="caption surface">
+          <p class="label">{work.apify.kind}</p>
+          <h3>{work.apify.name}</h3>
+          <p class="muted">{work.apify.line}</p>
+          <a class="ext" href={work.apify.href} {...ext(work.apify.href)}>
+            {work.apify.linkLabel}<span class="visually-hidden"> (opens in a new tab)</span>
+            <Fragment set:html={Arrow()} />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <p class="small dim note surface">{workNote}</p>
   </div>
 </section>
 
 <style>
-  .work {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .piece + .piece,
+  .piece + .pair {
+    margin-top: clamp(72px, 10vw, 140px);
+  }
+
+  .caption {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-  }
-
-  .item {
-    padding: 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition:
-      transform var(--t-base) var(--ease-out),
-      box-shadow var(--t-base) var(--ease-out),
-      border-color var(--t-base) ease;
-  }
-
-  @media (hover: hover) {
-    .item:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-card);
-      border-color: var(--accent-line);
-    }
-  }
-
-  .item-top {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
     gap: 12px;
-    flex-wrap: wrap;
+    margin-top: 28px;
+    max-width: 52ch;
   }
 
-  .kind {
-    font-variant-numeric: tabular-nums;
-  }
-
-  .line {
-    font-size: 15.5px;
-    color: var(--muted);
-    flex-grow: 1;
+  .caption .muted {
+    font-size: 16.5px;
   }
 
   .ext {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    align-self: flex-start;
-    font-size: 15px;
-    font-weight: 500;
+    gap: 6px;
+    justify-self: start;
+    margin-top: 6px;
+    font: 500 15px/1 var(--font-display);
   }
 
-  .ext svg {
+  .ext :global(svg) {
     width: 14px;
     height: 14px;
     transition: transform var(--t-base) var(--ease-out);
   }
 
-  .ext:hover svg {
+  .ext:hover :global(svg) {
     transform: translate(2px, -2px);
   }
 
+  /* Lifted out of the tank: a thin wet rim of light, deep shadow beneath. */
+  .media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.09),
+      0 60px 120px -50px rgb(0 0 0 / 0.9),
+      0 0 160px -40px rgb(42 91 215 / 0.35);
+  }
+
+  .phones {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: end;
+    gap: clamp(12px, 2.4vw, 32px);
+    max-width: 920px;
+  }
+
+  .phone {
+    border-radius: clamp(14px, 2.6vw, 34px);
+  }
+
+  .phones .p1 {
+    transform: translateY(-6%);
+  }
+
+  .site img {
+    border-radius: 6px;
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: end;
+  }
+
+  .single {
+    max-width: 300px;
+  }
+
+  .apify .caption {
+    margin-top: 0;
+    padding-top: 22px;
+    border-top: 1px solid var(--hair);
+  }
+
   .note {
-    margin-top: 20px;
+    margin-top: clamp(40px, 6vw, 72px);
+  }
+
+  @media (max-width: 719px) {
+    .pair {
+      grid-template-columns: 1fr;
+    }
+
+    .single {
+      max-width: 220px;
+    }
   }
 </style>

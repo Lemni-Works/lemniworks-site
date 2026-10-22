@@ -1,205 +1,114 @@
 ---
 import { services, notOffered } from '../site';
-
-/* Monoline pictograms in the mark's language: one stroke weight, round terminals. */
-const picto: Record<string, string> = {
-  scraping: `
-    <path d="M4.5 4.5h11a1 1 0 0 1 1 1v6"/>
-    <path d="M4.5 4.5v14a1 1 0 0 0 1 1h5"/>
-    <path d="M8 9h5"/>
-    <path d="M8 13h3"/>
-    <path d="M8 17h2"/>
-    <path d="M14 17h5.5"/>
-    <circle cx="20.5" cy="17" r="1.1" fill="currentColor" stroke="none"/>`,
-  automation: `
-    <rect x="3" y="7.5" width="6.5" height="9" rx="1.6"/>
-    <rect x="14.5" y="7.5" width="6.5" height="9" rx="1.6"/>
-    <path d="M9.5 10h2.6a2 2 0 0 1 2 2v0"/>
-    <path d="M14.5 14h-2.6a2 2 0 0 1-2-2v0"/>
-    <path d="M12.6 10.4l1.5 1.6-1.5 1.6"/>
-    <path d="M11.4 13.6l-1.5-1.6 1.5-1.6"/>`,
-  reports: `
-    <path d="M4 4.5v14a1 1 0 0 0 1 1h14.5"/>
-    <path d="M7.5 15.5l3.5-4 3 2.5 5-6"/>
-    <circle cx="19" cy="8" r="1.1" fill="currentColor" stroke="none"/>`,
-};
 ---
 
 <section id="services" class="section" aria-labelledby="services-title">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head surface">
       <h2 id="services-title">Services</h2>
-      <p>Three things I build. Each gets a written, fixed-price quote and an optional plan to keep it running.</p>
+      <p>Four things I build. Each has a fixed-price starting point and an optional plan to keep it running.</p>
     </div>
 
-    <ul class="services" role="list">
+    <ol class="rows">
       {
         services.map((s, i) => (
-          <li class="card service" style={`--i: ${i}`}>
-            <svg
-              class="picto"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-              set:html={picto[s.slug]}
-            />
-            <h3>{s.name}</h3>
-            <p class="desc">{s.description}</p>
-            <div class="offer">
-              <span class="offer-name">{s.offer}</span>
-              <span class="offer-price num">
-                <b>{s.price}</b>
-              </span>
+          <li id={`svc-${s.slug}`} class="row surface" data-ink>
+            <span class="idx num dim">{String(i + 1).padStart(2, '0')}</span>
+            <div class="row-main">
+              <h3>{s.name}</h3>
+              <p class="desc muted">{s.description}</p>
+              <p class="small dim upkeep">{s.upkeep}</p>
             </div>
-            <p class="small muted upkeep">{s.upkeep}</p>
+            <div class="row-offer">
+              <span class="offer-name">{s.offer}</span>
+              <span class="offer-price num muted">starting at <b>{s.price}</b></span>
+            </div>
           </li>
         ))
       }
-    </ul>
+    </ol>
 
-    <p class="small muted not-offered">{notOffered}</p>
+    <p class="small dim not-offered surface">{notOffered}</p>
   </div>
 </section>
 
 <style>
-  .services {
+  .rows {
     list-style: none;
     margin: 0;
     padding: 0;
+    border-top: 1px solid var(--hair);
+  }
+
+  .row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
+    grid-template-columns: 56px 1fr auto;
+    gap: 12px clamp(20px, 4vw, 64px);
+    padding-block: clamp(28px, 3.6vw, 44px);
+    border-bottom: 1px solid var(--hair);
+    align-items: start;
+    transition: background-color var(--t-slow) ease;
   }
 
-  .service {
-    display: flex;
-    flex-direction: column;
-    padding: 22px 22px 20px;
-    transition:
-      transform var(--t-base) var(--ease-out),
-      box-shadow var(--t-base) var(--ease-out),
-      border-color var(--t-base) ease;
+  .idx {
+    font: 500 14px/1.6 var(--font-display);
+    padding-top: 6px;
   }
 
-  @media (hover: hover) {
-    .service:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-card);
-      border-color: var(--accent-line);
-    }
-  }
-
-  .picto {
-    width: 32px;
-    height: 32px;
-    color: var(--ink);
-    margin-bottom: 18px;
-    transition: color var(--t-base) ease;
-  }
-
-  .service:hover .picto {
-    color: var(--accent);
-  }
-
-  /* Draw each pictogram in when the card reaches the viewport. */
-  .picto :global(path),
-  .picto :global(rect) {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    transition: stroke-dashoffset 900ms var(--ease-out);
-  }
-
-  .picto :global(circle) {
-    opacity: 0;
-    transition: opacity 400ms ease 700ms;
-  }
-
-  :global(html:not(.js)) .picto :global(path),
-  :global(html:not(.js)) .picto :global(rect),
-  .service.is-in .picto :global(path),
-  .service.is-in .picto :global(rect) {
-    stroke-dashoffset: 0;
-  }
-
-  :global(html:not(.js)) .picto :global(circle),
-  .service.is-in .picto :global(circle) {
-    opacity: 1;
-  }
-
-  .picto :global(*:nth-child(2)) { transition-delay: 90ms; }
-  .picto :global(*:nth-child(3)) { transition-delay: 180ms; }
-  .picto :global(*:nth-child(4)) { transition-delay: 270ms; }
-  .picto :global(*:nth-child(5)) { transition-delay: 360ms; }
-  .picto :global(*:nth-child(6)) { transition-delay: 450ms; }
-  .picto :global(circle) { transition-delay: 650ms; }
-
-  .service h3 {
-    margin-bottom: 8px;
+  .row-main {
+    display: grid;
+    gap: 12px;
+    max-width: 58ch;
   }
 
   .desc {
-    font-size: 15.5px;
+    font-size: 16.5px;
     line-height: 1.5;
-    color: var(--muted);
-    flex-grow: 1;
-  }
-
-  .offer {
-    margin-top: 20px;
-    padding-top: 14px;
-    border-top: 1px solid var(--line);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 4px 12px;
-    font-size: 15px;
-  }
-
-  .offer-name {
-    font-family: var(--font-display);
-    font-weight: 600;
-  }
-
-  .offer-price {
-    color: var(--muted);
-  }
-
-  .offer-price b {
-    font-weight: 600;
-    color: var(--ink);
   }
 
   .upkeep {
-    margin-top: 8px;
     line-height: 1.45;
   }
 
+  .row-offer {
+    display: grid;
+    gap: 6px;
+    text-align: right;
+    padding-top: 6px;
+    min-width: 12ch;
+  }
+
+  .offer-name {
+    font: 500 15px/1.3 var(--font-display);
+  }
+
+  .offer-price {
+    font-size: 14.5px;
+  }
+
+  .offer-price b {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
   .not-offered {
-    margin-top: 20px;
+    margin-top: 28px;
+  }
+
+  @media (max-width: 719px) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .idx {
+      padding-top: 0;
+    }
+
+    .row-offer {
+      text-align: left;
+      border-top: 1px solid var(--hair-soft);
+      padding-top: 14px;
+    }
   }
 </style>
-
-<script>
-  const cards = document.querySelectorAll<HTMLElement>('.service');
-  if (cards.length && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            const el = e.target as HTMLElement;
-            // Stagger siblings that arrive together.
-            el.style.setProperty('--d', `${Number(el.style.getPropertyValue('--i')) * 120}ms`);
-            el.classList.add('is-in');
-            io.unobserve(el);
-          }
-        }
-      },
-      { rootMargin: '0px 0px -12% 0px' }
-    );
-    cards.forEach((c) => io.observe(c));
-  }
-</script>

@@ -1,11 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
+import Tank from '../components/Tank.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site, email } from '../site';
 ---
 
 <Base title={`Privacy · ${site.name}`} description="What happens to the details you email to Lemni Works.">
+  <Tank />
   <Header />
   <main id="main" class="wrap section prose">
     <h1>Privacy</h1>
@@ -45,29 +47,23 @@ import { site, email } from '../site';
 
 <style>
   .prose {
-    max-width: calc(640px + 2 * var(--gutter));
+    padding-top: 160px;
+    max-width: calc(680px + 2 * var(--gutter));
     margin-inline: 0;
   }
 
-  @media (min-width: 720px) {
-    .prose {
-      margin-inline: auto;
-      margin-left: calc((100% - var(--measure) - 2 * var(--gutter)) / 2);
-    }
-  }
-
   .prose h1 {
-    font-size: clamp(30px, 4.5vw, 40px);
+    font-size: clamp(36px, 5vw, 56px);
   }
 
   .prose h1 + p {
-    margin-top: 10px;
+    margin-top: 12px;
   }
 
   .prose h2 {
-    font-size: 20px;
-    margin-top: 32px;
-    margin-bottom: 8px;
+    font-size: 22px;
+    margin-top: 40px;
+    margin-bottom: 10px;
   }
 
   .prose p + p {

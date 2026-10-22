@@ -4,7 +4,7 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="wrap footer-inner small muted">
+  <div class="wrap footer-inner small dim">
     <span class="num">© {year} {site.name}</span>
     <span>{site.city}</span>
     <a href="/privacy">Privacy</a>
@@ -13,17 +13,22 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer {
-    border-top: 1px solid var(--line);
-    padding-block: 28px 40px;
+    padding-block: 32px 44px;
   }
 
   .footer-inner {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 24px;
+    gap: 8px 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hair-soft);
   }
 
   .footer-inner a {
     color: inherit;
+  }
+
+  .footer-inner a:hover {
+    color: var(--ink);
   }
 </style>

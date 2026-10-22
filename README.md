@@ -37,7 +37,9 @@ Custom domains: `lemniworks.com` and `www.lemniworks.com`. Canonical URLs use th
 ```
 src/site.ts              copy, prices, links: every placeholder is here
 src/mark.ts              the lemniscate path data shared by all marks
-src/styles/global.css    design tokens (light and dark), base type, controls
+src/scripts/fluid.ts     the WebGL2 ink simulation
+src/components/Tank.astro  drives the ink: load injection, pointer, scroll, hover
+src/styles/global.css    design tokens (dark only), base type, controls
 src/layouts/Base.astro   head, meta, Open Graph, direction contract
 src/layouts/CaseStudy.astro   layout for /work/<slug>; no pages ship yet
 src/components/          Header, Hero, Services, Steps, Work, About, ContactForm, Footer, Mark
@@ -48,17 +50,13 @@ public/                  favicon, logo files, og-image, robots.txt, the Manrope 
 
 To add a case study, create `src/pages/work/<slug>.astro` that wraps its content in `CaseStudy.astro`.
 
-## Motion
+## The ink
 
-One material idea everywhere: a stroke drawing itself, and data moving along it.
+The page sits over a WebGL2 fluid simulation (`src/scripts/fluid.ts`, driven by `src/components/Tank.astro`). One injection of ink draws the lemniscate at load and dissolves; the pointer stirs it, scrolling pushes it, hovered service rows breathe a little ink. Without WebGL2 or with reduced motion a still CSS version shows instead. See DESIGN.md for the parameters.
 
-- Hero: the final Open Path mark draws in once, then particles follow its continuous path, pulse at the central crossing, and leave through the upper-right gap. Pointer over the mark speeds it up. It pauses when scrolled away or the tab is hidden.
-- Header: on desktop the small mark is absent while the big one is on screen; it draws in as you scroll past, and the wordmark slides over.
-- Services: each pictogram draws in when its card reaches the viewport.
-- How it works: the line between steps fills with scroll (CSS scroll-driven animation; browsers without it see the finished state).
-- Contact: the `?sent=1` confirmation draws the mark in blue.
+## Work images
 
-`prefers-reduced-motion` removes all of it and shows finished states.
+`public/work/` holds real captures copied on 2026-10-21: DineSense app previews from the DineSense-Website project, a desktop render of dinesense.app, and a Programmed workout screen from the Portfolio project. Programmed is labelled in development; remove it from `work` in `src/site.ts` if it should not be public yet. Refresh the captures when those apps change.
 
 ## Identity
 
@@ -75,6 +73,8 @@ Everything below is in `src/site.ts` unless noted.
 - [x] Owned domain: `lemniworks.com`; site config, canonical URLs and robots.txt agree
 - [ ] Build the contact Worker, configure `PUBLIC_WORKER_ORIGIN`, redeploy, and verify real delivery
 - [x] `hello@lemniworks.com` receives email (confirmed by the owner)
-- [ ] Service names, descriptions and entry-offer names are drafts to review
+- [ ] Service names, descriptions and entry-offer names are drafts to review, including the new websites and e-commerce service
+- [ ] Programmed is shown as an in-development app in the work section; remove it from `work` in `src/site.ts` if it should not be public yet
+- [ ] Work images were copied from the DineSense-Website and Portfolio projects on 2026-10-21; refresh them when those apps change
 - [x] Privacy commitments confirmed: inquiries that do not become work are deleted within 12 months; deletion requests are fulfilled within one week
 - [x] Final outlined logo, optical favicons and social images integrated

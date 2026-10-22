@@ -4,87 +4,120 @@ import { site, email, budgets, contactEndpoint } from '../site';
 ---
 
 <section id="contact" class="section" aria-labelledby="contact-title">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 id="contact-title">Contact</h2>
-      <p>Tell me what you need in your own words. I read every message myself.</p>
+  <div class="wrap contact">
+    <div class="intro surface">
+      <h2 id="contact-title">Tell me what you need.</h2>
+      <p class="muted">In your own words. I read every message myself and reply within {site.replyWindow}.</p>
+      {contactEndpoint && <p class="small dim alt">Prefer email? <a href={`mailto:${email}`}>{email}</a></p>}
     </div>
 
-    {contactEndpoint && <div id="sent" class="card sent" role="status" hidden>
-      <Mark class="sent-mark" />
-      <div>
-        <p class="sent-title">Got it.</p>
-        <p class="muted">I will reply within {site.replyWindow}.</p>
+    {contactEndpoint ? <div class="panel glass surface">
+      <div id="sent" class="sent" role="status" hidden>
+        <Mark class="sent-mark" />
+        <div>
+          <p class="sent-title">Got it.</p>
+          <p class="muted">I will reply within {site.replyWindow}.</p>
+        </div>
       </div>
-    </div>}
 
-    {contactEndpoint ? <form class="card form" method="post" action={contactEndpoint}>
-      <div class="row two">
+      <form class="form" method="post" action={contactEndpoint}>
+        <div class="row two">
+          <div class="field">
+            <label for="f-name">Name <span class="dim">(optional)</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required />
+          </div>
+        </div>
+
         <div class="field">
-          <label for="f-name">Name <span class="muted">(optional)</span></label>
-          <input id="f-name" name="name" type="text" autocomplete="name" />
+          <label for="f-need">What do you need?</label>
+          <textarea id="f-need" name="message" rows="4" required></textarea>
         </div>
+
         <div class="field">
-          <label for="f-email">Email</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" required />
+          <label for="f-budget">Rough budget</label>
+          <div class="select-wrap">
+            <select id="f-budget" name="budget">
+              {budgets.map((b) => <option value={b}>{b}</option>)}
+            </select>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5l4 4 4-4"></path></svg>
+          </div>
         </div>
-      </div>
 
-      <div class="field">
-        <label for="f-need">What do you need?</label>
-        <textarea id="f-need" name="message" rows="5" required></textarea>
-      </div>
-
-      <div class="field">
-        <label for="f-budget">Rough budget</label>
-        <div class="select-wrap">
-          <select id="f-budget" name="budget">
-            {budgets.map((b) => <option value={b}>{b}</option>)}
-          </select>
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 6.5l4 4 4-4"></path>
-          </svg>
+        <div class="hp" aria-hidden="true">
+          <label for="f-website">Website</label>
+          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
         </div>
-      </div>
 
-      <div class="hp" aria-hidden="true">
-        <label for="f-website">Website</label>
-        <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
-      </div>
-
-      <div class="actions">
-        <button class="btn" type="submit">
-          Send
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4"></path>
-          </svg>
-        </button>
-      </div>
-    </form> : <div class="card form">
-      <p>Email a few sentences about the problem and your rough budget. I reply within {site.replyWindow}.</p>
-      <div class="actions"><a class="btn" href={`mailto:${email}`}>Email {email}</a></div>
+        <div class="actions">
+          <button class="btn" type="submit">
+            Send
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
+          </button>
+        </div>
+      </form>
+    </div> : <div class="panel glass surface mail">
+      <p class="mail-line">Email a few sentences about the problem and your rough budget. I reply within {site.replyWindow}.</p>
+      <a class="btn" href={`mailto:${email}`}>
+        Email {email}
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
+      </a>
     </div>}
-
-    {contactEndpoint && <p class="small muted alt">Prefer email? <a href={`mailto:${email}`}>{email}</a></p>}
   </div>
 </section>
 
 <style>
-  .form {
-    padding: 24px;
+  .contact {
     display: grid;
-    gap: 18px;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
   }
 
-  @media (min-width: 720px) {
-    .form {
-      padding: 28px;
-    }
+  .intro {
+    display: grid;
+    gap: 20px;
+    position: sticky;
+    top: 120px;
+  }
+
+  .intro .muted {
+    max-width: 36ch;
+    font-size: 17px;
+  }
+
+  .alt {
+    margin-top: 12px;
+  }
+
+  .panel {
+    padding: clamp(24px, 3.2vw, 40px);
+  }
+
+  .form {
+    display: grid;
+    gap: 26px;
+  }
+
+  .mail {
+    display: grid;
+    gap: 28px;
+    justify-items: start;
+  }
+
+  .mail-line {
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 40ch;
+    color: var(--muted);
   }
 
   .row.two {
     display: grid;
-    gap: 18px;
+    gap: 26px;
   }
 
   @media (min-width: 560px) {
@@ -95,15 +128,12 @@ import { site, email, budgets, contactEndpoint } from '../site';
 
   .field {
     display: grid;
-    gap: 7px;
+    gap: 8px;
   }
 
   label {
-    font: 600 14.5px/1.3 var(--font-display);
-  }
-
-  label .muted {
-    font-weight: 500;
+    font: 500 13.5px/1.3 var(--font-display);
+    color: var(--muted);
   }
 
   input,
@@ -111,41 +141,39 @@ import { site, email, budgets, contactEndpoint } from '../site';
   select {
     width: 100%;
     margin: 0;
-    padding: 11px 13px;
+    padding: 12px 0;
     font: inherit;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.4;
     color: var(--ink);
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    transition:
-      border-color var(--t-fast) ease,
-      box-shadow var(--t-fast) ease;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--hair);
+    border-radius: 0;
+    transition: border-color var(--t-fast) ease;
   }
 
   textarea {
     resize: vertical;
-    min-height: 120px;
+    min-height: 110px;
   }
 
   input:hover,
   textarea:hover,
   select:hover {
-    border-color: color-mix(in srgb, var(--line) 40%, var(--muted));
+    border-color: var(--muted);
   }
 
   input:focus,
   textarea:focus,
   select:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-soft);
+    border-color: var(--cobalt-light);
   }
 
   input:user-invalid,
   textarea:user-invalid {
-    border-color: #c0392b;
+    border-color: #e0604f;
   }
 
   .select-wrap {
@@ -155,13 +183,17 @@ import { site, email, budgets, contactEndpoint } from '../site';
   select {
     appearance: none;
     -webkit-appearance: none;
-    padding-right: 40px;
+    padding-right: 36px;
     cursor: pointer;
+  }
+
+  select option {
+    background: #101115;
   }
 
   .select-wrap svg {
     position: absolute;
-    right: 13px;
+    right: 4px;
     top: 50%;
     width: 16px;
     height: 16px;
@@ -179,12 +211,7 @@ import { site, email, budgets, contactEndpoint } from '../site';
   }
 
   .actions {
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  .alt {
-    margin-top: 16px;
+    padding-top: 6px;
   }
 
   .sent[hidden] {
@@ -194,17 +221,16 @@ import { site, email, budgets, contactEndpoint } from '../site';
   .sent {
     display: flex;
     align-items: center;
-    gap: 18px;
-    padding: 20px 22px;
-    margin-bottom: 16px;
-    border-color: var(--accent-line);
-    background: color-mix(in srgb, var(--accent-soft) 50%, var(--card));
+    gap: 22px;
+    padding-bottom: 28px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--hair);
   }
 
   .sent :global(.sent-mark) {
     flex: none;
-    width: 76px;
-    color: var(--accent);
+    width: 84px;
+    color: var(--cobalt-light);
   }
 
   .sent :global(.sent-mark .mark-stroke) {
@@ -220,12 +246,21 @@ import { site, email, budgets, contactEndpoint } from '../site';
   }
 
   .sent-title {
-    font: 600 18px/1.3 var(--font-display);
+    font: 500 20px/1.3 var(--font-display);
+  }
+
+  @media (max-width: 859px) {
+    .contact {
+      grid-template-columns: 1fr;
+    }
+
+    .intro {
+      position: static;
+    }
   }
 </style>
 
 <script>
-  // The Worker redirects to /?sent=1 after a successful submission.
   const params = new URLSearchParams(location.search);
   if (params.get('sent') === '1') {
     const box = document.getElementById('sent');

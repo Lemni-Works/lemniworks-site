@@ -1,299 +1,98 @@
 ---
-import { MARK_PATH, MARK_VIEWBOX, MARK_STROKE } from '../mark';
-import { site } from '../site';
+import { hero, services } from '../site';
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="wrap">
-    <div class="hero-mark-wrap">
-      <svg
-        id="hero-mark"
-        class="hero-mark"
-        viewBox={MARK_VIEWBOX}
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <defs>
-          <pattern id="grid-dots" width="12" height="12" patternUnits="userSpaceOnUse">
-            <circle cx="6" cy="6" r="0.9" fill="var(--grid-dot)"></circle>
-          </pattern>
-          <radialGradient id="grid-fade" cx="50%" cy="50%" r="55%">
-            <stop offset="0" stop-color="#fff"></stop>
-            <stop offset="0.65" stop-color="#fff" stop-opacity="0.6"></stop>
-            <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
-          </radialGradient>
-          <mask id="grid-mask">
-            <rect width="232" height="120" fill="url(#grid-fade)"></rect>
-          </mask>
-        </defs>
-        <rect class="grid" width="232" height="120" fill="url(#grid-dots)" mask="url(#grid-mask)"></rect>
-        <path
-          class="mark-stroke"
-          d={MARK_PATH}
-          pathLength="1"
-          fill="none"
-          stroke="currentColor"
-          stroke-width={MARK_STROKE}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></path>
-        <g class="flow"></g>
-      </svg>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <h1 id="hero-title">{hero.headline}</h1>
+      <p class="lede">{hero.lede}</p>
+      <div class="hero-cta">
+        <a class="btn" href="#contact">
+          {hero.cta}
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
+        </a>
+        <p class="small muted note">{hero.note}</p>
+      </div>
     </div>
-
-    <h1 id="hero-title">Data and automation for small businesses.</h1>
-    <p class="lede">
-      I build scheduled scrapers, automations between the tools you already use, and the reports that read from
-      them. Fixed price, written quote, source code handed over at the end.
-    </p>
-    <div class="hero-cta">
-      <a class="btn" href="#contact">
-        Tell me what you need
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4"></path>
-        </svg>
-      </a>
-    </div>
-    <p class="hero-note small muted">
-      I reply within {site.replyWindow}. Calls are by appointment, evenings Central.
-    </p>
+    <ul class="doors" aria-label="Services">
+      {services.map((s) => <li><a href={`#svc-${s.slug}`}>{s.short}</a></li>)}
+    </ul>
   </div>
 </section>
 
 <style>
   .hero {
-    padding-block: 36px var(--section);
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    padding-top: 120px;
+    padding-bottom: clamp(40px, 6vw, 72px);
   }
 
-  @media (min-width: 720px) {
-    .hero {
-      padding-top: 48px;
-    }
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(40px, 6vw, 80px);
   }
 
-  .hero-mark-wrap {
-    max-width: 640px;
-    margin: 0 0 20px -8px;
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(22px, 3vw, 36px);
   }
 
-  @media (min-width: 720px) {
-    .hero-mark-wrap {
-      margin-bottom: 36px;
-      margin-left: -12px;
-    }
-  }
-
-  .hero-mark {
-    display: block;
-    width: 100%;
-    height: auto;
-    color: var(--ink);
-    overflow: visible;
-  }
-
-  .hero-mark .mark-stroke {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: draw 1500ms var(--ease-out) 200ms forwards;
-  }
-
-  @keyframes draw {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  .hero-mark .grid {
-    opacity: 0;
-    animation: fade 1200ms ease 600ms forwards;
-  }
-
-  @keyframes fade {
-    to {
-      opacity: 1;
-    }
-  }
-
-  .hero-mark :global(.dot) {
-    fill: var(--accent);
-  }
-
-  .hero-mark :global(.ring) {
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 2;
-    opacity: 0;
-    transform-box: fill-box;
-    transform-origin: center;
+  h1 {
+    max-width: 11ch;
   }
 
   .lede {
-    margin-top: 20px;
-    max-width: 58ch;
-    font-size: 19px;
+    max-width: 46ch;
+    font-size: clamp(17px, 1.6vw, 21px);
     line-height: 1.5;
     color: var(--muted);
   }
 
-  @media (min-width: 720px) {
-    .lede {
-      font-size: 20px;
-    }
-  }
-
   .hero-cta {
-    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px 32px;
   }
 
-  .hero-note {
-    margin-top: 14px;
+  .note {
+    max-width: 34ch;
+  }
+
+  .doors {
+    list-style: none;
+    margin: 0;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--hair);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 40px;
+  }
+
+  .doors a {
+    font: 500 15px/1.4 var(--font-display);
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--t-fast) ease;
+  }
+
+  .doors a:hover {
+    color: var(--ink);
+  }
+
+  @media (max-width: 719px) {
+    .hero {
+      padding-top: 96px;
+    }
+
+    .doors {
+      flex-direction: column;
+      gap: 10px;
+    }
   }
 </style>
-
-<script>
-  import { MARK_CROSS } from '../mark';
-
-  const svg = document.getElementById('hero-mark') as SVGSVGElement | null;
-  const path = svg?.querySelector<SVGPathElement>('.mark-stroke') ?? null;
-  const layer = svg?.querySelector<SVGGElement>('.flow') ?? null;
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Tell the header whether the big mark is on screen (the small one draws in when it is not).
-  if (svg) {
-    const root = document.documentElement;
-    new IntersectionObserver(
-      ([e]) => root.classList.toggle('hero-visible', e.isIntersecting),
-      { threshold: 0.2 }
-    ).observe(svg);
-  }
-
-  if (svg && path && layer && !reduce) {
-    const NS = 'http://www.w3.org/2000/svg';
-    const L = path.getTotalLength();
-    const N = 6;          // particles in flight
-    const LEAD = 0.05;    // fraction of the period spent appearing at the entry
-    const TAIL = 0.07;    // path fraction travelled past the exit terminal while fading
-    const PERIOD = 7600;  // ms for one traversal
-    const SPAN = 1 + LEAD + TAIL;
-
-    const at = (f: number) => path.getPointAtLength(Math.min(Math.max(f, 0), 1) * L);
-    const unit = (a: DOMPoint, b: DOMPoint) => {
-      const dx = b.x - a.x, dy = b.y - a.y, m = Math.hypot(dx, dy) || 1;
-      return { x: dx / m, y: dy / m };
-    };
-    const start = at(0), end = at(1);
-    const dirOut = unit(at(0.994), end);    // direction of travel at the exit
-    const cross = at(MARK_CROSS);
-
-    type P = { el: SVGCircleElement; p: number; crossed: boolean };
-    const parts: P[] = [];
-    for (let i = 0; i < N; i++) {
-      const el = document.createElementNS(NS, 'circle');
-      el.setAttribute('class', 'dot');
-      el.setAttribute('r', '4');
-      layer.appendChild(el);
-      parts.push({ el, p: -LEAD - (i * SPAN) / N, crossed: false });
-    }
-
-    const rings: SVGCircleElement[] = [];
-    for (let i = 0; i < 3; i++) {
-      const el = document.createElementNS(NS, 'circle');
-      el.setAttribute('class', 'ring');
-      el.setAttribute('cx', String(cross.x));
-      el.setAttribute('cy', String(cross.y));
-      el.setAttribute('r', '6');
-      layer.appendChild(el);
-      rings.push(el);
-    }
-    let ringIdx = 0;
-    const pulse = () => {
-      const el = rings[ringIdx++ % rings.length];
-      el.animate(
-        [
-          { transform: 'scale(0.4)', opacity: 0.9 },
-          { transform: 'scale(2.6)', opacity: 0 },
-        ],
-        { duration: 700, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
-      );
-    };
-
-    let running = false;
-    let last = 0;
-    let boost = 1;
-    let target = 1;
-    let raf = 0;
-
-    const frame = (t: number) => {
-      if (!running) return;
-      const dt = last ? Math.min(t - last, 48) : 0;
-      last = t;
-      boost += (target - boost) * 0.06;
-      const step = (dt / PERIOD) * boost;
-      for (const q of parts) {
-        q.p += step;
-        if (q.p > 1 + TAIL) {
-          q.p -= SPAN;
-          q.crossed = false;
-        }
-        if (!q.crossed && q.p >= MARK_CROSS) {
-          q.crossed = true;
-          pulse();
-        }
-        let x: number, y: number, o: number, r = 4;
-        if (q.p < 0) {
-          // Data appears at the entry terminal.
-          const k = Math.max(0, 1 + q.p / LEAD);
-          x = start.x;
-          y = start.y;
-          o = k;
-          r = 4 * k;
-        } else if (q.p > 1) {
-          // ...and leaves through the gap, fading as it goes.
-          const k = (q.p - 1) / TAIL;
-          const d = k * 24;
-          x = end.x + dirOut.x * d;
-          y = end.y + dirOut.y * d;
-          o = 1 - k;
-          r = 4 * (1 - k * 0.5);
-        } else {
-          const pt = at(q.p);
-          x = pt.x;
-          y = pt.y;
-          o = 1;
-        }
-        q.el.setAttribute('cx', x.toFixed(2));
-        q.el.setAttribute('cy', y.toFixed(2));
-        q.el.setAttribute('r', r.toFixed(2));
-        q.el.setAttribute('opacity', Math.max(0, Math.min(1, o)).toFixed(2));
-      }
-      raf = requestAnimationFrame(frame);
-    };
-
-    const setRunning = (on: boolean) => {
-      if (on === running) return;
-      running = on;
-      last = 0;
-      if (on) raf = requestAnimationFrame(frame);
-      else cancelAnimationFrame(raf);
-    };
-
-    let visible = false;
-    new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting;
-      setRunning(visible && !document.hidden && started);
-    }).observe(svg);
-    document.addEventListener('visibilitychange', () => setRunning(visible && !document.hidden && started));
-
-    // The pointer near the machine makes it run faster.
-    svg.addEventListener('pointerenter', () => (target = 1.9));
-    svg.addEventListener('pointerleave', () => (target = 1));
-
-    // Let the stroke draw itself before data starts moving.
-    let started = false;
-    setTimeout(() => {
-      started = true;
-      setRunning(visible && !document.hidden);
-    }, 1400);
-  }
-</script>
