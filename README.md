@@ -28,6 +28,8 @@ Until the contact Worker exists, leave `PUBLIC_WORKER_ORIGIN={WORKER_ORIGIN}`. T
 
 Once a valid HTTPS origin is configured, rebuild and deploy. The form posts form-encoded `name`, `email`, `message`, `budget` and `website` fields to `/api/contact` at that origin. The Worker must reject nonempty `website` honeypots and redirect successful submissions with HTTP 303 to `https://lemniworks.com/?sent=1`. The form works with JavaScript off; the success display uses the small query-string handler.
 
+Update the privacy notice when enabling the form so that it describes the actual processing, storage and retention in the new Worker. The launch notice describes email inquiries and the Cloudflare Web Analytics beacon observed on the live domain.
+
 Custom domains: `lemniworks.com` and `www.lemniworks.com`. Canonical URLs use the apex domain. The GitHub repository is already public; deployment does not require changing its visibility.
 
 ## Where things live
@@ -74,5 +76,5 @@ Everything below is in `src/site.ts` unless noted.
 - [ ] Build the contact Worker, configure `PUBLIC_WORKER_ORIGIN`, redeploy, and verify real delivery
 - [x] `hello@lemniworks.com` receives email (confirmed by the owner)
 - [ ] Service names, descriptions and entry-offer names are drafts to review
-- [ ] Privacy page text is a draft (retention period, hosting region)
+- [ ] Confirm an inquiry retention period and deletion response window before adding those commitments to the privacy notice
 - [x] Final outlined logo, optical favicons and social images integrated

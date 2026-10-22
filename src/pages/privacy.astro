@@ -5,35 +5,39 @@ import Footer from '../components/Footer.astro';
 import { site, email } from '../site';
 ---
 
-<Base title={`Privacy · ${site.name}`} description="What happens to the details you send through the Lemni Works contact form.">
+<Base title={`Privacy · ${site.name}`} description="What happens to the details you email to Lemni Works.">
   <Header />
   <main id="main" class="wrap section prose">
     <h1>Privacy</h1>
-    <p class="muted small">Last updated October 2026. Draft, to be confirmed.</p>
+    <p class="muted small">Last updated October 2026.</p>
 
     <h2>What this site collects</h2>
     <p>
-      This site has no analytics, no cookies and no third-party scripts. The only information it collects is what you
-      type into the contact form: your name if you give it, your email address, your message and the budget range you
-      pick.
+      This site uses Cloudflare Web Analytics to measure page views and loading performance. Cloudflare describes how
+      these metrics are collected in its <a href="https://developers.cloudflare.com/web-analytics/about/">Web Analytics documentation</a>.
+      This site does not include advertising tools.
+    </p>
+    <p>
+      The contact link opens your email app. When you email me, I receive your email address and whatever details you
+      choose to include in your message.
     </p>
 
     <h2>What I do with it</h2>
     <p>
-      The form is delivered to a mailbox and a small private database that only I can reach. I use it to reply to you
-      and, if we work together, to keep track of the project. I do not sell it, share it or add you to a mailing list.
+      I use your message to reply to you and, if we work together, to keep track of the project. I do not sell your
+      contact details or add you to a mailing list.
     </p>
 
-    <h2>How long I keep it</h2>
+    <h2>Questions and deletion requests</h2>
     <p>
-      Messages that do not turn into work are deleted within 12 months. If you would like yours deleted sooner, email
-      <a href={`mailto:${email}`}>{email}</a> and I will do it the same week.
+      If you have a question about your information or would like to request deletion of a message you sent, email
+      <a href={`mailto:${email}`}>{email}</a>.
     </p>
 
     <h2>Where it is stored</h2>
     <p>
-      The form is processed and stored on Cloudflare infrastructure in the United States. Email replies go through my
-      ordinary business mailbox.
+      Cloudflare hosts this website. Inquiries and replies go through my Google business mailbox. This site does not
+      currently submit contact messages to a form service or a separate database.
     </p>
   </main>
   <Footer />
