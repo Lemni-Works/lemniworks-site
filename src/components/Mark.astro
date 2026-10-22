@@ -1,0 +1,35 @@
+---
+import { MARK_PATH, MARK_VIEWBOX } from "../mark";
+
+interface Props {
+  class?: string;
+  /** Accessible name. Omit to mark decorative. */
+  title?: string;
+  /** Stroke width in viewBox units (1/8 of the mark height ≈ 10). */
+  stroke?: number;
+  id?: string;
+}
+const { class: cls = '', title, stroke = 10, id } = Astro.props;
+---
+
+<svg
+  class:list={['mark', cls]}
+  viewBox={MARK_VIEWBOX}
+  xmlns="http://www.w3.org/2000/svg"
+  role={title ? 'img' : undefined}
+  aria-hidden={title ? undefined : 'true'}
+  focusable="false"
+  id={id}
+>
+  {title && <title>{title}</title>}
+  <path
+    class="mark-stroke"
+    d={MARK_PATH}
+    pathLength="1"
+    fill="none"
+    stroke="currentColor"
+    stroke-width={stroke}
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

@@ -1,0 +1,103 @@
+---
+import { work, workNote } from '../site';
+---
+
+<section id="work" class="section" aria-labelledby="work-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="work-title">Built by Lemni Works</h2>
+    </div>
+    <ul class="work" role="list">
+      {
+        work.map((w) => (
+          <li class="card item">
+            <div class="item-top">
+              <h3>{w.name}</h3>
+              <span class="kind small muted">{w.kind}</span>
+            </div>
+            <p class="line">{w.line}</p>
+            <a class="ext" href={w.href} target="_blank" rel="noopener">
+              {w.linkLabel}
+              <span class="visually-hidden"> (opens in a new tab)</span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4.5 11.5l7-7M6 4.5h5.5V10" />
+              </svg>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="small muted note">{workNote}</p>
+  </div>
+</section>
+
+<style>
+  .work {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .item {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition:
+      transform var(--t-base) var(--ease-out),
+      box-shadow var(--t-base) var(--ease-out),
+      border-color var(--t-base) ease;
+  }
+
+  @media (hover: hover) {
+    .item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+      border-color: var(--accent-line);
+    }
+  }
+
+  .item-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .kind {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .line {
+    font-size: 15.5px;
+    color: var(--muted);
+    flex-grow: 1;
+  }
+
+  .ext {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    align-self: flex-start;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .ext svg {
+    width: 14px;
+    height: 14px;
+    transition: transform var(--t-base) var(--ease-out);
+  }
+
+  .ext:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  .note {
+    margin-top: 20px;
+  }
+</style>

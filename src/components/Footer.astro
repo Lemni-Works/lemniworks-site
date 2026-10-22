@@ -1,0 +1,29 @@
+---
+import { site } from '../site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-inner small muted">
+    <span class="num">© {year} {site.name}</span>
+    <span>{site.city}</span>
+    <a href="/privacy">Privacy</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding-block: 28px 40px;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+
+  .footer-inner a {
+    color: inherit;
+  }
+</style>

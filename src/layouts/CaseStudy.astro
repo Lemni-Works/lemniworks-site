@@ -1,0 +1,65 @@
+---
+/**
+ * Layout for /work/<slug> case studies. No pages use it at launch; add
+ * src/pages/work/<slug>.astro files that wrap their content in this layout.
+ */
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../site';
+
+interface Props {
+  title: string;
+  description: string;
+  client?: string;
+  year?: string;
+}
+const { title, description, client, year } = Astro.props;
+---
+
+<Base title={`${title} · ${site.name}`} description={description}>
+  <Header />
+  <main id="main" class="wrap section study">
+    <p class="small muted meta num">
+      {client && <span>{client}</span>}
+      {year && <span>{year}</span>}
+    </p>
+    <h1>{title}</h1>
+    <p class="lede muted">{description}</p>
+    <div class="body">
+      <slot />
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .study {
+    max-width: calc(680px + 2 * var(--gutter));
+  }
+
+  .meta {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .lede {
+    margin-top: 16px;
+    font-size: 19px;
+  }
+
+  .body {
+    margin-top: 36px;
+  }
+
+  .body :global(h2) {
+    font-size: 22px;
+    margin-top: 36px;
+    margin-bottom: 8px;
+  }
+
+  .body :global(p + p) {
+    margin-top: 12px;
+  }
+</style>

@@ -1,0 +1,291 @@
+/* Lemni Works — design tokens and base styles.
+   Tokens follow DESIGN.md. Light and dark from prefers-color-scheme only. */
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/fonts/manrope-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --ink: #1b1b1f;
+  --muted: #5d6068;
+  --bg: #fbfbfc;
+  --card: #ffffff;
+  --line: #e4e4e8;
+  --accent: #2a5bd7;
+  --accent-ink: #ffffff;
+  --accent-soft: rgb(42 91 215 / 0.12);
+  --accent-line: rgb(42 91 215 / 0.4);
+  --grid-dot: rgb(27 27 31 / 0.16);
+  --shadow-card: 0 1px 2px rgb(27 27 31 / 0.04), 0 12px 32px -16px rgb(27 27 31 / 0.22);
+  --shadow-btn: 0 6px 16px -8px rgb(42 91 215 / 0.6);
+
+  --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+
+  --measure: 860px;
+  --gutter: 20px;
+  --section: 72px;
+  --radius: 12px;
+  --header-h: 64px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 150ms;
+  --t-base: 260ms;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #ececf0;
+    --muted: #a0a3ab;
+    --bg: #121317;
+    --card: #1a1b20;
+    --line: #2a2b31;
+    --accent: #6b93ff;
+    --accent-ink: #0d1526;
+    --accent-soft: rgb(107 147 255 / 0.16);
+    --accent-line: rgb(107 147 255 / 0.45);
+    --grid-dot: rgb(236 236 240 / 0.14);
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -16px rgb(0 0 0 / 0.6);
+    --shadow-btn: 0 6px 16px -8px rgb(107 147 255 / 0.5);
+    color-scheme: dark;
+  }
+}
+
+@media (max-width: 719px) {
+  :root {
+    --section: 48px;
+    --header-h: 56px;
+  }
+}
+
+/* ---------- Reset and base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  caret-color: var(--accent);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(34px, 5.5vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+h3 {
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: var(--accent-line);
+  transition: text-decoration-color var(--t-fast) ease;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+small,
+.small {
+  font-size: 14.5px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Layout ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--measure) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section);
+}
+
+.section + .section {
+  padding-top: 0;
+}
+
+.section-head {
+  margin-bottom: 28px;
+}
+
+.section-head p {
+  margin-top: 8px;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.skip {
+  position: absolute;
+  left: var(--gutter);
+  top: 8px;
+  padding: 8px 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transform: translateY(-200%);
+  transition: transform var(--t-fast) ease;
+  z-index: 100;
+}
+
+.skip:focus-visible {
+  transform: none;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Controls ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 20px 13px 22px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 0;
+  border-radius: 10px;
+  font: 600 16px/1 var(--font-display);
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 transparent;
+  transition:
+    transform var(--t-base) var(--ease-out),
+    box-shadow var(--t-base) var(--ease-out),
+    filter var(--t-fast) ease;
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--t-base) var(--ease-out);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-btn);
+  filter: brightness(1.05);
+}
+
+.btn:hover svg {
+  transform: translateX(3px);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+  transition-duration: 60ms;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+/* ---------- Mark ---------- */
+
+.mark {
+  display: block;
+  color: currentColor;
+  overflow: visible;
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site, email } from '../site';
+---
+
+<Base title={`Privacy · ${site.name}`} description="What happens to the details you send through the Lemni Works contact form.">
+  <Header />
+  <main id="main" class="wrap section prose">
+    <h1>Privacy</h1>
+    <p class="muted small">Last updated October 2026. Draft, to be confirmed.</p>
+
+    <h2>What this site collects</h2>
+    <p>
+      This site has no analytics, no cookies and no third-party scripts. The only information it collects is what you
+      type into the contact form: your name if you give it, your email address, your message and the budget range you
+      pick.
+    </p>
+
+    <h2>What I do with it</h2>
+    <p>
+      The form is delivered to a mailbox and a small private database that only I can reach. I use it to reply to you
+      and, if we work together, to keep track of the project. I do not sell it, share it or add you to a mailing list.
+    </p>
+
+    <h2>How long I keep it</h2>
+    <p>
+      Messages that do not turn into work are deleted within 12 months. If you would like yours deleted sooner, email
+      <a href={`mailto:${email}`}>{email}</a> and I will do it the same week.
+    </p>
+
+    <h2>Where it is stored</h2>
+    <p>
+      The form is processed and stored on Cloudflare infrastructure in the United States. Email replies go through my
+      ordinary business mailbox.
+    </p>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .prose {
+    max-width: calc(640px + 2 * var(--gutter));
+    margin-inline: 0;
+  }
+
+  @media (min-width: 720px) {
+    .prose {
+      margin-inline: auto;
+      margin-left: calc((100% - var(--measure) - 2 * var(--gutter)) / 2);
+    }
+  }
+
+  .prose h1 {
+    font-size: clamp(30px, 4.5vw, 40px);
+  }
+
+  .prose h1 + p {
+    margin-top: 10px;
+  }
+
+  .prose h2 {
+    font-size: 20px;
+    margin-top: 32px;
+    margin-bottom: 8px;
+  }
+
+  .prose p + p {
+    margin-top: 12px;
+  }
+</style>
