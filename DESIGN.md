@@ -176,9 +176,7 @@ Each line colour reaches its elements through one custom property, `--c`, set by
 - **Raised Graphite** (#181715): the ground of the lines section and the contact section, each bounded by a soft hairline. Also the fill of relay-stop circles and of select menus.
 - **Bone** (#f3f1ea): ink. Headings, body, station ticks, terminus bars, rings, the hub capsule, trains, button fills, the journey line.
 - **Muted Bone** (#aaa89f): secondary text: ledes, descriptions, route-strip labels, line-name meta lines, nav links at rest, timetable "what runs" cells.
-- **Dim Bone** (#7d7c73): tertiary text: prices, section labels, the legend title, the footer, the "not offered" line, the footer mark.
 - **Hair** (bone at 12%): the hairline. Borders under table cells and inputs, line-entry separators, the glass panel's border, ghost button borders, the relay track at rest.
-- **Soft Hair** (bone at 7%): the quieter hairline. Section bounds, the header's bottom edge, the footer rule, summary separators, legend rows on phones.
 - **Glass** (bone at 3.5%): the fill of the one glass panel, the contact form.
 - **White** (#ffffff): the hover fill of the primary button only.
 - **Invalid Red** (#e0604f): the underline of a field the user has left invalid. No other red exists.
@@ -203,7 +201,6 @@ Each line colour reaches its elements through one custom property, `--c`, set by
 - **Headline** (500, clamp(32px, 4.6vw, 60px), 1.0, −0.035em): section headings: "What I build.", "In service.", "The journey.", "One operator. Every line.", "Tell me what you need." Headings are short, end in a full stop, and are balanced.
 - **Title** (500, clamp(22px, 2.4vw, 30px), 1.15, −0.025em): the service name on each line entry (raised there to clamp(26px, 2.6vw, 36px)), journey stops (20px), the "sent" title.
 - **Body** (400, 17px, 1.55, system sans): prose. Measures run 34ch (hero lede) to 52ch (about, case-study overview); descriptions sit at 46ch in muted bone. Small text is 14.5px; captions, status lines and prices run 13px to 13.5px.
-- **Label** (500, 13px, 1.3, Manrope, sentence case): the workhorse small label. Line-name meta lines, the legend title, legend names (15px), route-strip stops, form labels (13.5px), timetable headers, nav links (14.5px), text links (14px), chips (13.5px), the about sign-off.
 - **Station** (500, 15px, −0.01em, Manrope): station names on the map, in sentence case. Destination names are the same at weight 600, underlined in hair.
 - **Button** (500, 16px, 1, −0.005em, Manrope): pill buttons. Small variant 14px.
 - **Meta** (500, 12.5px, 0.08em, uppercase, dim bone): the `.label` class. Used only below a heading or as a row label ("Next", the case-study kind and year, the case-study block headings at 15px/0.06em). Never above a heading.
@@ -211,7 +208,7 @@ Each line colour reaches its elements through one custom property, `--c`, set by
 ### Named Rules
 **The One Weight Rule.** Manrope is set at 500 everywhere except the hub name and the destination labels on the map, which are 600. No bold headings, no light display.
 
-**The Sentence Case Rule.** Headings, labels, buttons, stations and legend entries are sentence case. The only uppercase is the meta line beneath a heading and the case-study block headings.
+**The Sentence Case Rule.** Headings, labels, buttons, stations and services section entries are sentence case. The only uppercase is the meta line beneath a heading and the case-study block headings.
 
 **The Meta Below Rule.** A line name or kind sits below its heading as a meta line with a swatch. Nothing is set as an eyebrow above a heading.
 
@@ -219,9 +216,9 @@ Each line colour reaches its elements through one custom property, `--c`, set by
 
 The page is a single column on a 1280px measure (`--measure`), centred by `.wrap` with gutters of clamp(20px, 5vw, 72px). Sections are spaced clamp(80px, 10vw, 140px) apart and open with a section head: the headline left, a muted paragraph of 36–44ch right, aligned to the baseline, with clamp(40px, 6vw, 72px) below it. Two sections, the lines and the contact, sit on raised graphite and are bounded by soft hairlines; the about section drops its top padding to butt against the lines section.
 
-The first viewport is the map. A fixed 80px header (64px under 720px) is frosted graphite at 72% with an 18px blur; below it the hero stage is one grid cell in which the map (a 1200×720 viewBox, `xMidYMid slice`) and the copy overlap. The map is sized to `min(100%, (100vh − 120px) × 1.76)` so it fills the stage without cropping the hub; the copy owns the empty north-west quadrant at a 420px measure and never takes the wrap's auto margins; between 901 and 1100px the measure narrows to 300px and the headline steps down to clamp(32px, 3.3vw, 38px) so the overlay holds. Beneath the stage, the legend: a title rule, then five entries in a 4 + 0.9 fraction grid, each a swatch, a line name and the service in muted bone. At 900px and below the stage stacks, copy first, and the map becomes a pocket map: a 980×372 strip wider than the screen, cropped to the band around the hub and masked so the band fades into the ground at its top and bottom 6%, scrolled sideways by hand with the hub centred on load, no visible scrollbar. The legend goes to two columns at 900px with the Depot spanning both, and to one column with soft hairline rows at 560px.
+The first viewport is the map. A fixed 80px header (64px under 720px) is frosted graphite at 72% with an 18px blur; below it the hero stage is one grid cell in which the map (a 1200×720 viewBox, `xMidYMid slice`) and the copy overlap. The map is sized to `min(100%, (100vh − 120px) × 1.76)` so it fills the stage without cropping the hub; the copy owns the empty north-west quadrant at a 420px measure and never takes the wrap's auto margins; between 901 and 1100px the measure narrows to 300px and the headline steps down to clamp(32px, 3.3vw, 38px) so the overlay holds. Beneath the stage, the services section: a title rule, then five entries in a 4 + 0.9 fraction grid, each a swatch, a line name and the service in muted bone. At 900px and below the stage stacks, copy first, and the map becomes a pocket map: a 980×372 strip wider than the screen, cropped to the band around the hub and masked so the band fades into the ground at its top and bottom 6%, scrolled sideways by hand with the hub centred on load, no visible scrollbar. The services section goes to two columns at 900px with the Depot spanning both, and to one column with soft hairline rows at 560px.
 
-Inside sections the page is two-column: line entries split copy 5 / proof 7 with a gap of clamp(32px, 5vw, 80px); about splits portrait 4 / text 7, contact splits intro 5 / panel 7, and the case-study body is two equal columns, all with a gap of clamp(32px, 6vw, 96px). The contact intro is sticky at 120px. Every two-column layout collapses to one at about 860px (719px for about, the header and case studies). Line entries are separated by hairlines and padded 44px above, 64px below, with a 96px scroll margin so a legend tap lands below the header. The journey is four columns across, one column with the line running down the left below 860px. Tables (the timetable, the collector instrument) are full-width with hairline rows; on phones the timetable drops its header row and each row becomes a small grid.
+Inside sections the page is two-column: line entries split copy 5 / proof 7 with a gap of clamp(32px, 5vw, 80px); about splits portrait 4 / text 7, contact splits intro 5 / panel 7, and the case-study body is two equal columns, all with a gap of clamp(32px, 6vw, 96px). The contact intro is sticky at 120px. Every two-column layout collapses to one at about 860px (719px for about, the header and case studies). Line entries are separated by hairlines and padded 44px above, 64px below, with a 96px scroll margin so a services section tap lands below the header. The journey is four columns across, one column with the line running down the left below 860px. Tables (the timetable, the collector instrument) are full-width with hairline rows; on phones the timetable drops its header row and each row becomes a small grid.
 
 ## Elevation & Depth
 
@@ -238,7 +235,7 @@ Flat by default, with tonal layering. Depth is one step of ground (graphite to r
 
 ## Shapes
 
-Two silhouettes rule: the pill and the line. Buttons, swatches, the hub capsule, the period toggle and stack chips are full pills (999px). Lines are strokes with round caps and round joins; on the map they are 9 units wide (6 and dashed for the siding), bend with a 28-unit radius, and carry 4-unit ticks 16 long, 5-unit terminus bars 26 long, and 4-unit rings of radius 10 at destinations. Route strips in the services section are 7px pill bars; the journey line is a 7px pill bar in bone; swatches are 44×9 (legend) or 28×7 (meta lines, timetable) pills, drawn as a 4px dashed top border for the Depot.
+Two silhouettes rule: the pill and the line. Buttons, swatches, the hub capsule, the period toggle and stack chips are full pills (999px). Lines are strokes with round caps and round joins; on the map they are 9 units wide (6 and dashed for the siding), bend with a 28-unit radius, and carry 4-unit ticks 16 long, 5-unit terminus bars 26 long, and 4-unit rings of radius 10 at destinations. Route strips in the services section are 7px pill bars; the journey line is a 7px pill bar in bone; swatches are 44×9 (services section) or 28×7 (meta lines, timetable) pills, drawn as a 4px dashed top border for the Depot.
 
 The station marker (`.dot`) is a 12px disc in the line colour (10–11px inside route strips and the journey) inside a white ring: a 2px gap of graphite, then a 1.5px ring of bone. Rectangles are rare and soft: the glass panel at 18px, the site capture at 14px, desktop screens and the portrait at 6px, phone screens at clamp(18px, 2.4vw, 34px), report bars square at the base and 4px at the top. Inputs are not boxes; they are a hairline under the text.
 
@@ -279,7 +276,7 @@ The signature. `src/map.ts` holds the geometry; `src/components/NetworkMap.astro
 
 Draw-in: each line's path uses `pathLength="1"` and runs its dash offset from 1 to 0 over 2400ms with `cubic-bezier(0.65, 0, 0.2, 1)`, lines staggered 320ms apart; each station fades in (500ms) at its own fraction of the line's length; terminus bars at +2300ms, trains at +2600ms, the hub at 2500ms. Trains are radius-6 bone discs with a 3-unit stroke in the line colour, running the line on an 18s-plus loop (longer on later lines) that begins at 2.6s. The map draws once the entrance has landed, or two frames after load when there is no entrance. Without JavaScript everything is drawn. Reduced motion zeroes every delay and hides the trains.
 
-Legend selection: hovering or focusing a legend entry sets the map's focus to that line; the other lines drop to 16% opacity over 320ms and the swatch stretches to 1.36×. On touch there is no hover; tapping a legend entry navigates to that line's section, which is the selection.
+Services section selection: hovering or focusing a services section entry sets the map's focus to that line; the other lines drop to 16% opacity over 320ms and the swatch stretches to 1.36×. On touch there is no hover; tapping a services section entry navigates to that line's section, which is the selection.
 
 ### Route strips, the journey and instruments
 Each line entry opens with a route strip: a 7px bar in the line colour with its deliverables as station dots and labels spaced along it; below 860px the bar turns vertical down the left. The journey is the same strip in bone with four stops. Proof beside each line is real work or a working example: the Storefront line shows the real dinesense.app capture; the Automation line is a straight stretch of track whose test order (a pulse, 2.6s linear, lighting each stop and writing a status line) runs in the page and sends nothing; the Data line is a table of 3 fictional rows with a CSV download; the Reports line is seven bars scaling to their values over 500ms, switching between a week and a month. Every example says it is an example in its status line.
@@ -296,7 +293,6 @@ Five verbs, one placement easing (`cubic-bezier(0.16, 1, 0.3, 1)`), two draw eas
 - **Rise:** `.reveal` fades and lifts 22px (900ms opacity, 1100ms transform), staggered with `--d`. Hidden only under `html.js`.
 - **Uncover:** `.img-reveal` hides an image under a page-coloured cover that shrinks upward (1100ms) while the image settles from 1.06 to 1 (1400ms).
 - **Travel:** view transitions carry a project's title and hero shot; the root crossfades in 420ms.
-- **Settle:** the relay pulse runs 2.6s; bars scale over 500ms; legend swatches stretch over 320ms; period and ring fills change in 200–250ms.
 - **Timing tokens:** feedback 150ms, state 280ms, slow 900ms. Reduced motion collapses every animation and transition to 0.01ms and shows finished states.
 
 ## Do's and Don'ts

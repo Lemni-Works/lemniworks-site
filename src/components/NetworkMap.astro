@@ -230,22 +230,6 @@ const drawn = lines.map((L, i) => ({
     opacity: 1;
   }
 
-  /* Selecting a line in the legend lights it and sends the others to the background. */
-  .line-group {
-    transition: opacity 320ms ease;
-  }
-
-  .network[data-focus] .line-group {
-    opacity: 0.16;
-  }
-
-  .network[data-focus='web'] .line-group[data-line='web'],
-  .network[data-focus='automation'] .line-group[data-line='automation'],
-  .network[data-focus='scraping'] .line-group[data-line='scraping'],
-  .network[data-focus='reports'] .line-group[data-line='reports'] {
-    opacity: 1;
-  }
-
   :global(html:not(.js)) .line {
     stroke-dashoffset: 0;
   }

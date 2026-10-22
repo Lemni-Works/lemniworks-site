@@ -22,8 +22,7 @@ function reveals() {
   cleanups.push(() => observer.disconnect());
 }
 
-/* The map draws itself once the entrance has landed (or at once when there is no entrance),
-   and the legend lights one line at a time. */
+/* The map draws itself once the entrance has landed (or at once when there is no entrance). */
 function map(signal: AbortSignal) {
   const svg = document.querySelector<SVGSVGElement>('[data-map]');
   if (!svg) return;
@@ -56,15 +55,6 @@ function map(signal: AbortSignal) {
     requestAnimationFrame(() => requestAnimationFrame(live));
     setTimeout(live, 600);
   }
-  document.querySelectorAll<HTMLElement>('[data-legend-item]').forEach((item) => {
-    const slug = item.dataset.line ?? '';
-    const on = () => svg.setAttribute('data-focus', slug);
-    const off = () => svg.removeAttribute('data-focus');
-    item.addEventListener('pointerenter', on, { signal });
-    item.addEventListener('focus', on, { signal });
-    item.addEventListener('pointerleave', off, { signal });
-    item.addEventListener('blur', off, { signal });
-  });
 }
 
 /* A test order travels the Relay line: every stop lights as it passes. Nothing leaves the page. */
