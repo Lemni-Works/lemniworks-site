@@ -1,47 +1,578 @@
 ---
-import { services, notOffered, email } from '../site';
+/* The lines. Each service is a line: a route strip of what it connects, the copy, and its proof
+   beside it, real work where it exists and a working example where it does not. */
+import { services, notOffered } from '../site';
+import { serviceLines as lines } from '../map';
 import Arrow from './Arrow.astro';
+
 const outcomes = ['Make a good first impression.', 'Give the busywork a way out.', 'Stop collecting it by hand.', 'Know what is actually happening.'];
-const symbols = ['M3 5h18v14H3zM3 9h18M7 7h.01M10 7h.01', 'M4 7h6v6H4zM14 11h6v6h-6zM10 10h7v1M7 13v5h7', 'M5 3h10l4 4v14H5zM14 3v5h5M8 12h8M8 16h6', 'M4 4v16h17M8 15v-4M13 15V7M18 15v-6'];
+const routes: Record<string, string[]> = {
+  web: ['Design', 'Build', 'Store or site', 'Launch', 'Handover, with the keys'],
+  automation: ['Trigger', 'Transform', 'Deliver', 'Monitor'],
+  scraping: ['Sources', 'Schedule', 'Clean rows', 'Spreadsheet, database or file'],
+  reports: ['Sources', 'Queries', 'Page or PDF', 'On a schedule'],
+};
+const relayStops = ['Form entry', 'New order', 'Spreadsheet', 'CRM', 'Email'];
+const rows = [['Canvas tote', 'Field Supply', '24.00', 'In stock'], ['Desk tray', 'North Studio', '38.00', 'In stock'], ['Travel flask', 'Field Supply', '32.00', 'In stock']];
+const csv = 'Product,Source,Price,Availability\n' + rows.map((row) => row.join(',')).join('\n');
+const week = [42, 68, 54, 85, 72, 96, 82];
 ---
-<section id="services" class="section" aria-labelledby="services-title">
-  <div class="wrap services-layout">
-    <div class="services-intro reveal"><h2 id="services-title">What needs<br />to work better?</h2><p>Start with one problem. I can build the part you need, or connect the whole thing.</p><p class="service-terms">Fixed scope. Written quote.<br />Source code included.</p><a class="text-link" href="#contact">Let's figure it out<Arrow /></a></div>
-    <div class="service-list">
-      {services.map((s, i) => <article id={`svc-${s.slug}`} class="service reveal">
-        <div class="service-heading"><svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={symbols[i]} /></svg><h3>{s.name}</h3></div>
-        <p class="outcome">{outcomes[i]}</p><p class="desc">{s.description}</p>
-        <div class="service-bottom"><a href={`mailto:${email}?subject=${encodeURIComponent(s.name + ' project')}`}>{s.offer}<Arrow diagonal /></a><span>{s.price}</span></div>
-        <details><summary>Ongoing support<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M8 3v10" /></svg></summary><p>{s.upkeep}</p></details>
-      </article>)}
-      <p class="not-offered">{notOffered}</p>
+
+<section id="lines" class="section" aria-labelledby="lines-title">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 id="lines-title">The lines.</h2>
+      <p>Four services, each one a line. Take one, or ride the whole network. Fixed scope, written quote, source code included.</p>
     </div>
+
+    {lines.map((L, i) => {
+      const s = services[i];
+      return (
+        <article id={`line-${L.slug}`} class="line-entry reveal" data-line={L.slug}>
+          <div class="route" aria-label={`What the ${L.name} covers`}>
+            {routes[L.slug].map((stop) => (
+              <span class="stop"><i class="dot" aria-hidden="true"></i><span>{stop}</span></span>
+            ))}
+          </div>
+          <div class="line-body">
+            <div class="line-copy">
+              <h3>{s.name}</h3>
+              <p class="line-name"><span class="swatch" aria-hidden="true"></span>{L.name}</p>
+              <p class="outcome">{outcomes[i]}</p>
+              <p class="desc">{s.description}</p>
+              <div class="line-actions">
+                <a class="btn small" href="#contact">{s.offer}<Arrow /></a>
+                <span class="price">{s.price}</span>
+              </div>
+              <details>
+                <summary>Optional upkeep<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M8 3v10" /></svg></summary>
+                <p>{s.upkeep}</p>
+              </details>
+            </div>
+
+            <div class="line-proof">
+              {L.slug === 'web' && (
+                <figure class="proof-site">
+                  <a href="/work/dinesense-site" aria-label="Read the dinesense.app case study"><img src="/work/dinesense-site.jpg" alt="The DineSense website at desktop width" width="1400" height="1006" loading="lazy" decoding="async" /></a>
+                  <figcaption><span>dinesense.app, a real site I built.</span><a class="text-link" href="/work/dinesense-site">Read the case study<Arrow diagonal /></a></figcaption>
+                </figure>
+              )}
+
+              {L.slug === 'automation' && (
+                <div class="instrument" data-relay>
+                  <svg class="relay" viewBox="0 0 560 110" aria-hidden="true">
+                    <path class="relay-track" d="M30 44 H530" />
+                    <path class="relay-lit" d="M30 44 H530" pathLength="1" />
+                    {relayStops.map((name, k) => (
+                      <g class="relay-stop" data-relay-stop transform={`translate(${30 + k * 125} 44)`}>
+                        <circle r="9" />
+                        <text y="40" text-anchor="middle">{name}</text>
+                      </g>
+                    ))}
+                    <circle class="relay-pulse" r="7">
+                      <animateMotion dur="2.6s" begin="indefinite" fill="freeze" path="M30 44 H530" />
+                    </circle>
+                  </svg>
+                  <div class="instrument-foot">
+                    <button class="btn small" type="button" data-run-relay>Send a test order<Arrow /></button>
+                    <span class="status" role="status" data-relay-status>An example that runs here, in the page. Nothing is sent.</span>
+                  </div>
+                </div>
+              )}
+
+              {L.slug === 'scraping' && (
+                <div class="instrument" data-collector>
+                  <table>
+                    <caption class="visually-hidden">Fictional product data showing a scraper's output</caption>
+                    <thead><tr><th>Product</th><th>Source</th><th>Price</th><th>Availability</th></tr></thead>
+                    <tbody>{rows.map((r) => <tr><td>{r[0]}</td><td>{r[1]}</td><td class="num">${r[2]}</td><td>{r[3]}</td></tr>)}</tbody>
+                  </table>
+                  <div class="instrument-foot">
+                    <a class="btn small" href={`data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`} download="lemni-works-sample.csv">Download the sample CSV<Arrow /></a>
+                    <span class="status">3 fictional rows, collected on a schedule, delivered as CSV, JSON or a database table.</span>
+                  </div>
+                </div>
+              )}
+
+              {L.slug === 'reports' && (
+                <div class="instrument" data-report>
+                  <div class="report-top">
+                    <p><span class="report-label">Orders</span><strong class="num" data-report-total>499</strong></p>
+                    <div class="period" role="group" aria-label="Example report period">
+                      <button type="button" aria-pressed="true" data-report-period="week">Week</button>
+                      <button type="button" aria-pressed="false" data-report-period="month">Month</button>
+                    </div>
+                  </div>
+                  <div class="chart" role="img" aria-label="Sample orders for Monday through Sunday: 42, 68, 54, 85, 72, 96, 82" data-report-chart>
+                    {week.map((value, k) => (
+                      <div class="column">
+                        <span class="num" data-bar-value>{value}</span>
+                        <div class="bar" style={`--bar-scale: ${value / 100}`} data-bar></div>
+                        <span class="bar-label" data-bar-label>{['M', 'T', 'W', 'T', 'F', 'S', 'S'][k]}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p class="status">Sample numbers. Yours come from your own sources, with the queries handed over.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </article>
+      );
+    })}
+
+    <p class="not-offered reveal">{notOffered}</p>
   </div>
 </section>
+
 <style>
-  #services { background: #0d1016; border-block: 1px solid var(--hair-soft); }
-  .services-layout { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(40px, 8vw, 120px); align-items: start; }
-  .services-intro { position: sticky; top: 120px; }
-  .services-intro h2 { line-height: 1.13; }
-  .services-intro > p { margin-top: 26px; max-width: 29ch; color: var(--muted); font-size: 17px; }
-  .services-intro .service-terms { font-size: 13px; line-height: 1.9; color: var(--dim); margin-top: 34px; }
-  .services-intro .text-link { margin-top: 28px; }
-  .service { border-top: 1px solid var(--hair); padding-block: 30px 34px; scroll-margin-top: 100px; }
-  .service-heading { display: flex; gap: 16px; align-items: center; }
-  .service-icon { width: 25px; height: 25px; color: var(--cobalt-light); flex: none; }
-  .service h3 { font-size: clamp(20px, 2vw, 26px); }
-  .outcome { font-size: 17px; margin-top: 24px; }
-  .desc { color: var(--muted); font-size: 15px; line-height: 1.7; margin-top: 10px; }
-  .service-bottom { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; }
-  .service-bottom a { display: inline-flex; align-items: center; gap: 12px; font-size: 13px; text-decoration: none; }
-  .service-bottom a :global(svg) { width: 15px; color: var(--cobalt-light); }
-  .service-bottom > span { font-size: 12px; color: var(--dim); }
-  details { margin-top: 20px; }
-  summary { display: flex; justify-content: space-between; align-items: center; list-style: none; cursor: pointer; color: var(--dim); font-size: 12px; padding-block: 8px; }
-  summary::-webkit-details-marker { display: none; }
-  summary svg { width: 13px; transition: transform 200ms; }
-  details[open] summary svg { transform: rotate(45deg); }
-  details p { font-size: 13px; color: var(--muted); padding-block: 6px 10px; }
-  .not-offered { font-size: 12px; color: var(--dim); border-top: 1px solid var(--hair); padding-top: 24px; }
-  @media (max-width: 800px) { .services-layout { grid-template-columns: 1fr; } .services-intro { position: static; } .services-intro > p { max-width: 42ch; } .services-intro .service-terms { margin-top: 20px; } }
+  #lines {
+    background: var(--water-2);
+    border-block: 1px solid var(--hair-soft);
+  }
+
+  .section-head p {
+    max-width: 40ch;
+  }
+
+  .line-entry {
+    padding-block: 44px 64px;
+    border-top: 1px solid var(--hair);
+    scroll-margin-top: 96px;
+  }
+
+  /* The route strip: a bar in the line's colour with the deliverables as its stations. */
+  .route {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 2px;
+  }
+
+  .route::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    top: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--c);
+  }
+
+  .stop {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    text-align: center;
+    font: 500 13px/1.3 var(--font-display);
+    color: var(--muted);
+    max-width: 12ch;
+  }
+
+  .stop:first-child {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .stop:last-child {
+    justify-items: end;
+    text-align: right;
+  }
+
+  .stop .dot {
+    width: 10px;
+    height: 10px;
+    margin-top: 3px;
+  }
+
+  .line-body {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(32px, 5vw, 80px);
+    margin-top: 44px;
+    align-items: start;
+  }
+
+  .line-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font: 500 13px/1 var(--font-display);
+    color: var(--muted);
+  }
+
+  .swatch {
+    width: 28px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--c);
+  }
+
+  h3 {
+    font-size: clamp(26px, 2.6vw, 36px);
+  }
+
+  .line-name {
+    margin-top: 14px;
+  }
+
+  .outcome {
+    font-size: 18px;
+    margin-top: 24px;
+  }
+
+  .desc {
+    color: var(--muted);
+    font-size: 15.5px;
+    line-height: 1.65;
+    margin-top: 10px;
+    max-width: 46ch;
+  }
+
+  .line-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 20px;
+    margin-top: 26px;
+  }
+
+  .btn.small {
+    padding: 12px 18px 12px 20px;
+    font-size: 14px;
+  }
+
+  .price {
+    font-size: 13px;
+    color: var(--dim);
+  }
+
+  details {
+    margin-top: 22px;
+    max-width: 46ch;
+  }
+
+  summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    cursor: pointer;
+    color: var(--dim);
+    font-size: 13px;
+    padding-block: 8px;
+    border-top: 1px solid var(--hair-soft);
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary svg {
+    width: 13px;
+    transition: transform 200ms;
+  }
+
+  details[open] summary svg {
+    transform: rotate(45deg);
+  }
+
+  details p {
+    font-size: 13.5px;
+    color: var(--muted);
+    padding-block: 6px 10px;
+  }
+
+  /* Proof: real work or a working example, plain on the ground. */
+  .proof-site img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 0 0 1px var(--hair), 0 40px 80px -40px rgb(0 0 0 / 0.9);
+  }
+
+  .proof-site figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 20px;
+    margin-top: 16px;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+
+  .instrument {
+    padding-top: 6px;
+  }
+
+  .instrument-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 20px;
+    margin-top: 22px;
+  }
+
+  .status {
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 44ch;
+  }
+
+  /* Relay instrument: a straight stretch of the line that a test order travels along. */
+  .relay {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    font-family: var(--font-display);
+  }
+
+  .relay-track {
+    fill: none;
+    stroke: var(--hair);
+    stroke-width: 8;
+    stroke-linecap: round;
+  }
+
+  .relay-lit {
+    fill: none;
+    stroke: var(--c);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .is-running .relay-lit {
+    transition: stroke-dashoffset 2600ms linear;
+    stroke-dashoffset: 0;
+  }
+
+  .is-done .relay-lit {
+    stroke-dashoffset: 0;
+  }
+
+  .relay-stop circle {
+    fill: var(--water-2);
+    stroke: var(--ink);
+    stroke-width: 3.5;
+    transition: fill 250ms ease;
+  }
+
+  .relay-stop.is-lit circle {
+    fill: var(--c);
+  }
+
+  .relay-stop text {
+    fill: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    transition: fill 250ms ease;
+  }
+
+  .relay-stop.is-lit text {
+    fill: var(--ink);
+  }
+
+  .relay-pulse {
+    fill: var(--ink);
+    stroke: var(--c);
+    stroke-width: 3;
+    opacity: 0;
+  }
+
+  .is-running .relay-pulse {
+    opacity: 1;
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  /* Collector instrument: the rows as they land. */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 12px 10px 12px 0;
+    border-bottom: 1px solid var(--hair);
+  }
+
+  th {
+    font: 500 12.5px/1.3 var(--font-display);
+    color: var(--c);
+    letter-spacing: 0.02em;
+  }
+
+  td.num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Dashboard instrument. */
+  .report-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  .report-label {
+    display: block;
+    font: 500 12.5px/1.3 var(--font-display);
+    color: var(--muted);
+  }
+
+  .report-top strong {
+    display: block;
+    font: 500 44px/1.2 var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .period {
+    display: flex;
+    gap: 4px;
+    padding: 3px;
+    border: 1px solid var(--hair);
+    border-radius: 999px;
+  }
+
+  .period button {
+    font: 500 13px/1 var(--font-display);
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .period button[aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--water);
+  }
+
+  .chart {
+    height: 170px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+    border-bottom: 1px solid var(--hair);
+  }
+
+  .column[hidden] {
+    display: none;
+  }
+
+  .column {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+  }
+
+  .column > .num {
+    font-size: 12px;
+    color: var(--muted);
+    padding-bottom: 6px;
+  }
+
+  .bar {
+    width: 100%;
+    max-width: 34px;
+    height: 118px;
+    transform: scaleY(var(--bar-scale));
+    transform-origin: bottom;
+    background: var(--c);
+    border-radius: 4px 4px 0 0;
+    transition: transform 500ms var(--ease-out);
+  }
+
+  .bar-label {
+    font-size: 12px;
+    color: var(--dim);
+    padding-block: 8px;
+  }
+
+  .instrument .status {
+    margin-top: 16px;
+    display: block;
+  }
+
+  .not-offered {
+    font-size: 13px;
+    color: var(--dim);
+    border-top: 1px solid var(--hair);
+    padding-top: 24px;
+  }
+
+  @media (max-width: 860px) {
+    .line-body {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .route {
+      flex-direction: column;
+      gap: 18px;
+      padding-left: 26px;
+    }
+
+    .route::before {
+      left: 5px;
+      right: auto;
+      top: 6px;
+      bottom: 6px;
+      width: 7px;
+      height: auto;
+    }
+
+    .stop,
+    .stop:first-child,
+    .stop:last-child {
+      grid-template-columns: auto 1fr;
+      justify-items: start;
+      text-align: left;
+      align-items: center;
+      gap: 14px;
+      max-width: none;
+    }
+
+    .stop .dot {
+      margin: 0 0 0 -26px;
+    }
+
+    .chart {
+      gap: 8px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    /* the relay stretch scales down with the screen; its labels must not */
+    .relay-stop text {
+      font-size: 21px;
+    }
+
+    .relay-stop circle {
+      r: 11;
+      stroke-width: 4.5;
+    }
+
+    .relay-pulse {
+      r: 9;
+    }
+  }
 </style>

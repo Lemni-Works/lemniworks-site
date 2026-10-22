@@ -8,9 +8,9 @@ import { about } from '../site';
       <img src={about.portrait.src} alt={about.portrait.alt} width="599" height="900" loading="lazy" decoding="async" />
     </div>
     <div class="text reveal">
-      <h2 id="about-title">One point of contact.<br />Me, Zander.</h2>
+      <h2 id="about-title">One operator.<br />Every line.</h2>
       <p class="body">{about.text}</p>
-      <p class="about-signoff">Based in Wichita, Kansas. Built for your business.</p>
+      <p class="about-signoff">Zander Erwin. Wichita, Kansas.</p>
     </div>
   </div>
 </section>
@@ -63,8 +63,8 @@ import { about } from '../site';
   }
 
   .about-signoff {
-    color: var(--cobalt-light);
-    font-size: 13px;
+    color: var(--muted);
+    font: 500 13px/1.4 var(--font-display);
   }
 
   @media (max-width: 719px) {

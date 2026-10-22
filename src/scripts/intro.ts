@@ -31,6 +31,7 @@ if (overlay && html.classList.contains('intro')) {
     controller.abort();
     html.classList.remove('intro', 'intro-mark');
     overlay.remove();
+    document.dispatchEvent(new CustomEvent('lw:intro-landed'));
   };
 
   const travel = () => {

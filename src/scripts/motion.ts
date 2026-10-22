@@ -22,82 +22,78 @@ function reveals() {
   cleanups.push(() => observer.disconnect());
 }
 
-function studioDemo(signal: AbortSignal) {
-  const root = document.querySelector<HTMLElement>('[data-studio-demo]');
-  if (!root) return;
-  const tabs = [...root.querySelectorAll<HTMLAnchorElement>('[data-demo-tab]')];
-  const panels = [...root.querySelectorAll<HTMLElement>('[data-demo-panel]')];
-  const list = root.querySelector('.demo-tabs');
-  list?.setAttribute('role', 'tablist');
-  const activate = (index: number, focus = false) => {
-    tabs.forEach((tab, i) => {
-      tab.setAttribute('aria-selected', String(i === index));
-      tab.tabIndex = i === index ? 0 : -1;
-      tab.classList.toggle('is-selected', i === index);
-    });
-    panels.forEach((panel, i) => {
-      panel.hidden = i !== index;
-      panel.classList.toggle('is-entering', i === index && !reduce());
-    });
-    const count = root.querySelector('.demo-count');
-    if (count) count.textContent = `${String(index + 1).padStart(2, '0')} / 04`;
-    if (focus) tabs[index].focus();
-  };
-  tabs.forEach((tab, i) => {
-    tab.setAttribute('role', 'tab');
-    tab.setAttribute('aria-controls', panels[i].id);
-    panels[i].setAttribute('role', 'tabpanel');
-    panels[i].setAttribute('aria-labelledby', tab.id);
-    panels[i].tabIndex = 0;
-    tab.addEventListener('click', (event) => { event.preventDefault(); activate(i); }, { signal });
-    tab.addEventListener('keydown', (event) => {
-      let target = i;
-      if (event.key === 'ArrowRight') target = (i + 1) % tabs.length;
-      else if (event.key === 'ArrowLeft') target = (i - 1 + tabs.length) % tabs.length;
-      else if (event.key === 'Home') target = 0;
-      else if (event.key === 'End') target = tabs.length - 1;
-      else if (event.key === ' ') { event.preventDefault(); activate(i); return; }
-      else return;
-      event.preventDefault();
-      activate(target, true);
-    }, { signal });
+/* The map draws itself once the entrance has landed (or at once when there is no entrance),
+   and the legend lights one line at a time. */
+function map(signal: AbortSignal) {
+  const svg = document.querySelector<SVGSVGElement>('[data-map]');
+  if (!svg) return;
+  const live = () => svg.classList.add('is-live');
+  // On a phone the map is a pocket map wider than the screen: open it on the hub, not its left edge.
+  const pocket = svg.parentElement;
+  if (pocket && pocket.scrollWidth > pocket.clientWidth) {
+    pocket.scrollLeft = (pocket.scrollWidth - pocket.clientWidth) / 2;
+  }
+  if (document.documentElement.classList.contains('intro-mark')) {
+    document.addEventListener('lw:intro-landed', live, { once: true, signal });
+  } else {
+    // Two frames in, so the drawn-out state has been painted and the transitions have a start;
+    // the timer covers a tab that never gets a frame.
+    requestAnimationFrame(() => requestAnimationFrame(live));
+    setTimeout(live, 600);
+  }
+  document.querySelectorAll<HTMLElement>('[data-legend-item]').forEach((item) => {
+    const slug = item.dataset.line ?? '';
+    const on = () => svg.setAttribute('data-focus', slug);
+    const off = () => svg.removeAttribute('data-focus');
+    item.addEventListener('pointerenter', on, { signal });
+    item.addEventListener('focus', on, { signal });
+    item.addEventListener('pointerleave', off, { signal });
+    item.addEventListener('blur', off, { signal });
   });
-  activate(0);
+}
 
-  const run = root.querySelector<HTMLButtonElement>('[data-run-example]');
-  const steps = [...root.querySelectorAll<HTMLElement>('[data-flow-step]')];
-  const result = root.querySelector<HTMLElement>('[data-run-result]');
+/* A test order travels the Relay line: every stop lights as it passes. Nothing leaves the page. */
+function relay(signal: AbortSignal) {
+  const root = document.querySelector<HTMLElement>('[data-relay]');
+  if (!root) return;
+  const button = root.querySelector<HTMLButtonElement>('[data-run-relay]');
+  const status = root.querySelector<HTMLElement>('[data-relay-status]');
+  const pulse = root.querySelector<SVGAnimationElement>('animateMotion');
+  const stops = [...root.querySelectorAll<SVGElement>('[data-relay-stop]')];
+  const messages = ['Form entry received.', 'New order #1042.', 'Row added to the spreadsheet.', 'Contact updated in the CRM.', 'Summary emailed to the team. 2.6 seconds, example only.'];
   const timers = new Set<ReturnType<typeof setTimeout>>();
   cleanups.push(() => timers.forEach(clearTimeout));
-  run?.addEventListener('click', () => {
-    run.disabled = true;
+  button?.addEventListener('click', () => {
+    button.disabled = true;
+    root.classList.remove('is-done');
+    stops.forEach((stop) => stop.classList.remove('is-lit'));
     root.classList.add('is-running');
-    if (result) result.textContent = 'Running the example…';
-    steps.forEach((step) => {
-      step.classList.remove('is-complete');
-      const state = step.querySelector('.flow-state');
-      if (state) state.textContent = 'Ready';
-    });
-    steps.forEach((step, i) => {
+    const duration = reduce() ? 0 : 2600;
+    if (duration) pulse?.beginElement();
+    stops.forEach((stop, i) => {
       const timer = setTimeout(() => {
         timers.delete(timer);
-        step.classList.add('is-complete');
-        const state = step.querySelector('.flow-state');
-        if (state) state.textContent = 'Done';
-        if (i === steps.length - 1) {
+        stop.classList.add('is-lit');
+        if (status) status.textContent = messages[i];
+        if (i === stops.length - 1) {
           root.classList.remove('is-running');
-          run.disabled = false;
-          if (result) result.textContent = '3 steps completed. Example only.';
+          root.classList.add('is-done');
+          button.disabled = false;
         }
-      }, reduce() ? 0 : 450 * (i + 1));
+      }, (duration * i) / (stops.length - 1));
       timers.add(timer);
     });
   }, { signal });
+}
 
+/* The Dashboard example switches between a week and a month. */
+function report(signal: AbortSignal) {
+  const root = document.querySelector<HTMLElement>('[data-report]');
+  if (!root) return;
   const periods = [...root.querySelectorAll<HTMLButtonElement>('[data-report-period]')];
   const chart = root.querySelector<HTMLElement>('[data-report-chart]');
   const total = root.querySelector<HTMLElement>('[data-report-total]');
-  const columns = [...root.querySelectorAll<HTMLElement>('.chart-column')];
+  const columns = [...root.querySelectorAll<HTMLElement>('.column')];
   periods.forEach((button) => button.addEventListener('click', () => {
     const isMonth = button.dataset.reportPeriod === 'month';
     const values = isMonth ? [399, 420, 470, 499] : [42, 68, 54, 85, 72, 96, 82];
@@ -113,7 +109,7 @@ function studioDemo(signal: AbortSignal) {
       const bar = column.querySelector<HTMLElement>('[data-bar]');
       const value = column.querySelector('[data-bar-value]');
       const label = column.querySelector('[data-bar-label]');
-      if (bar) bar.style.setProperty('--bar-scale', String((values[i] ?? 0) / Math.max(...values) * 0.96));
+      if (bar) bar.style.setProperty('--bar-scale', String(((values[i] ?? 0) / Math.max(...values)) * 0.96));
       if (value) value.textContent = String(values[i] ?? '');
       if (label) label.textContent = labels[i] ?? '';
     });
@@ -149,11 +145,30 @@ export function initMotion() {
   const controller = new AbortController();
   cleanups.push(() => controller.abort());
   reveals();
-  studioDemo(controller.signal);
+  map(controller.signal);
+  relay(controller.signal);
+  report(controller.signal);
   nav();
   sent();
 }
 document.addEventListener('astro:before-swap', release);
 /* The router replaces every attribute on <html>, which drops the js flag set in the head. */
 document.addEventListener('astro:after-swap', () => document.documentElement.classList.add('js'));
-document.addEventListener('astro:page-load', initMotion);
+
+/* On the first load, start as soon as the DOM is parsed rather than waiting for astro:page-load,
+   which follows the window load event and every image on the page. Later navigations use page-load. */
+let booted = false;
+const boot = () => {
+  if (booted) return;
+  booted = true;
+  initMotion();
+};
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
+else boot();
+document.addEventListener('astro:page-load', () => {
+  if (booted) {
+    booted = false;
+    return;
+  }
+  initMotion();
+});

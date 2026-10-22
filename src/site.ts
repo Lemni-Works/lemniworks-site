@@ -23,9 +23,9 @@ export const contactEndpoint = /^https:\/\/[^/{}\s]+\/?$/.test(site.workerOrigin
   : null;
 
 export const hero = {
-  headline: 'One studio for the whole shop.',
+  headline: 'Your whole shop, on one map.',
   lede:
-    'Stores, websites, automations and the reports behind them, built by one person and handed over with the source. Fixed price, written quote within two business days.',
+    'The store, the automations behind it, the data it collects and the report on top, built by one person in Wichita and connected so they actually talk to each other. Fixed price. Written quote within two business days.',
   cta: 'Tell me what you need',
   quoteLine: 'Written quote within two business days. Fixed price. Payment on delivery.',
   note: `I reply within ${site.replyWindow}. Calls are by appointment, evenings Central.`,

@@ -38,12 +38,13 @@ Custom domains: `lemniworks.com` and `www.lemniworks.com`. Canonical URLs use th
 src/site.ts              copy, prices, links: every placeholder is here
 src/mark.ts              the lemniscate path data shared by all marks
 src/work.ts              case studies: copy, stack, images, featured flag
-src/scripts/motion.ts    service demos, reveals, nav marker, sent handler
+src/scripts/motion.ts    the map draw-in and legend, the test order, the report example, reveals, nav marker, sent handler
 src/scripts/intro.ts     the entrance: the mark draws itself, then travels into the header
 src/styles/global.css    design tokens (dark only), base type, controls
 src/layouts/Base.astro   head, meta, Open Graph, direction contract
 src/layouts/CaseStudy.astro   layout for /work/<slug>
-src/components/          Intro, Header, Hero, StudioDemo, Services, Steps, Work, About, ContactForm, Footer, Mark, Arrow
+src/map.ts               the network map: four lines, their stations, Beck geometry helpers
+src/components/          Intro, Header, Hero, NetworkMap, Services, Steps, Work, About, ContactForm, Footer, Mark, Arrow
 src/pages/index.astro    the one-page pitch
 src/pages/privacy.astro  privacy notice
 public/                  favicon, logo files, og-image, robots.txt, the Manrope subset
@@ -51,17 +52,15 @@ public/                  favicon, logo files, og-image, robots.txt, the Manrope 
 
 To add a case study, add an entry to `src/work.ts` and drop its images in `public/work/`.
 
-## Connected Studio theme
+## The Network Map
 
-The homepage opens, once per browser session, with the Open Path mark drawing itself and travelling into the header while the hero rises (`src/components/Intro.astro`, `src/scripts/intro.ts`). The decision to play it is made before first paint in `src/layouts/Base.astro`; any click, key or scroll skips it, reduced motion never shows it, and it does not replay on client-side navigation. Clear `sessionStorage` to see it again.
+The home page is a transit-style map of the studio. The tools a shop already pays for are stations, the four services are four coloured lines (Storefront, Relay, Collector, Dashboard), and all four change trains at one hub, Lemni Works. Geometry lives in `src/map.ts` and must obey Beck's rules: every segment horizontal, vertical or 45°, every station on its line. `src/components/NetworkMap.astro` draws it; the lines draw themselves after the entrance lands, the legend beneath lights one line at a time, and a slow train runs on each.
 
-The homepage opens with four interactive service demonstrations. The website view uses the real DineSense site capture; the automation, scraper output, and report use explicitly labeled examples. The workflow runs locally, the CSV download contains the visible sample rows, and report period buttons update both the bars and their accessible description. Nothing in a demo sends requests or submits an inquiry.
+The home page opens, once per browser session, with the Open Path mark drawing itself and travelling into the header (`src/components/Intro.astro`, `src/scripts/intro.ts`). The decision to play it is made before first paint in `src/layouts/Base.astro`; any click, key or scroll skips it, reduced motion never shows it, and it does not replay on client-side navigation. Clear `sessionStorage` to see it again.
 
-The selectors support mouse, touch, arrow keys, Home, and End. Without JavaScript, they link to the corresponding service descriptions. Content remains visible by default, reduced motion removes animation, and page-owned observers, listeners, and timers are cleaned up during Astro navigation.
+Each line has an entry in `src/components/Services.astro` with a route strip of what it covers, the copy from `src/site.ts`, and its proof: the real dinesense.app capture for the Storefront line, a test order that travels the Relay line in the page, three fictional rows and a CSV download for the Collector line, and a week/month example for the Dashboard line. Nothing in these examples sends a request. Without JavaScript everything is visible and the examples simply sit still.
 
-`src/components/Work.astro` composes the website feature, two app presentations, and the data-tools link using the projects in `src/work.ts`. Every project gets a page at `/work/<slug>` from `src/pages/work/[slug].astro` and `src/layouts/CaseStudy.astro`. Shared image and title transitions carry into the case studies. Update the homepage composition when changing the selected projects.
-
-Service inquiry links open an email with the service in the subject. The main contact section retains the configured Worker form or the email fallback described above. No contact-backend configuration is changed by the theme.
+`src/components/Work.astro` shows shipped work plainly: the website feature, the two apps, the data tools. Every project gets a page at `/work/<slug>` from `src/pages/work/[slug].astro` and `src/layouts/CaseStudy.astro`, with shared image and title transitions.
 
 ## Work images
 
