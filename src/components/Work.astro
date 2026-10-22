@@ -5,9 +5,9 @@ import { bySlug } from '../work';
 import Arrow from './Arrow.astro';
 const rows = [
   { line: 'web', lineName: 'Storefront', p: bySlug('dinesense-site')!, runs: 'A product site that lets the product do the talking.' },
-  { line: 'scraping', lineName: 'Collector', p: bySlug('apify-tools')!, runs: 'Keyword lists in. Structured datasets out, from the Apify store.' },
-  { line: 'depot', lineName: 'Depot', p: bySlug('dinesense')!, runs: 'An iOS app that turns one meal’s numbers into the exact order nearby.' },
-  { line: 'depot', lineName: 'Depot', p: bySlug('programmed')!, runs: 'A lifting log where the program, the sets and the food live together.' },
+  { line: 'scraping', lineName: 'Data', p: bySlug('apify-tools')!, runs: 'Keyword lists in. Clean datasets out, from the Apify store.' },
+  { line: 'depot', lineName: 'Product work', p: bySlug('dinesense')!, runs: 'An iOS app that turns one meal’s numbers into the exact order nearby.' },
+  { line: 'depot', lineName: 'Product work', p: bySlug('programmed')!, runs: 'A lifting log where the program, the sets and the food live together.' },
 ];
 ---
 
@@ -20,7 +20,7 @@ const rows = [
 
     <table class="timetable reveal">
       <thead>
-        <tr><th scope="col">Line</th><th scope="col">Destination</th><th scope="col">What runs</th><th scope="col" class="num">Since</th></tr>
+        <tr><th scope="col">Line</th><th scope="col">Destination</th><th scope="col">What it does</th><th scope="col" class="num">Since</th></tr>
       </thead>
       <tbody>
         {rows.map((r) => (
@@ -34,7 +34,7 @@ const rows = [
       </tbody>
     </table>
 
-    <p class="work-note">The Depot holds product and engineering work shown as proof. Custom mobile apps are not currently offered as a service.</p>
+    <p class="work-note">The apps are product work shown as proof. Custom mobile apps are not currently offered as a service.</p>
   </div>
 </section>
 

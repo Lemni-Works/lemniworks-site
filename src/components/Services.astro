@@ -7,12 +7,12 @@ import Arrow from './Arrow.astro';
 
 const outcomes = ['Make a good first impression.', 'Give the busywork a way out.', 'Stop collecting it by hand.', 'Know what is actually happening.'];
 const routes: Record<string, string[]> = {
-  web: ['Design', 'Build', 'Store or site', 'Launch', 'Handover, with the keys'],
-  automation: ['Trigger', 'Transform', 'Deliver', 'Monitor'],
-  scraping: ['Sources', 'Schedule', 'Clean rows', 'Spreadsheet, database or file'],
-  reports: ['Sources', 'Queries', 'Page or PDF', 'On a schedule'],
+  web: ['We design it', 'I build it', 'It goes live', 'The keys are yours'],
+  automation: ['Something happens', 'It gets passed along', 'It lands where it should', 'I keep an eye on it'],
+  scraping: ['The sites you choose', 'On a schedule', 'Clean rows', 'In your spreadsheet'],
+  reports: ['Your numbers', 'Pulled together', 'A page or a PDF', 'Every week'],
 };
-const relayStops = ['Form entry', 'New order', 'Spreadsheet', 'CRM', 'Email'];
+const relayStops = ['Form filled in', 'New order', 'Spreadsheet', 'Contacts', 'Email'];
 const rows = [['Canvas tote', 'Field Supply', '24.00', 'In stock'], ['Desk tray', 'North Studio', '38.00', 'In stock'], ['Travel flask', 'Field Supply', '32.00', 'In stock']];
 const csv = 'Product,Source,Price,Availability\n' + rows.map((row) => row.join(',')).join('\n');
 const week = [42, 68, 54, 85, 72, 96, 82];

@@ -20,13 +20,13 @@
   --hair-soft: rgb(243 241 234 / 0.07);
   --glass: rgb(243 241 234 / 0.035);
 
-  /* the four lines */
-  --l-web: #ff6b47;
-  --l-automation: #f6b73c;
-  --l-scraping: #3fcf9f;
-  --l-reports: #b58dff;
+  /* the four lines: one ember scheme in four steps, sand to rust */
+  --l-scraping: #f1d08a;
+  --l-automation: #f2b03d;
+  --l-web: #e8783a;
+  --l-reports: #cf4b30;
   --l-depot: #8f8d86;
-  /* the one signal colour the interface itself uses: the Relay amber */
+  /* the one signal colour the interface itself uses: the amber step */
   --signal: var(--l-automation);
   --signal-ink: #1a1203;
 

@@ -27,7 +27,22 @@ function reveals() {
 function map(signal: AbortSignal) {
   const svg = document.querySelector<SVGSVGElement>('[data-map]');
   if (!svg) return;
-  const live = () => svg.classList.add('is-live');
+  const timers = new Set<ReturnType<typeof setTimeout>>();
+  cleanups.push(() => timers.forEach(clearTimeout));
+  const live = () => {
+    if (svg.classList.contains('is-live')) return;
+    svg.classList.add('is-live');
+    if (reduce()) return;
+    // The trains leave once their line has drawn, each from its first station.
+    svg.querySelectorAll<SVGAnimationElement>('.train animateMotion').forEach((motion, i) => {
+      const timer = setTimeout(() => {
+        timers.delete(timer);
+        motion.beginElement();
+        motion.parentElement?.classList.add('is-moving');
+      }, 1900 + i * 450);
+      timers.add(timer);
+    });
+  };
   // On a phone the map is a pocket map wider than the screen: open it on the hub, not its left edge.
   const pocket = svg.parentElement;
   if (pocket && pocket.scrollWidth > pocket.clientWidth) {
@@ -60,7 +75,7 @@ function relay(signal: AbortSignal) {
   const status = root.querySelector<HTMLElement>('[data-relay-status]');
   const pulse = root.querySelector<SVGAnimationElement>('animateMotion');
   const stops = [...root.querySelectorAll<SVGElement>('[data-relay-stop]')];
-  const messages = ['Form entry received.', 'New order #1042.', 'Row added to the spreadsheet.', 'Contact updated in the CRM.', 'Summary emailed to the team. 2.6 seconds, example only.'];
+  const messages = ['Someone filled in the form.', 'Order #1042 is in.', 'A row was added to the spreadsheet.', 'The contact was updated.', 'The summary went out by email. 2.6 seconds, example only.'];
   const timers = new Set<ReturnType<typeof setTimeout>>();
   cleanups.push(() => timers.forEach(clearTimeout));
   button?.addEventListener('click', () => {

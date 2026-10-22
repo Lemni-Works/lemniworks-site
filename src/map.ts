@@ -3,7 +3,7 @@
    `scripts/check-map.mjs` in the scratchpad verified this geometry; keep it true when editing. */
 
 export const MAP_W = 1200;
-export const MAP_H = 720;
+export const MAP_H = 680;
 export const HUB = { x: 600, y: 340 } as const;
 
 export interface Station {
@@ -17,15 +17,13 @@ export interface Station {
 }
 
 export interface Line {
-  slug: 'web' | 'automation' | 'scraping' | 'reports' | 'depot';
+  slug: 'web' | 'automation' | 'scraping' | 'reports';
   /** The line's name on the map and in the legend. */
   name: string;
-  /** The service it stands for, from site.ts; the Depot is product work, not a service. */
+  /** The service it stands for, from site.ts. */
   service: string;
   /** CSS custom property that carries its colour. */
   color: string;
-  /** A siding: dashed, dim, not a service line. */
-  siding?: boolean;
   points: [number, number][];
   stations: Station[];
 }
@@ -38,81 +36,57 @@ export const lines: Line[] = [
     color: 'var(--l-web)',
     points: [[60, 520], [240, 520], [420, 340], [900, 340], [1000, 240], [1160, 240]],
     stations: [
-      { name: 'Your domain', x: 140, y: 520, side: 's' },
-      { name: 'The site', x: 300, y: 460, side: 'e' },
-      { name: 'The store', x: 390, y: 370, side: 'e' },
-      { name: 'Checkout', x: 452, y: 340, side: 'n' },
-      { name: 'Orders', x: 748, y: 340, side: 'n' },
-      { name: 'Customers', x: 820, y: 340, side: 'n' },
-      { name: 'Repeat orders', x: 1060, y: 240, side: 'n' },
+      { name: 'Your site', x: 150, y: 520, side: 's' },
+      { name: 'Customers', x: 800, y: 340, side: 'n' },
+      { name: 'Repeat orders', x: 1050, y: 240, side: 'n' },
       { name: 'dinesense.app', x: 1160, y: 240, side: 'w', href: '/work/dinesense-site' },
     ],
   },
   {
     slug: 'automation',
-    name: 'Relay line',
+    name: 'Automation line',
     service: 'Workflow automation',
     color: 'var(--l-automation)',
     points: [[480, 60], [480, 220], [600, 340], [600, 480], [740, 620], [1000, 620]],
     stations: [
-      { name: 'Form entries', x: 480, y: 120, side: 'e' },
-      { name: 'New order', x: 480, y: 170, side: 'e' },
-      { name: 'Spreadsheet', x: 600, y: 470, side: 'w' },
-      { name: 'CRM', x: 670, y: 550, side: 'w' },
-      { name: 'Email', x: 820, y: 620, side: 's' },
-      { name: 'Team chat', x: 940, y: 620, side: 's' },
+      { name: 'An order comes in', x: 480, y: 140, side: 'e' },
+      { name: 'Spreadsheet', x: 670, y: 550, side: 'w' },
+      { name: 'Your email', x: 820, y: 620, side: 's' },
+      { name: 'Your team', x: 950, y: 620, side: 's' },
     ],
   },
   {
     slug: 'scraping',
-    name: 'Collector line',
+    name: 'Data line',
     service: 'Web scraping and data collection',
     color: 'var(--l-scraping)',
     points: [[120, 600], [340, 600], [600, 340], [600, 200], [740, 60], [1120, 60]],
     stations: [
-      { name: 'Source sites', x: 250, y: 600, side: 'n' },
-      { name: 'Every night', x: 420, y: 520, side: 'e' },
-      { name: 'Clean rows', x: 500, y: 440, side: 'w' },
-      { name: 'Database', x: 600, y: 215, side: 'w' },
-      { name: 'Exports', x: 680, y: 120, side: 'e' },
-      { name: 'Your files', x: 860, y: 60, side: 'n' },
-      { name: 'Your tools', x: 1000, y: 60, side: 'n' },
+      { name: 'The sites you watch', x: 230, y: 600, side: 's' },
+      { name: 'Every night', x: 450, y: 490, side: 'e' },
+      { name: 'Clean rows', x: 600, y: 210, side: 'w' },
+      { name: 'Your files', x: 880, y: 60, side: 'n' },
       { name: 'Keyword tools on Apify', x: 1120, y: 60, side: 'w', href: '/work/apify-tools' },
     ],
   },
   {
     slug: 'reports',
-    name: 'Dashboard line',
+    name: 'Reports line',
     service: 'Reports and dashboards',
     color: 'var(--l-reports)',
     points: [[1140, 540], [800, 540], [600, 340], [760, 180], [1100, 180]],
     stations: [
-      { name: 'Sales data', x: 1040, y: 540, side: 's' },
-      { name: 'Ad spend', x: 900, y: 540, side: 's' },
+      { name: 'Sales', x: 1040, y: 540, side: 's' },
+      { name: 'Ad spend', x: 890, y: 540, side: 's' },
       { name: 'Bookkeeping', x: 700, y: 440, side: 'e' },
-      { name: 'Queries', x: 680, y: 260, side: 'e' },
-      { name: 'Page or PDF', x: 880, y: 180, side: 'n' },
-      { name: 'Your inbox', x: 1020, y: 180, side: 'n' },
-    ],
-  },
-  {
-    slug: 'depot',
-    name: 'Depot',
-    service: 'Product work, shown as proof',
-    color: 'var(--l-depot)',
-    siding: true,
-    /* leaves the Collector line at (200, 600) and runs along the bottom of the map */
-    points: [[200, 600], [290, 690], [540, 690]],
-    stations: [
-      { name: 'DineSense', x: 360, y: 690, side: 's', href: '/work/dinesense' },
-      { name: 'Programmed', x: 500, y: 690, side: 's', href: '/work/programmed' },
+      { name: 'A weekly report', x: 900, y: 180, side: 'n' },
+      { name: 'Your inbox', x: 1060, y: 180, side: 'n' },
     ],
   },
 ];
 
 /** The four service lines, in the order of `services` in site.ts. */
-export const serviceLines = lines.filter((L) => !L.siding);
-export const depot = lines.find((L) => L.siding)!;
+export const serviceLines = lines;
 
 /** SVG path for a line, with rounded corners of radius r at every bend. */
 export function linePath(points: [number, number][], r = 28): string {

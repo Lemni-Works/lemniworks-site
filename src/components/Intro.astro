@@ -8,9 +8,18 @@ import { MARK_PATH, MARK_VIEWBOX, MARK_STROKE } from '../mark';
 
 <div class="site-intro" data-intro aria-hidden="true">
   <svg class="intro-mark" viewBox={MARK_VIEWBOX} xmlns="http://www.w3.org/2000/svg" focusable="false">
+    <defs>
+      <linearGradient id="intro-ember" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="var(--l-scraping)" />
+        <stop offset="0.4" stop-color="var(--l-automation)" />
+        <stop offset="0.75" stop-color="var(--l-web)" />
+        <stop offset="1" stop-color="var(--l-reports)" />
+      </linearGradient>
+    </defs>
     <path class="intro-track" d={MARK_PATH} pathLength="1" fill="none" stroke-width={MARK_STROKE} stroke-linecap="round" stroke-linejoin="round" />
     <path class="intro-glow" d={MARK_PATH} pathLength="1" fill="none" stroke-width={MARK_STROKE + 2} stroke-linecap="round" stroke-linejoin="round" />
-    <path class="intro-line" d={MARK_PATH} pathLength="1" fill="none" stroke-width={MARK_STROKE} stroke-linecap="round" stroke-linejoin="round" />
+    <path class="intro-line" d={MARK_PATH} pathLength="1" fill="none" stroke="url(#intro-ember)" stroke-width={MARK_STROKE} stroke-linecap="round" stroke-linejoin="round" />
+    <path class="intro-ink" d={MARK_PATH} fill="none" stroke-width={MARK_STROKE} stroke-linecap="round" stroke-linejoin="round" />
   </svg>
 </div>
 
@@ -71,8 +80,15 @@ import { MARK_PATH, MARK_VIEWBOX, MARK_STROKE } from '../mark';
     opacity: 0;
   }
 
-  .intro-line {
+  /* The ink copy sits on top and fades in during the flight, so the mark lands matching the header. */
+  .intro-ink {
     stroke: var(--ink);
+    opacity: 0;
+    transition: opacity 700ms ease 150ms;
+  }
+
+  .is-clearing .intro-ink {
+    opacity: 1;
   }
 
   @keyframes intro-draw {

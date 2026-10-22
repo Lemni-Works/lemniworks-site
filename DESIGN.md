@@ -10,10 +10,10 @@ colors:
   hair: "rgb(243 241 234 / 0.12)"
   hair-soft: "rgb(243 241 234 / 0.07)"
   glass: "rgb(243 241 234 / 0.035)"
-  storefront-vermilion: "#ff6b47"
-  relay-amber: "#f6b73c"
-  collector-jade: "#3fcf9f"
-  dashboard-orchid: "#b58dff"
+  storefront-tangerine: "#e8783a"
+  automation-amber: "#f2b03d"
+  data-sand: "#f1d08a"
+  reports-rust: "#cf4b30"
   depot-grey: "#8f8d86"
   signal-ink: "#1a1203"
   invalid-red: "#e0604f"
@@ -143,13 +143,13 @@ components:
 
 Lemni Works is a one-person studio drawn as a transit network. The tools a small shop already pays for are stations; the four services are four coloured lines; every line changes trains at one hub, the builder. The world is Harry Beck's: a warm graphite ground, bone ink, lines that run only horizontal, vertical or at 45° with rounded bends, white station ticks, rings for the destinations, a capsule for the interchange. The site is dark only. Nothing on it is a card; structure comes from hairlines, route strips, tables and the lines themselves.
 
-The ground is warm, never blue. Page ground is a warm graphite; the two service sections (the lines, the contact form) sit one step lighter on a raised graphite with a soft hairline above and below. Ink is bone, not white. The four line colours are loud on purpose and belong to the lines: vermilion for the Storefront line, amber for the Relay line, jade for the Collector line, orchid for the Dashboard line, with a dashed grey siding for the Depot. The interface itself uses one of them, the Relay amber, as its single signal colour for selection, the caret, focus rings and hover colour. Everything else is bone on graphite.
+The ground is warm, never blue. Page ground is a warm graphite; the two service sections (the lines, the contact form) sit one step lighter on a raised graphite with a soft hairline above and below. Ink is bone, not white. The four line colours are loud on purpose and belong to the lines: tangerine for the Storefront line, amber for the Automation line, sand for the Data line, rust for the Reports line, with a dashed grey siding for the Depot. The interface itself uses one of them, the amber step, as its single signal colour for selection, the caret, focus rings and hover colour. Everything else is bone on graphite.
 
 Motion is drawn, not animated. The Open Path mark draws itself once per session and travels into the header; the map's lines draw themselves after it lands, stations appearing in order along each line, the hub last; slow trains then run every line indefinitely. Sections rise 22px into place; images are uncovered; titles and shots travel between routes; instruments settle. Reduced motion shows every finished state and hides the trains. The craft of the motion is the proof that one person runs every line.
 
 **Key Characteristics:**
 - Dark only. Warm graphite ground (#121110), bone ink, one raised step for two sections.
-- Four line colours plus a dashed Depot grey; one signal colour (the Relay amber) for the interface.
+- Four line colours plus a dashed Depot grey; one signal colour (the amber step) for the interface.
 - Beck geometry everywhere a line appears: horizontal, vertical, 45°, rounded bends, stations on the line.
 - Manrope at weight 500 for every display size and label; 600 only on the hub name and destination labels. Body on the system sans.
 - Pill buttons and pill swatches, like stations. Hairlines, tables and route strips instead of cards.
@@ -157,16 +157,16 @@ Motion is drawn, not animated. The Open Path mark draws itself once per session 
 
 ## Colors
 
-A warm monochrome of graphite and bone carries the whole interface; four saturated line colours belong to the map and to anything that names a line, and one of them, the Relay amber, is borrowed as the interface's only signal.
+A warm monochrome of graphite and bone carries the whole interface; four saturated line colours belong to the map and to anything that names a line, and one of them, the amber step, is borrowed as the interface's only signal.
 
 ### Primary
-- **Relay Amber** (#f6b73c): the Relay line, and the interface's single signal colour. Text selection (amber on signal ink), the caret, the 1.5px focus ring at 4px offset, the hover colour of text links and destination names, the arrow in the header's contact link, the stroke of the "sent" mark on the contact panel, the dash before each list item on a case study. It is never a fill behind a button.
+- **Relay Amber** (#f2b03d): the Automation line, and the interface's single signal colour. Text selection (amber on signal ink), the caret, the 1.5px focus ring at 4px offset, the hover colour of text links and destination names, the arrow in the header's contact link, the stroke of the "sent" mark on the contact panel, the dash before each list item on a case study. It is never a fill behind a button.
 - **Signal Ink** (#1a1203): the text colour on an amber selection. Nowhere else.
 
 ### Secondary
-- **Storefront Vermilion** (#ff6b47): the Storefront line (websites and e-commerce). Line stroke, route strip, swatch, dot, table header on that line's instrument.
-- **Collector Jade** (#3fcf9f): the Collector line (web scraping and data collection). Same uses.
-- **Dashboard Orchid** (#b58dff): the Dashboard line (reports and dashboards). Same uses, and the bars of the report instrument.
+- **Storefront Vermilion** (#e8783a): the Storefront line (websites and e-commerce). Line stroke, route strip, swatch, dot, table header on that line's instrument.
+- **Collector Jade** (#f1d08a): the Data line (web scraping and data collection). Same uses.
+- **Dashboard Orchid** (#cf4b30): the Reports line (reports and dashboards). Same uses, and the bars of the report instrument.
 - **Depot Grey** (#8f8d86): the Depot siding, product work shown as proof. Drawn dashed and at a narrower stroke; it is not a service line and never lights up.
 
 Each line colour reaches its elements through one custom property, `--c`, set by `data-line="<slug>"` on an ancestor. Components never hardcode a line colour; they read `--c`.
@@ -184,7 +184,7 @@ Each line colour reaches its elements through one custom property, `--c`, set by
 - **Invalid Red** (#e0604f): the underline of a field the user has left invalid. No other red exists.
 
 ### Named Rules
-**The One Signal Rule.** The interface borrows exactly one line colour, the Relay amber, for selection, focus, caret and hover. No second accent; no line colour is promoted to a button fill or a background.
+**The One Signal Rule.** The interface borrows exactly one line colour, the amber step, for selection, focus, caret and hover. No second accent; no line colour is promoted to a button fill or a background.
 
 **The Line Owns Its Colour Rule.** A line colour appears only on things that stand for that line: its stroke on the map, its route strip, its swatch, its dot, its table head, its bars. Colour is read from `--c` under `data-line`, never hardcoded.
 
@@ -282,7 +282,7 @@ Draw-in: each line's path uses `pathLength="1"` and runs its dash offset from 1 
 Legend selection: hovering or focusing a legend entry sets the map's focus to that line; the other lines drop to 16% opacity over 320ms and the swatch stretches to 1.36×. On touch there is no hover; tapping a legend entry navigates to that line's section, which is the selection.
 
 ### Route strips, the journey and instruments
-Each line entry opens with a route strip: a 7px bar in the line colour with its deliverables as station dots and labels spaced along it; below 860px the bar turns vertical down the left. The journey is the same strip in bone with four stops. Proof beside each line is real work or a working example: the Storefront line shows the real dinesense.app capture; the Relay line is a straight stretch of track whose test order (a pulse, 2.6s linear, lighting each stop and writing a status line) runs in the page and sends nothing; the Collector line is a table of 3 fictional rows with a CSV download; the Dashboard line is seven bars scaling to their values over 500ms, switching between a week and a month. Every example says it is an example in its status line.
+Each line entry opens with a route strip: a 7px bar in the line colour with its deliverables as station dots and labels spaced along it; below 860px the bar turns vertical down the left. The journey is the same strip in bone with four stops. Proof beside each line is real work or a working example: the Storefront line shows the real dinesense.app capture; the Automation line is a straight stretch of track whose test order (a pulse, 2.6s linear, lighting each stop and writing a status line) runs in the page and sends nothing; the Data line is a table of 3 fictional rows with a CSV download; the Reports line is seven bars scaling to their values over 500ms, switching between a week and a month. Every example says it is an example in its status line.
 
 ### Timetable
 Work in service is a table, not a showcase: a bone rule under the Manrope 13px header, hair rules between rows, a line swatch and name in the first cell, the destination name at clamp(20px, 2vw, 26px) with a diagonal arrow that nudges and turns amber on hover, the kind beneath in dim bone, the year right-aligned in tabular numerals.
@@ -305,7 +305,7 @@ Five verbs, one placement easing (`cubic-bezier(0.16, 1, 0.3, 1)`), two draw eas
 - **Do** keep every map segment horizontal, vertical or 45°, bent with the 28-unit rounded corner `linePath` draws; new geometry goes in `src/map.ts`.
 - **Do** place every station on its line; the scratch checker (`scripts/check-map.mjs`) enforces it and must stay green.
 - **Do** read a line's colour from `--c` under `data-line="<slug>"`; never write a line hex into a component.
-- **Do** use the Relay amber alone for selection, focus (1.5px ring, 4px offset), caret and hover colour.
+- **Do** use the amber step alone for selection, focus (1.5px ring, 4px offset), caret and hover colour.
 - **Do** set Manrope at 500 for every heading, label, button and station; 600 only for the hub name and destination labels.
 - **Do** put the line name below its heading as a meta line with a 28×7 swatch.
 - **Do** structure with hairlines, route strips and tables; proof sits plain on the ground.

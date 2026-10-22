@@ -1,6 +1,6 @@
 ---
 import { hero, services } from '../site';
-import { lines, serviceLines } from '../map';
+import { lines } from '../map';
 import Arrow from './Arrow.astro';
 import NetworkMap from './NetworkMap.astro';
 ---
@@ -17,14 +17,14 @@ import NetworkMap from './NetworkMap.astro';
     </div>
   </div>
   <div class="wrap legend" style="--i: 320ms">
-    <p class="legend-title">Four lines and a depot. One operator.</p>
+    <p class="legend-title">Four lines. One operator.</p>
     <ul class="key" aria-label="The lines">
       {lines.map((L, i) => (
-        <li class:list={{ siding: L.siding }}>
-          <a href={L.siding ? '#work' : `#line-${L.slug}`} data-line={L.slug} data-legend-item>
+        <li>
+          <a href={`#line-${L.slug}`} data-line={L.slug} data-legend-item>
             <span class="swatch" aria-hidden="true"></span>
             <span class="key-name">{L.name}</span>
-            <span class="key-service">{L.siding ? L.service : services[i].short}</span>
+            <span class="key-service">{services[i].short}</span>
           </a>
         </li>
       ))}
@@ -110,18 +110,8 @@ import NetworkMap from './NetworkMap.astro';
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr) 0.9fr;
-    gap: 0 28px;
-  }
-
-  .siding .swatch {
-    height: 0;
-    border-top: 4px dashed var(--c);
-    background: none;
-  }
-
-  .siding .key-name {
-    color: var(--muted);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0 32px;
   }
 
   .key a {
@@ -223,7 +213,7 @@ import NetworkMap from './NetworkMap.astro';
 
     .hero-map :global(.network) {
       width: 980px;
-      height: 372px;
+      height: 360px;
       padding-inline: var(--gutter);
     }
 
@@ -231,9 +221,6 @@ import NetworkMap from './NetworkMap.astro';
       grid-template-columns: 1fr 1fr;
     }
 
-    .key li.siding {
-      grid-column: 1 / -1;
-    }
   }
 
   @media (max-width: 560px) {

@@ -40,7 +40,7 @@ function endNormal(points: [number, number][], atEnd: boolean): [number, number]
 const drawn = lines.map((L, i) => ({
   ...L,
   d: linePath(L.points),
-  delay: i * 320,
+  delay: i * 180,
   normals: [endNormal(L.points, false), endNormal(L.points, true)] as [number, number][],
   stations: L.stations.map((s) => {
     const side = s.side ?? 'n';
@@ -64,15 +64,14 @@ const drawn = lines.map((L, i) => ({
 
 <svg class:list={['network', cls]} viewBox={`0 0 ${MAP_W} ${MAP_H}`} preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" data-map role="img" aria-labelledby="map-title map-desc">
   <title id="map-title">The four lines Lemni Works runs</title>
-  <desc id="map-desc">A transit-style map. The Storefront line runs from your domain through the site, the store, checkout and orders to repeat customers, ending at dinesense.app, a real site. The Relay line carries form entries and new orders into a spreadsheet, a CRM, email and team chat. The Collector line collects source sites every night into clean rows, a database and your files, ending at the keyword tools on Apify. The Dashboard line takes sales data, ad spend and bookkeeping through queries to a page or PDF in your inbox. All four meet at one hub, Lemni Works in Wichita. A Depot siding holds two apps built here, DineSense and Programmed. Destinations link to their case studies.</desc>
+  <desc id="map-desc">A transit-style map. The Storefront line runs from your site through checkout and customers to repeat orders, ending at dinesense.app, a real site. The Automation line carries an incoming order into your spreadsheet, your email and your team. The Data line watches the sites you choose every night and delivers clean rows to your files, ending at the keyword tools on Apify. The Reports line takes sales, ad spend and bookkeeping to a weekly report in your inbox. All four meet at one hub, Lemni Works in Wichita. Destinations link to their case studies.</desc>
 
   {drawn.map((L) => (
-    <g class:list={['line-group', { siding: L.siding }]} data-line={L.slug} style={`--ld: ${L.delay}ms`}>
+    <g class="line-group" data-line={L.slug} style={`--ld: ${L.delay}ms`}>
       <path class="line" d={L.d} pathLength="1" />
       {[L.points[0], L.points[L.points.length - 1]].map(([x, y], k) => {
         const [nx, ny] = L.normals[k];
         if (L.stations.some((st) => st.href && st.x === x && st.y === y)) return null;
-        if (L.siding && k === 0) return null;
         return <line class="terminus" x1={x + nx * 13} y1={y + ny * 13} x2={x - nx * 13} y2={y - ny * 13} />;
       })}
       {L.stations.map((s) => s.href ? (
@@ -86,9 +85,9 @@ const drawn = lines.map((L, i) => ({
           <text class="stn" x={s.lx} y={s.ly} text-anchor={s.anchor} dominant-baseline={s.baseline}>{s.name}</text>
         </g>
       ))}
-      <circle class="train" r="6" cx={L.points[0][0]} cy={L.points[0][1]}>
-        <animateMotion dur={`${18 + L.delay / 40}s`} begin={`${2.6 + L.delay / 1000}s`} repeatCount="indefinite" path={L.d} />
-      </circle>
+      <rect class="train" x="-12" y="-4.5" width="24" height="9" rx="4.5">
+        <animateMotion dur={`${16 + L.delay / 30}s`} begin="indefinite" repeatCount="indefinite" rotate="auto" path={L.d} />
+      </rect>
     </g>
   ))}
 
@@ -118,27 +117,18 @@ const drawn = lines.map((L, i) => ({
     stroke-linejoin: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    transition: stroke-dashoffset 2400ms cubic-bezier(0.65, 0, 0.2, 1) var(--ld);
+    transition: stroke-dashoffset 1500ms cubic-bezier(0.65, 0, 0.2, 1) var(--ld);
   }
 
   .network.is-live .line {
     stroke-dashoffset: 0;
   }
 
-  .siding .line {
-    stroke-dashoffset: 0;
-    opacity: 0;
-    transition: opacity 600ms ease var(--ld);
-  }
-
-  .network.is-live .siding .line {
-    opacity: 1;
-  }
 
   .station {
     opacity: 0;
     transition: opacity 500ms ease;
-    transition-delay: calc(var(--ld) + var(--t) * 2400ms);
+    transition-delay: calc(var(--ld) + var(--t) * 1500ms);
   }
 
   .network.is-live .station {
@@ -176,14 +166,6 @@ const drawn = lines.map((L, i) => ({
     text-decoration-color: var(--ink);
   }
 
-  .siding .line {
-    stroke-width: 6;
-    stroke-dasharray: 0.045 0.03;
-  }
-
-  .siding .train {
-    display: none;
-  }
 
   .tick {
     stroke: var(--ink);
@@ -193,16 +175,16 @@ const drawn = lines.map((L, i) => ({
 
   .stn {
     fill: var(--ink);
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
   }
 
   .hub {
     opacity: 0;
     transform-box: fill-box;
     transform-origin: center;
-    transition: opacity 500ms ease 2500ms;
+    transition: opacity 500ms ease 1400ms;
   }
 
   .network.is-live .hub {
@@ -228,22 +210,24 @@ const drawn = lines.map((L, i) => ({
     stroke-width: 5;
     stroke-linecap: round;
     opacity: 0;
-    transition: opacity 500ms ease calc(var(--ld) + 2300ms);
+    transition: opacity 500ms ease calc(var(--ld) + 1400ms);
   }
 
   .network.is-live .terminus {
     opacity: 1;
   }
 
+  /* A train: a small capsule in the line's colour, oriented along the track. It is started from
+     script once its line has drawn, and shows only while it moves, so it is always on the rails. */
   .train {
-    fill: var(--ink);
-    stroke: var(--c);
-    stroke-width: 3;
+    fill: var(--c);
+    stroke: var(--water);
+    stroke-width: 2;
     opacity: 0;
-    transition: opacity 600ms ease calc(var(--ld) + 2600ms);
+    transition: opacity 500ms ease;
   }
 
-  .network.is-live .train {
+  .train.is-moving {
     opacity: 1;
   }
 
@@ -269,8 +253,7 @@ const drawn = lines.map((L, i) => ({
 
   :global(html:not(.js)) .station,
   :global(html:not(.js)) .hub,
-  :global(html:not(.js)) .terminus,
-  :global(html:not(.js)) .train {
+  :global(html:not(.js)) .terminus {
     opacity: 1;
   }
 
@@ -278,8 +261,7 @@ const drawn = lines.map((L, i) => ({
     .line,
     .station,
     .hub,
-    .terminus,
-    .train {
+    .terminus {
       transition-delay: 0s !important;
     }
 
