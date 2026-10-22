@@ -112,7 +112,7 @@ const drawn = lines.map((L, i) => ({
     fill: none;
     stroke: var(--c);
     stroke-width: 8;
-    stroke-linecap: round;
+    stroke-linecap: butt;
     stroke-linejoin: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
@@ -206,7 +206,7 @@ const drawn = lines.map((L, i) => ({
   /* Beck's terminus: a short bar across each line's outer ends. */
   .terminus {
     stroke: var(--ink);
-    stroke-width: 5;
+    stroke-width: 6;
     stroke-linecap: round;
     opacity: 0;
     transition: opacity 500ms ease calc(var(--ld) + 1400ms);
