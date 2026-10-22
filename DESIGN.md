@@ -200,7 +200,7 @@ Each line colour reaches its elements through one custom property, `--c`, set by
 
 ### Hierarchy
 - **Display** (500, clamp(46px, 7vw, 96px), 0.98, −0.04em): the case-study title. The hero headline is the same face at a smaller size (clamp(42px, 3.75vw, 56px), 1.02) because it sits in the map's north-west quadrant, not across the page.
-- **Headline** (500, clamp(32px, 4.6vw, 60px), 1.0, −0.035em): section headings: "The lines.", "In service.", "The journey.", "One operator. Every line.", "Tell me what you need." Headings are short, end in a full stop, and are balanced.
+- **Headline** (500, clamp(32px, 4.6vw, 60px), 1.0, −0.035em): section headings: "What I build.", "In service.", "The journey.", "One operator. Every line.", "Tell me what you need." Headings are short, end in a full stop, and are balanced.
 - **Title** (500, clamp(22px, 2.4vw, 30px), 1.15, −0.025em): the service name on each line entry (raised there to clamp(26px, 2.6vw, 36px)), journey stops (20px), the "sent" title.
 - **Body** (400, 17px, 1.55, system sans): prose. Measures run 34ch (hero lede) to 52ch (about, case-study overview); descriptions sit at 46ch in muted bone. Small text is 14.5px; captions, status lines and prices run 13px to 13.5px.
 - **Label** (500, 13px, 1.3, Manrope, sentence case): the workhorse small label. Line-name meta lines, the legend title, legend names (15px), route-strip stops, form labels (13.5px), timetable headers, nav links (14.5px), text links (14px), chips (13.5px), the about sign-off.

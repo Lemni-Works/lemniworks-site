@@ -131,6 +131,25 @@ function report(signal: AbortSignal) {
   }, { signal }));
 }
 
+/* After an in-page jump the hash would survive a refresh and drop the visitor mid-page. Whatever
+   performed the jump (the browser, or the router, which pushes the hash itself), it scrolls; once
+   that scroll has settled with an in-page hash in the address, the address goes back to the plain
+   path. A hash in a shared link still lands on its section first. */
+function anchors(signal: AbortSignal) {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  cleanups.push(() => clearTimeout(timer));
+  const settle = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (location.hash && document.getElementById(location.hash.slice(1))) {
+        history.replaceState(history.state, '', location.pathname + location.search);
+      }
+    }, 600);
+  };
+  addEventListener('scroll', settle, { passive: true, signal });
+  addEventListener('hashchange', settle, { signal });
+}
+
 function nav() {
   const links = [...document.querySelectorAll<HTMLAnchorElement>('.site-header nav a')];
   const targets = links.map((link) => document.getElementById(link.hash.slice(1))).filter(Boolean) as HTMLElement[];
@@ -163,6 +182,7 @@ export function initMotion() {
   map(controller.signal);
   relay(controller.signal);
   report(controller.signal);
+  anchors(controller.signal);
   nav();
   sent();
 }
