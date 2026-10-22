@@ -81,7 +81,7 @@ Everything below is in `src/site.ts` unless noted.
 - [x] Quote-based wording for services and optional upkeep, approved for launch
 - [x] DineSense description and existing product-site link; direct App Store/TestFlight link can be added when public
 - [x] Public Apify Actor link
-- [ ] First-reply window (`replyWindow`, currently "one business day")
+- [x] First-reply window confirmed by the owner on 2026-10-22: one business day (`replyWindow`)
 - [x] Owned domain: `lemniworks.com`; site config, canonical URLs and robots.txt agree
 - [ ] Build the contact Worker, configure `PUBLIC_WORKER_ORIGIN`, redeploy, and verify real delivery
 - [x] `hello@lemniworks.com` receives email (confirmed by the owner)

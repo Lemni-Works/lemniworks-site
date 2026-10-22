@@ -11,7 +11,7 @@ export const site = {
   title: 'Lemni Works · One studio for the whole shop',
   description:
     'Stores, websites, automations and the reports behind them, built by one person in Wichita and handed over with the source. Fixed price, written quote within two business days.',
-  // PLACEHOLDER: first-reply window. Spec fixes the quote window at two business days.
+  // Confirmed by the owner on 2026-10-22. The written quote window stays at two business days.
   replyWindow: 'one business day',
 } as const;
 
