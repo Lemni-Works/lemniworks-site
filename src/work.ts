@@ -58,7 +58,7 @@ export const projects: Project[] = [
     year: '2026',
     line: 'A static site that introduces the app with its own screens.',
     summary:
-      'The site had one job: explain the current iPhone app and invite people into a small TestFlight pilot. It is plain HTML, CSS and JavaScript with no framework and no build step, and every screen on it is a real capture from the app in a deterministic demo mode.',
+      'The site has one job: introduce the iPhone app and send people to it on the App Store. It is plain HTML, CSS and JavaScript with no framework and no build step, and every screen on it is a real capture from the app in a deterministic demo mode.',
     built: [
       'An opening that fans three real screens over a place setting, then follows the pointer for depth. No idle loop, no video.',
       'A guided walkthrough from target to order, with the screens as the evidence.',

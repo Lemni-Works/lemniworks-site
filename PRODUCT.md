@@ -49,7 +49,7 @@ One builder who ships the whole thing and hands it over: the store, the automati
 
 - Final identity package at /Users/zandere/Documents/Research/lemni-works-open-path-final (outlined lockups, favicons, social images, Manrope source).
 - Build Kit spec with section copy and tone rules (DESIGN section mirrored in this repo's history).
-- Shipped products exist but no screenshots, device mockups or case-study copy are in the repo yet. DineSense App Store or TestFlight link, Apify Actor links and example website URLs are not yet supplied. Do not fabricate clients, testimonials, metrics or prices.
+- Real captures and case-study copy for DineSense, dinesense.app, Programmed and the Apify tools live in `src/work.ts` and `public/work/`. DineSense links to its App Store listing (id6816440061) and the data tools to https://apify.com/lemniworks/keyword-search-volume, both confirmed on 2026-10-22. Do not fabricate clients, testimonials, metrics or prices.
 
 ## Product Principles
 
