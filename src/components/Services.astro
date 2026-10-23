@@ -1,32 +1,72 @@
 ---
-/* The lines. Each service is a line: a route strip of what it connects, the copy, and its proof
-   beside it, real work where it exists and a working example where it does not. */
-import { services, notOffered } from '../site';
+/* The lines. Each office job is a line: a route strip of what changes, the copy, and a working
+   example beside it. Every example runs in the page; nothing is sent. */
+import { services, website, notOffered } from '../site';
 import { serviceLines as lines } from '../map';
 import Arrow from './Arrow.astro';
 
-const outcomes = ['Make a good first impression.', 'Give the busywork a way out.', 'Stop collecting it by hand.', 'Know what is actually happening.'];
 const routes: Record<string, string[]> = {
-  web: ['We design it', 'I build it', 'It goes live', 'The keys are yours'],
-  automation: ['Something happens', 'It gets passed along', 'It lands where it should', 'I keep an eye on it'],
-  scraping: ['The sites you choose', 'On a schedule', 'Clean rows', 'In your spreadsheet'],
-  reports: ['Your numbers', 'Pulled together', 'A page or a PDF', 'Every week'],
+  quotes: ['A customer asks', 'The quote builds itself', 'It goes out', 'A follow-up'],
+  billing: ['A bill or a payment', 'Read and entered', 'In QuickBooks', 'Reminders on unpaid'],
+  scheduling: ['A request', 'A time that works', 'Confirmed', 'Reminded the day before'],
+  paperwork: ['What you need', 'What came in', 'What is missing', 'A nudge until it arrives'],
 };
-const relayStops = ['Form filled in', 'New order', 'Spreadsheet', 'Contacts', 'Email'];
-const rows = [['Canvas tote', 'Field Supply', '24.00', 'In stock'], ['Desk tray', 'North Studio', '38.00', 'In stock'], ['Travel flask', 'Field Supply', '32.00', 'In stock']];
-const csv = 'Product,Source,Price,Availability\n' + rows.map((row) => row.join(',')).join('\n');
-const week = [42, 68, 54, 85, 72, 96, 82];
+
+/* The relay examples: a request travels the line and every stop lights as it passes. */
+const relays: Record<string, { button: string; stops: string[]; messages: string[] }> = {
+  quotes: {
+    button: 'Send a test quote request',
+    stops: ['Request', 'Quote built', 'Emailed', 'Follow-up set', 'Deposit'],
+    messages: [
+      'A customer asked for a quote through your form.',
+      'The quote was built from your price list.',
+      'Quote #1043 went out by email.',
+      'A follow-up is set for three days from now, in case nobody answers.',
+      'A deposit link is ready for when they say yes. Example only, nothing was sent.',
+    ],
+  },
+  billing: {
+    button: 'Send a test bill',
+    stops: ['New bill', 'Details read', 'QuickBooks', 'Invoice late', 'Reminder'],
+    messages: [
+      'A supplier’s bill arrived by email.',
+      'The vendor, date and amount were read off it.',
+      'It was entered in QuickBooks, ready for you to approve.',
+      'Meanwhile, invoice #2207 to a customer is a week past due.',
+      'A polite reminder went out for it. Example only, nothing was sent.',
+    ],
+  },
+  scheduling: {
+    button: 'Send a test booking',
+    stops: ['Request', 'Time picked', 'Confirmed', 'Calendar', 'Reminder'],
+    messages: [
+      'Someone asked to book a job.',
+      'They picked Thursday at 9, a time you had open.',
+      'They got a confirmation right away.',
+      'It landed on your calendar with their address and notes.',
+      'A reminder goes out Wednesday morning. Example only, nothing was sent.',
+    ],
+  },
+};
+
+/* The paperwork tracker: what came in and what is still missing. Fictional rows. */
+const tracker = [
+  ['Order 1041', 'Signed agreement', 'Received', ''],
+  ['Order 1042', 'Vehicle title', 'Missing', 'Reminder Thursday'],
+  ['New client: Hart', 'Tax documents', '2 of 3 in', 'Reminder Friday'],
+];
 ---
 
 <section id="lines" class="section" aria-labelledby="lines-title">
   <div class="wrap">
     <div class="section-head reveal">
-      <h2 id="lines-title">What I build.</h2>
-      <p>Four services, each one a line on the map. Take one, or connect the whole shop. Fixed scope, written quote, source code included.</p>
+      <h2 id="lines-title">What I set up.</h2>
+      <p>Four jobs most small offices still do by hand, each one a line on the map. Start with one. Fixed price, written plan, set up on your accounts.</p>
     </div>
 
     {lines.map((L, i) => {
       const s = services[i];
+      const relay = relays[L.slug];
       return (
         <article id={`line-${L.slug}`} class="line-entry reveal" data-line={L.slug}>
           <div class="route" aria-label={`What the ${L.name} covers`}>
@@ -38,7 +78,7 @@ const week = [42, 68, 54, 85, 72, 96, 82];
             <div class="line-copy">
               <h3>{s.name}</h3>
               <p class="line-name"><span class="swatch" aria-hidden="true"></span>{L.name}</p>
-              <p class="outcome">{outcomes[i]}</p>
+              <p class="outcome">{s.before}</p>
               <p class="desc">{s.description}</p>
               <div class="line-actions">
                 <a class="btn small" href="#contact">{s.offer}<Arrow /></a>
@@ -51,20 +91,13 @@ const week = [42, 68, 54, 85, 72, 96, 82];
             </div>
 
             <div class="line-proof">
-              {L.slug === 'web' && (
-                <figure class="proof-site">
-                  <a href="/work/dinesense-site" aria-label="Read the dinesense.app case study"><img src="/work/dinesense-site.jpg" alt="The DineSense website at desktop width" width="1400" height="1006" loading="lazy" decoding="async" /></a>
-                  <figcaption><span>dinesense.app, a real site I built.</span><a class="text-link" href="/work/dinesense-site">Read the case study<Arrow diagonal /></a></figcaption>
-                </figure>
-              )}
-
-              {L.slug === 'automation' && (
-                <div class="instrument" data-relay>
+              {relay && (
+                <div class="instrument" data-relay data-messages={JSON.stringify(relay.messages)}>
                   <svg class="relay" viewBox="0 0 560 110" aria-hidden="true">
                     <path class="relay-track" d="M30 44 H530" />
                     <path class="relay-lit" d="M30 44 H530" pathLength="1" />
-                    {relayStops.map((name, k) => (
-                      <g class="relay-stop" data-relay-stop transform={`translate(${30 + k * 125} 44)`}>
+                    {relay.stops.map((name, k) => (
+                      <g class="relay-stop" data-relay-stop transform={`translate(${30 + k * (500 / (relay.stops.length - 1))} 44)`}>
                         <circle r="9" />
                         <text y="40" text-anchor="middle">{name}</text>
                       </g>
@@ -74,45 +107,24 @@ const week = [42, 68, 54, 85, 72, 96, 82];
                     </circle>
                   </svg>
                   <div class="instrument-foot">
-                    <button class="btn small" type="button" data-run-relay>Send a test order<Arrow /></button>
+                    <button class="btn small" type="button" data-run-relay>{relay.button}<Arrow /></button>
                     <span class="status" role="status" data-relay-status>An example that runs here, in the page. Nothing is sent.</span>
                   </div>
                 </div>
               )}
 
-              {L.slug === 'scraping' && (
-                <div class="instrument" data-collector>
+              {L.slug === 'paperwork' && (
+                <div class="instrument" data-tracker>
                   <table>
-                    <caption class="visually-hidden">Fictional product data showing a scraper's output</caption>
-                    <thead><tr><th>Product</th><th>Source</th><th>Price</th><th>Availability</th></tr></thead>
-                    <tbody>{rows.map((r) => <tr><td>{r[0]}</td><td>{r[1]}</td><td class="num">${r[2]}</td><td>{r[3]}</td></tr>)}</tbody>
+                    <caption class="visually-hidden">An example paperwork tracker with fictional orders and clients</caption>
+                    <thead><tr><th scope="col">For</th><th scope="col">Document</th><th scope="col">Status</th><th scope="col">Next</th></tr></thead>
+                    <tbody>{tracker.map((r) => (
+                      <tr class:list={{ waiting: r[2] !== 'Received' }}>
+                        <td>{r[0]}</td><td>{r[1]}</td><td class="state"><i class="state-dot" aria-hidden="true"></i>{r[2]}</td><td class="next">{r[3] || '—'}</td>
+                      </tr>
+                    ))}</tbody>
                   </table>
-                  <div class="instrument-foot">
-                    <a class="btn small" href={`data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`} download="lemni-works-sample.csv">Download the sample CSV<Arrow /></a>
-                    <span class="status">3 fictional rows, collected on a schedule, delivered as CSV, JSON or a database table.</span>
-                  </div>
-                </div>
-              )}
-
-              {L.slug === 'reports' && (
-                <div class="instrument" data-report>
-                  <div class="report-top">
-                    <p><span class="report-label">Orders</span><strong class="num" data-report-total>499</strong></p>
-                    <div class="period" role="group" aria-label="Example report period">
-                      <button type="button" aria-pressed="true" data-report-period="week">Week</button>
-                      <button type="button" aria-pressed="false" data-report-period="month">Month</button>
-                    </div>
-                  </div>
-                  <div class="chart" role="img" aria-label="Sample orders for Monday through Sunday: 42, 68, 54, 85, 72, 96, 82" data-report-chart>
-                    {week.map((value, k) => (
-                      <div class="column">
-                        <span class="num" data-bar-value>{value}</span>
-                        <div class="bar" style={`--bar-scale: ${value / 100}`} data-bar></div>
-                        <span class="bar-label" data-bar-label>{['M', 'T', 'W', 'T', 'F', 'S', 'S'][k]}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <p class="status">Sample numbers. Yours come from your own sources, with the queries handed over.</p>
+                  <p class="status">An example with made-up orders. Yours would list your own jobs and clients, and the reminders send themselves.</p>
                 </div>
               )}
             </div>
@@ -120,6 +132,20 @@ const week = [42, 68, 54, 85, 72, 96, 82];
         </article>
       );
     })}
+
+    <article class="website-entry reveal">
+      <div class="website-copy">
+        <h3>{website.title}</h3>
+        <p class="desc">{website.body}</p>
+        <div class="line-actions">
+          <a class="btn small ghost" href="#contact">Ask about a website<Arrow /></a>
+        </div>
+      </div>
+      <figure class="proof-site">
+        <a href="/work/dinesense-site" aria-label="Read the dinesense.app case study"><img src="/work/dinesense-site.jpg" alt="The DineSense website at desktop width" width="1400" height="1006" loading="lazy" decoding="async" /></a>
+        <figcaption><span>dinesense.app, a real site I built.</span><a class="text-link" href="/work/dinesense-site">Read the case study<Arrow diagonal /></a></figcaption>
+      </figure>
+    </article>
 
     <p class="not-offered reveal">{notOffered}</p>
   </div>
@@ -419,92 +445,46 @@ const week = [42, 68, 54, 85, 72, 96, 82];
     font-variant-numeric: tabular-nums;
   }
 
-  /* Dashboard instrument. */
-  .report-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 16px;
+  /* Paperwork tracker: what is in and what is still missing. */
+  td.state {
+    white-space: nowrap;
   }
 
-  .report-label {
-    display: block;
-    font: 500 12.5px/1.3 var(--font-display);
-    color: var(--muted);
-  }
-
-  .report-top strong {
-    display: block;
-    font: 500 44px/1.2 var(--font-display);
-    letter-spacing: -0.03em;
-  }
-
-  .period {
-    display: flex;
-    gap: 4px;
-    padding: 3px;
-    border: 1px solid var(--hair);
-    border-radius: 999px;
-  }
-
-  .period button {
-    font: 500 13px/1 var(--font-display);
-    color: var(--muted);
-    background: transparent;
-    border: 0;
-    padding: 8px 14px;
-    border-radius: 999px;
-    cursor: pointer;
-  }
-
-  .period button[aria-pressed='true'] {
-    background: var(--ink);
-    color: var(--water);
-  }
-
-  .chart {
-    height: 170px;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 12px;
-    margin-top: 18px;
-    border-bottom: 1px solid var(--hair);
-  }
-
-  .column[hidden] {
-    display: none;
-  }
-
-  .column {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    min-width: 0;
-  }
-
-  .column > .num {
-    font-size: 12px;
-    color: var(--muted);
-    padding-bottom: 6px;
-  }
-
-  .bar {
-    width: 100%;
-    max-width: 34px;
-    height: 118px;
-    transform: scaleY(var(--bar-scale));
-    transform-origin: bottom;
+  .state-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 50%;
     background: var(--c);
-    border-radius: 4px 4px 0 0;
-    transition: transform 500ms var(--ease-out);
+    vertical-align: 1px;
   }
 
-  .bar-label {
-    font-size: 12px;
+  tr.waiting .state-dot {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--ink);
+  }
+
+  tr.waiting .next {
+    color: var(--ink);
+  }
+
+  td.next {
     color: var(--dim);
-    padding-block: 8px;
+  }
+
+  /* Websites: an add-on, set apart from the four lines by a hairline and no route strip. */
+  .website-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(32px, 5vw, 80px);
+    align-items: center;
+    padding-block: 56px 64px;
+    border-top: 1px solid var(--hair);
+  }
+
+  .website-entry .desc {
+    margin-top: 14px;
   }
 
   .instrument .status {
@@ -556,8 +536,13 @@ const week = [42, 68, 54, 85, 72, 96, 82];
       margin: 0 0 0 -26px;
     }
 
-    .chart {
-      gap: 8px;
+    .website-entry {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    table {
+      font-size: 13.5px;
     }
   }
 
