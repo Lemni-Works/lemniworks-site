@@ -12,19 +12,19 @@ Astro 7, static output, plain CSS, no component library. Deployed to Cloudflare 
 
 ## Users
 
-Owners and operations people at 5-50 person businesses, marketers, e-commerce sellers and agency staff. Non-technical. Reading on a phone as often as a laptop. They arrive from Reddit, Hacker News, Upwork or a referral, already holding a specific problem: a store or site they need built or fixed, a data source they need collected, a manual process they want automated, numbers they keep rebuilding by hand. They skim.
+Owners and office managers of small local businesses around Wichita (roughly 2–50 people): trades and home services, rentals, auto, small retail and wholesale, small professional offices. Non-technical. Reading on a phone as often as a laptop. Most arrive from a cold email (the signature links here) that mentioned something specific about their business, often a job posting for office help; others from a referral. They already have the problem: office work done by retyping, quotes built in spreadsheets, bills keyed into QuickBooks, phone tag to book jobs, paperwork chased from memory. They skim, and they decide in the first screen whether this is for them.
 
 ## Product Purpose
 
-Lemni Works is Zander Erwin's one-person studio in Wichita, Kansas that builds what a small business needs online: e-commerce stores and websites, workflow automation, scheduled scrapers and data collection, and reports and dashboards. The site's only job is to turn a visitor with one of those problems into a contact-form submission. Success is measured by form submissions, not time on page. Secondary job: look like a real, careful studio so a link from a forum or a marketplace is trusted.
+Lemni Works is Zander Erwin's one-person studio in Wichita, Kansas that sets up the software side of small-business office work: quotes, billing and bookkeeping, scheduling, and paperwork and onboarding, usually on tools the business already pays for. Websites are offered as an add-on, connected to the rest. The site's only job is to turn an owner who recognizes their busywork into a message. Success is measured by messages, not time on page. Secondary job: back up the cold email that sent them here, so the claims there are visibly true here.
 
 ## Positioning
 
-One builder who ships the whole thing and hands it over: the store, the automation behind it and the report on top, with source code, a handover note and a fixed price quoted in writing within two business days. Agencies split that across teams and retainers; marketplaces split it across strangers. Lemni Works should read as a premium studio, not a freelancer profile, while staying honest that it is one person.
+A local person who takes the retyping out of a small office: looks at how the work is done today, writes a plan with a fixed price within two business days, sets it up on the tools the business already uses, and hands it over with a written how-to. Payment on delivery. The alternative the owner is weighing is hiring (or keeping) someone to do the retyping; the pitch is that software does the repetitive part and the person does the parts that need a person, never that the hire is unnecessary. Lemni Works should read as a careful premium studio, not a freelancer profile, while staying honest that it is one person in Wichita.
 
 ## Operating Context
 
-- Visitors compare against agency sites, Upwork profiles and template-shop storefronts.
+- Visitors compare against hiring office help, their bookkeeper, and doing nothing. They rarely compare against agencies.
 - First contact is the form; calls are by appointment, evenings Central.
 - Quotes are fixed price with delivery date, inclusions and exclusions. Payment on delivery. Optional monthly upkeep plans.
 - Shipped work: DineSense (iOS app, on the App Store since 2026-10-22), public data tools on the Apify store, and websites. Custom mobile apps are not offered as a service.
@@ -32,7 +32,9 @@ One builder who ships the whole thing and hands it over: the store, the automati
 
 ## Capabilities and Constraints
 
-- Four services: websites and e-commerce, workflow automation, web scraping and data collection, reports and dashboards. The homepage speaks to all four audiences equally.
+- Four office jobs on the homepage, one per map line: quotes, billing and bookkeeping, scheduling, paperwork and onboarding. Websites appear once, as an add-on. Scraping and reports are still done on request but are not on the homepage.
+- Contact is email only for now (no phone number). No prices are published until the owner sets a starting price.
+- Avoid technical words on the homepage (API, JSON, dataset, CSV, scraper). Name the owner's task, not the technology.
 - Zero third-party scripts, no analytics at launch, no cookie banner, no chat widget. Fonts self-hosted. Form works without JavaScript.
 - One H1, headings in order, visible labels, 4.5:1 body contrast, visible focus.
 - Target under 150 KB page weight and Lighthouse 95+ on all categories at 375px and 1280px.
@@ -53,8 +55,8 @@ One builder who ships the whole thing and hands it over: the store, the automati
 
 ## Product Principles
 
-1. The form is the product: every section exists to make sending a message feel easy and sensible.
-2. Prove, don't claim: shipped work and demonstrated craft over adjectives.
-3. One shop, four doors: a visitor with any of the four problems should find their door within one scroll.
+1. The message is the product: every section exists to make writing in feel easy and sensible.
+2. Prove, don't claim: shipped work and working examples over adjectives. Never invent clients, testimonials or results.
+3. Their busywork, in their words: an owner should recognize their own office within one scroll.
 4. Premium by precision, not by volume: restraint, finish and real motion craft signal the studio tier.
 5. Honest scale: one builder, stated plainly, framed as an advantage.

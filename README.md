@@ -38,7 +38,7 @@ Custom domains: `lemniworks.com` and `www.lemniworks.com`. Canonical URLs use th
 src/site.ts              copy, prices, links: every placeholder is here
 src/mark.ts              the lemniscate path data shared by all marks
 src/work.ts              case studies: copy, stack, images, featured flag
-src/scripts/motion.ts    the map draw-in and legend, the test order, the report example, reveals, nav marker, sent handler
+src/scripts/motion.ts    the map draw-in, the test-request examples, reveals, nav marker, sent handler
 src/scripts/intro.ts     the entrance: the mark draws itself, then travels into the header
 src/styles/global.css    design tokens (dark only), base type, controls
 src/layouts/Base.astro   head, meta, Open Graph, direction contract
@@ -54,13 +54,13 @@ To add a case study, add an entry to `src/work.ts` and drop its images in `publi
 
 ## The Network Map
 
-The home page is a transit-style map of the studio. The tools a shop already pays for are stations, the four services are four lines in one green scheme (Storefront, Automation, Data, Reports), and all four change trains at one hub, Lemni Works. Geometry lives in `src/map.ts` and must obey Beck's rules: every segment horizontal, vertical or 45°, every station on its line. `src/components/NetworkMap.astro` draws it; the lines draw themselves after the entrance lands, the legend beneath lights one line at a time, and a slow train runs on each.
+The home page is a transit-style map of the studio. The four office jobs it takes on are four lines in one green scheme (Quotes, Billing, Scheduling, Paperwork; the Storefront, Automation, Data and Reports lines until 2026-10-23, on the same geometry), and all four change trains at one hub, Lemni Works. Geometry lives in `src/map.ts` and must obey Beck's rules: every segment horizontal, vertical or 45°, every station on its line. `src/components/NetworkMap.astro` draws it; the lines draw themselves after the entrance lands, the legend beneath lights one line at a time, and a slow train runs on each.
 
 The home page opens, once per browser session, with the Open Path mark drawing itself and travelling into the header (`src/components/Intro.astro`, `src/scripts/intro.ts`). The decision to play it is made before first paint in `src/layouts/Base.astro`; any click, key or scroll skips it, reduced motion never shows it, and it does not replay on client-side navigation. Clear `sessionStorage` to see it again.
 
-Each line has an entry in `src/components/Services.astro` with a route strip of what it covers, the copy from `src/site.ts`, and its proof: the real dinesense.app capture for the Storefront line, a test order that travels the Relay line in the page, three fictional rows and a CSV download for the Collector line, and a week/month example for the Dashboard line. Nothing in these examples sends a request. Without JavaScript everything is visible and the examples simply sit still.
+Each line has an entry in `src/components/Services.astro` with a route strip of what changes, the copy from `src/site.ts`, and a working example: a test request that travels the line in the page for Quotes, Billing and Scheduling (each with its own messages), and a fictional tracker table for Paperwork. Websites follow the four lines as an add-on, with the real dinesense.app capture. Nothing in these examples sends a request. Without JavaScript everything is visible and the examples simply sit still.
 
-`src/components/Work.astro` shows shipped work plainly: the website feature, the two apps, the data tools. Every project gets a page at `/work/<slug>` from `src/pages/work/[slug].astro` and `src/layouts/CaseStudy.astro`, with shared image and title transitions.
+`src/components/Work.astro` ("Things I've built", below About) shows shipped work plainly: the dinesense.app site and the DineSense app. The Apify tools and Programmed keep their case-study pages but are off the homepage. Every project gets a page at `/work/<slug>` from `src/pages/work/[slug].astro` and `src/layouts/CaseStudy.astro`, with shared image and title transitions.
 
 ## Work images
 
@@ -85,8 +85,8 @@ Everything below is in `src/site.ts` unless noted.
 - [x] Owned domain: `lemniworks.com`; site config, canonical URLs and robots.txt agree
 - [ ] Build the contact Worker, configure `PUBLIC_WORKER_ORIGIN`, redeploy, and verify real delivery
 - [x] `hello@lemniworks.com` receives email (confirmed by the owner)
-- [ ] Service names, descriptions and entry-offer names are drafts to review, including the new websites and e-commerce service
-- [ ] Programmed is shown as an in-development app in the work section; remove it from the homepage selection in `src/components/Work.astro` if it should not be public yet
+- [ ] Office-job names, descriptions and button labels (2026-10-23 rewrite) are drafts to review
+- [ ] No starting price is published yet; add one to `services` in `src/site.ts` once decided
 - [ ] Work images were copied from the DineSense-Website and Portfolio projects on 2026-10-21; refresh them when those apps change
 - [x] Privacy commitments confirmed: inquiries that do not become work are deleted within 12 months; deletion requests are fulfilled within one week
 - [x] Final outlined logo, optical favicons and social images integrated
