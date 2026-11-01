@@ -14,6 +14,8 @@ export interface Project {
   /** First image is the hero. Phone screens are 880x1912 or 460x1000; the site render is 1400x1006. */
   images: { src: string; alt: string; w: number; h: number }[];
   link?: { label: string; href: string };
+  /** Further outbound links, shown under `link` (e.g. one per listing). */
+  links?: { label: string; href: string }[];
   /** Marks a featured project; homepage composition lives in components/Work.astro. */
   featured: boolean;
 }
@@ -107,15 +109,17 @@ export const projects: Project[] = [
     year: '2026',
     line: 'Scrapers anyone can run from the Apify store.',
     summary:
-      'Public Actors on the Apify platform, including bulk keyword search volume, difficulty and search intent, for people who need the numbers without a seat on an SEO suite. Give it a list, get a dataset back as CSV or JSON.',
+      'Public Actors on the Apify platform: bulk keyword search volume, difficulty and search intent for people who need the numbers without a seat on an SEO suite, and a Shopify monitor that exports any public store and flags price drops, sell-outs and new products between runs. Give it a list, get a dataset back as CSV or JSON.',
     built: [
-      'Actors that take a keyword list as input and return a clean dataset.',
+      'Actors that take a list of keywords or store URLs as input and return a clean dataset.',
+      'A Shopify monitor that keeps a snapshot of each store and reports what changed on the next run.',
       'Scheduling, monitoring and storage handled by the Apify platform.',
     ],
     stack: ['Node.js', 'Apify SDK', 'Crawlee'],
     notice: ['Each listing links back here for a custom version.'],
     images: [],
-    link: { label: 'View on Apify', href: 'https://apify.com/lemniworks/keyword-search-volume' }, // confirmed live on 2026-10-22 under the Lemniworks account
+    link: { label: 'Keyword volume on Apify', href: 'https://apify.com/lemniworks/keyword-search-volume' }, // confirmed live on 2026-10-22 under the Lemniworks account
+    links: [{ label: 'Shopify monitor on Apify', href: 'https://apify.com/lemniworks/shopify-products-price-monitor' }], // confirmed live on 2026-10-31
     featured: false,
   },
 ];
