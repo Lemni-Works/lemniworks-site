@@ -57,68 +57,40 @@ function map(signal: AbortSignal) {
   }
 }
 
-/* A test order travels the Relay line: every stop lights as it passes. Nothing leaves the page. */
-function relay(signal: AbortSignal) {
-  const root = document.querySelector<HTMLElement>('[data-relay]');
-  if (!root) return;
-  const button = root.querySelector<HTMLButtonElement>('[data-run-relay]');
-  const status = root.querySelector<HTMLElement>('[data-relay-status]');
-  const pulse = root.querySelector<SVGAnimationElement>('animateMotion');
-  const stops = [...root.querySelectorAll<SVGElement>('[data-relay-stop]')];
-  const messages = ['Someone filled in the form.', 'Order #1042 is in.', 'A row was added to the spreadsheet.', 'The contact was updated.', 'The summary went out by email. 2.6 seconds, example only.'];
+/* A test request travels a line: every stop lights as it passes. Each example carries its own
+   messages in data-messages. Nothing leaves the page. */
+function relays(signal: AbortSignal) {
   const timers = new Set<ReturnType<typeof setTimeout>>();
   cleanups.push(() => timers.forEach(clearTimeout));
-  button?.addEventListener('click', () => {
-    button.disabled = true;
-    root.classList.remove('is-done');
-    stops.forEach((stop) => stop.classList.remove('is-lit'));
-    root.classList.add('is-running');
-    const duration = reduce() ? 0 : 2600;
-    if (duration) pulse?.beginElement();
-    stops.forEach((stop, i) => {
-      const timer = setTimeout(() => {
-        timers.delete(timer);
-        stop.classList.add('is-lit');
-        if (status) status.textContent = messages[i];
-        if (i === stops.length - 1) {
-          root.classList.remove('is-running');
-          root.classList.add('is-done');
-          button.disabled = false;
-        }
-      }, (duration * i) / (stops.length - 1));
-      timers.add(timer);
-    });
-  }, { signal });
-}
-
-/* The Dashboard example switches between a week and a month. */
-function report(signal: AbortSignal) {
-  const root = document.querySelector<HTMLElement>('[data-report]');
-  if (!root) return;
-  const periods = [...root.querySelectorAll<HTMLButtonElement>('[data-report-period]')];
-  const chart = root.querySelector<HTMLElement>('[data-report-chart]');
-  const total = root.querySelector<HTMLElement>('[data-report-total]');
-  const columns = [...root.querySelectorAll<HTMLElement>('.column')];
-  periods.forEach((button) => button.addEventListener('click', () => {
-    const isMonth = button.dataset.reportPeriod === 'month';
-    const values = isMonth ? [399, 420, 470, 499] : [42, 68, 54, 85, 72, 96, 82];
-    const labels = isMonth ? ['Wk 1', 'Wk 2', 'Wk 3', 'Wk 4'] : ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-    periods.forEach((period) => period.setAttribute('aria-pressed', String(period === button)));
-    if (total) total.textContent = values.reduce((sum, value) => sum + value, 0).toLocaleString('en-US');
-    if (chart) {
-      chart.style.gridTemplateColumns = `repeat(${values.length}, 1fr)`;
-      chart.setAttribute('aria-label', `Sample orders ${isMonth ? 'for weeks one through four' : 'for Monday through Sunday'}: ${values.join(', ')}`);
-    }
-    columns.forEach((column, i) => {
-      column.hidden = i >= values.length;
-      const bar = column.querySelector<HTMLElement>('[data-bar]');
-      const value = column.querySelector('[data-bar-value]');
-      const label = column.querySelector('[data-bar-label]');
-      if (bar) bar.style.setProperty('--bar-scale', String(((values[i] ?? 0) / Math.max(...values)) * 0.96));
-      if (value) value.textContent = String(values[i] ?? '');
-      if (label) label.textContent = labels[i] ?? '';
-    });
-  }, { signal }));
+  document.querySelectorAll<HTMLElement>('[data-relay]').forEach((root) => {
+    const button = root.querySelector<HTMLButtonElement>('[data-run-relay]');
+    const status = root.querySelector<HTMLElement>('[data-relay-status]');
+    const pulse = root.querySelector<SVGAnimationElement>('animateMotion');
+    const stops = [...root.querySelectorAll<SVGElement>('[data-relay-stop]')];
+    let messages: string[] = [];
+    try { messages = JSON.parse(root.dataset.messages ?? '[]'); } catch { messages = []; }
+    button?.addEventListener('click', () => {
+      button.disabled = true;
+      root.classList.remove('is-done');
+      stops.forEach((stop) => stop.classList.remove('is-lit'));
+      root.classList.add('is-running');
+      const duration = reduce() ? 0 : 2600;
+      if (duration) pulse?.beginElement();
+      stops.forEach((stop, i) => {
+        const timer = setTimeout(() => {
+          timers.delete(timer);
+          stop.classList.add('is-lit');
+          if (status && messages[i]) status.textContent = messages[i];
+          if (i === stops.length - 1) {
+            root.classList.remove('is-running');
+            root.classList.add('is-done');
+            button.disabled = false;
+          }
+        }, (duration * i) / (stops.length - 1));
+        timers.add(timer);
+      });
+    }, { signal });
+  });
 }
 
 /* After an in-page jump the hash would survive a refresh and drop the visitor mid-page. Whatever
@@ -170,8 +142,7 @@ export function initMotion() {
   cleanups.push(() => controller.abort());
   reveals();
   map(controller.signal);
-  relay(controller.signal);
-  report(controller.signal);
+  relays(controller.signal);
   anchors(controller.signal);
   nav();
   sent();

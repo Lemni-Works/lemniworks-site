@@ -1,26 +1,26 @@
 ---
-/* In service. The destinations on the map, listed as a timetable: line, destination, what runs,
-   since when. No showcase; the proof is the map and the case studies. */
+/* Things I've built: my own shipped work, listed as a timetable. No showcase; each row links to its
+   case study. The Apify tools and Programmed keep their case-study pages but are off the homepage,
+   which speaks to small-business offices. */
 import { bySlug } from '../work';
+import { workNote } from '../site';
 import Arrow from './Arrow.astro';
 const rows = [
-  { line: 'web', lineName: 'Storefront', p: bySlug('dinesense-site')!, runs: 'A product site that lets the product do the talking.' },
-  { line: 'scraping', lineName: 'Data', p: bySlug('apify-tools')!, runs: 'Keyword lists in. Clean datasets out, from the Apify store.' },
-  { line: 'depot', lineName: 'Product work', p: bySlug('dinesense')!, runs: 'An iOS app that turns one meal’s numbers into the exact order nearby.' },
-  { line: 'depot', lineName: 'Product work', p: bySlug('programmed')!, runs: 'A lifting log where the program, the sets and the food live together.' },
+  { line: 'depot', lineName: 'Website', p: bySlug('dinesense-site')!, runs: 'A product site that lets the product do the talking.' },
+  { line: 'depot', lineName: 'App', p: bySlug('dinesense')!, runs: 'An iOS app on the App Store that turns one meal’s numbers into the exact order nearby.' },
 ];
 ---
 
 <section id="work" class="section" aria-labelledby="work-title">
   <div class="wrap">
     <div class="section-head reveal">
-      <h2 id="work-title">In service.</h2>
-      <p>The destinations on the map. Real things I shipped; every one has a case study.</p>
+      <h2 id="work-title">Things I’ve built.</h2>
+      <p>My own work, shipped and public. Each one has a case study.</p>
     </div>
 
     <table class="timetable reveal">
       <thead>
-        <tr><th scope="col">Line</th><th scope="col">Destination</th><th scope="col">What it does</th><th scope="col" class="num">Since</th></tr>
+        <tr><th scope="col">Kind</th><th scope="col">Destination</th><th scope="col">What it does</th><th scope="col" class="num">Since</th></tr>
       </thead>
       <tbody>
         {rows.map((r) => (
@@ -34,7 +34,7 @@ const rows = [
       </tbody>
     </table>
 
-    <p class="work-note">The apps are product work shown as proof. Custom mobile apps are not currently offered as a service.</p>
+    <p class="work-note">{workNote}</p>
   </div>
 </section>
 

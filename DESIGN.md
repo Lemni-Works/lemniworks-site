@@ -143,7 +143,7 @@ components:
 
 Lemni Works is a one-person studio drawn as a transit network. The tools a small shop already pays for are stations; the four services are four coloured lines; every line changes trains at one hub, the builder. The world is Harry Beck's: a warm graphite ground, bone ink, lines that run only horizontal, vertical or at 45° with rounded bends, white station ticks, rings for the destinations, a capsule for the interchange. The site is dark only. Nothing on it is a card; structure comes from hairlines, route strips, tables and the lines themselves.
 
-The ground is warm, never blue. Page ground is a warm graphite; the two service sections (the lines, the contact form) sit one step lighter on a raised graphite with a soft hairline above and below. Ink is bone, not white. The four line colours are loud on purpose and belong to the lines: moss for the Storefront line, jade for the Automation line, mint for the Data line, pine for the Reports line, with a dashed grey siding for the Depot. The interface itself uses one of them, the jade step, as its single signal colour for selection, the caret, focus rings and hover colour. Everything else is bone on graphite.
+The ground is warm, never blue. Page ground is a warm graphite; the two service sections (the lines, the contact form) sit one step lighter on a raised graphite with a soft hairline above and below. Ink is bone, not white. The four line colours are loud on purpose and belong to the lines: moss for the Quotes line, jade for the Billing line, mint for the Scheduling line, pine for the Paperwork line, with a dashed grey siding for the Depot. (Until 2026-10-23 the same colours were the Storefront, Automation, Data and Reports lines; the CSS variables were renamed to match.) The interface itself uses one of them, the jade step, as its single signal colour for selection, the caret, focus rings and hover colour. Everything else is bone on graphite.
 
 Motion is drawn, not animated. The Open Path mark draws itself once per session and travels into the header; the map's lines draw themselves after it lands, stations appearing in order along each line, the hub last; slow trains then run every line indefinitely. Sections rise 22px into place; images are uncovered; titles and shots travel between routes; instruments settle. Reduced motion shows every finished state and hides the trains. The craft of the motion is the proof that one person runs every line.
 
@@ -160,13 +160,13 @@ Motion is drawn, not animated. The Open Path mark draws itself once per session 
 A warm monochrome of graphite and bone carries the whole interface; four saturated line colours belong to the map and to anything that names a line, and one of them, the jade step, is borrowed as the interface's only signal.
 
 ### Primary
-- **Automation Jade** (#5ad49f): the Automation line, and the interface's single signal colour. Text selection (jade on signal ink), the caret, the 1.5px focus ring at 4px offset, the hover colour of text links and destination names, the arrow in the header's contact link, the stroke of the "sent" mark on the contact panel, the dash before each list item on a case study. It is never a fill behind a button.
+- **Billing Jade** (#5ad49f): the Billing line (`--l-billing`), and the interface's single signal colour. Text selection (jade on signal ink), the caret, the 1.5px focus ring at 4px offset, the hover colour of text links and destination names, the arrow in the header's contact link, the stroke of the "sent" mark on the contact panel, the dash before each list item on a case study. It is never a fill behind a button.
 - **Signal Ink** (#06281b): the text colour on an jade selection. Nowhere else.
 
 ### Secondary
-- **Storefront Vermilion** (#2fa374): the Storefront line (websites and e-commerce). Line stroke, route strip, swatch, dot, table header on that line's instrument.
-- **Data Mint** (#b9ecc9): the Data line (web scraping and data collection). Same uses.
-- **Dashboard Orchid** (#1c7a56): the Reports line (reports and dashboards). Same uses, and the bars of the report instrument.
+- **Quotes Moss** (#2fa374): the Quotes line (`--l-quotes`). Line stroke, route strip, swatch, dot, the lit stops of its test request.
+- **Scheduling Mint** (#b9ecc9): the Scheduling line (`--l-scheduling`). Same uses.
+- **Paperwork Pine** (#1c7a56): the Paperwork line (`--l-paperwork`). Same uses, and the table head and received dots of the tracker.
 - **Depot Grey** (#8f8d86): the Depot siding, product work shown as proof. Drawn dashed and at a narrower stroke; it is not a service line and never lights up.
 
 Each line colour reaches its elements through one custom property, `--c`, set by `data-line="<slug>"` on an ancestor. Components never hardcode a line colour; they read `--c`.
@@ -226,7 +226,7 @@ Flat by default, with tonal layering. Depth is one step of ground (graphite to r
 
 ### Shadow Vocabulary
 - **Button lift** (`box-shadow: 0 8px 24px -12px rgb(0 0 0 / 0.7)`, with `translateY(-1px)`): the primary button on hover only.
-- **Screen ground** (`0 0 0 1px rgb(255 255 255 / 0.09), 0 40px 80px -40px rgb(0 0 0 / 0.9)`): a captured site or app screen sitting on the ground. Case-study hero shots deepen to `0 60px 120px -50px`; the portrait to `0 50px 100px -50px`. The site proof on the Storefront line uses the hair ring (`0 0 0 1px var(--hair)`) with the same ground shadow.
+- **Screen ground** (`0 0 0 1px rgb(255 255 255 / 0.09), 0 40px 80px -40px rgb(0 0 0 / 0.9)`): a captured site or app screen sitting on the ground. Case-study hero shots deepen to `0 60px 120px -50px`; the portrait to `0 50px 100px -50px`. The website add-on's site capture uses the hair ring (`0 0 0 1px var(--hair)`) with the same ground shadow.
 - **Glass inset** (`inset 0 0 0 1px var(--hair-soft), inset 0 1px 0 rgb(255 255 255 / 0.08)`): the contact panel only.
 - **Frosted header** (`background: rgb(18 17 16 / 0.72); backdrop-filter: blur(18px) saturate(150%)`): the fixed header; whatever scrolls beneath stays legible.
 
@@ -279,7 +279,7 @@ Draw-in: each line's path uses `pathLength="1"` and runs its dash offset from 1 
 Services section selection: hovering or focusing a services section entry sets the map's focus to that line; the other lines drop to 16% opacity over 320ms and the swatch stretches to 1.36×. On touch there is no hover; tapping a services section entry navigates to that line's section, which is the selection.
 
 ### Route strips, the journey and instruments
-Each line entry opens with a route strip: a 7px bar in the line colour with its deliverables as station dots and labels spaced along it; below 860px the bar turns vertical down the left. The journey is the same strip in bone with four stops. Proof beside each line is real work or a working example: the Storefront line shows the real dinesense.app capture; the Automation line is a straight stretch of track whose test order (a pulse, 2.6s linear, lighting each stop and writing a status line) runs in the page and sends nothing; the Data line is a table of 3 fictional rows with a CSV download; the Reports line is seven bars scaling to their values over 500ms, switching between a week and a month. Every example says it is an example in its status line.
+Each line entry opens with a route strip: a 7px bar in the line colour with its deliverables as station dots and labels spaced along it; below 860px the bar turns vertical down the left. The journey is the same strip in bone with four stops. Beside each line is a working example: the Quotes, Billing and Scheduling lines are each a straight stretch of track whose test request (a pulse, 2.6s linear, lighting each stop and writing that line's status line) runs in the page and sends nothing; the Paperwork line is a tracker table of 3 fictional rows, filled dots for received and ring dots for waiting. After the four lines, websites appear once as an add-on beside the real dinesense.app capture. Every example says it is an example.
 
 ### Timetable
 Work in service is a table, not a showcase: a bone rule under the Manrope 13px header, hair rules between rows, a line swatch and name in the first cell, the destination name at clamp(20px, 2vw, 26px) with a diagonal arrow that nudges and turns jade on hover, the kind beneath in dim bone, the year right-aligned in tabular numerals.

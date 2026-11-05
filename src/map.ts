@@ -1,4 +1,4 @@
-/* The network map. Four lines, one per service, meeting at the hub. Beck's rules hold:
+/* The network map. Four lines, one per office job, meeting at the hub. Beck's rules hold:
    every segment is horizontal, vertical or 45°, and every station sits on its line.
    `scripts/check-map.mjs` in the scratchpad verified this geometry; keep it true when editing. */
 
@@ -17,10 +17,10 @@ export interface Station {
 }
 
 export interface Line {
-  slug: 'web' | 'automation' | 'scraping' | 'reports';
+  slug: 'quotes' | 'billing' | 'scheduling' | 'paperwork';
   /** The line's name on the map and in the legend. */
   name: string;
-  /** The service it stands for, from site.ts. */
+  /** The office job it stands for, from `services` in site.ts. */
   service: string;
   /** CSS custom property that carries its colour. */
   color: string;
@@ -28,62 +28,64 @@ export interface Line {
   stations: Station[];
 }
 
+/* The geometry is the original network's; only the lines' meaning and their stops changed
+   (2026-10-23). Stations sit on the same coordinates, so Beck's rules still hold. */
 export const lines: Line[] = [
   {
-    slug: 'web',
-    name: 'Storefront line',
-    service: 'Websites and e-commerce',
-    color: 'var(--l-web)',
+    slug: 'quotes',
+    name: 'Quotes line',
+    service: 'Quotes',
+    color: 'var(--l-quotes)',
     points: [[60, 520], [240, 520], [420, 340], [900, 340], [1000, 240], [1160, 240]],
     stations: [
-      { name: 'Your site', x: 150, y: 520, side: 's' },
-      { name: 'Customers', x: 800, y: 340, side: 'n' },
-      { name: 'Repeat orders', x: 1080, y: 240, side: 'n' },
+      { name: 'A customer asks', x: 150, y: 520, side: 's' },
+      { name: 'Quote sent', x: 800, y: 340, side: 'n' },
+      { name: 'Deposit paid', x: 1080, y: 240, side: 'n' },
     ],
   },
   {
-    slug: 'automation',
-    name: 'Automation line',
-    service: 'Workflow automation',
-    color: 'var(--l-automation)',
+    slug: 'billing',
+    name: 'Billing line',
+    service: 'Billing and bookkeeping',
+    color: 'var(--l-billing)',
     points: [[480, 60], [480, 220], [600, 340], [600, 480], [740, 620], [1000, 620]],
     stations: [
-      { name: 'An order comes in', x: 480, y: 100, side: 'e' },
-      { name: 'Spreadsheet', x: 670, y: 550, side: 'w' },
-      { name: 'Your email', x: 820, y: 620, side: 's' },
-      { name: 'Your team', x: 950, y: 620, side: 's' },
+      { name: 'A bill arrives', x: 480, y: 100, side: 'e' },
+      { name: 'QuickBooks', x: 670, y: 550, side: 'w' },
+      { name: 'Reminder sent', x: 820, y: 620, side: 's' },
+      { name: 'Paid', x: 950, y: 620, side: 's' },
     ],
   },
   {
-    slug: 'scraping',
-    name: 'Data line',
-    service: 'Web scraping and data collection',
-    color: 'var(--l-scraping)',
+    slug: 'scheduling',
+    name: 'Scheduling line',
+    service: 'Scheduling',
+    color: 'var(--l-scheduling)',
     points: [[120, 600], [340, 600], [600, 340], [600, 200], [740, 60], [1120, 60]],
     stations: [
-      { name: 'The sites you watch', x: 230, y: 600, side: 's' },
-      { name: 'Every night', x: 450, y: 490, side: 'e' },
-      { name: 'Clean rows', x: 600, y: 210, side: 'w' },
-      { name: 'Your files', x: 940, y: 60, side: 'n' },
+      { name: 'A request', x: 230, y: 600, side: 's' },
+      { name: 'A good time', x: 450, y: 490, side: 'e' },
+      { name: 'Confirmed', x: 600, y: 210, side: 'w' },
+      { name: 'Your calendar', x: 940, y: 60, side: 'n' },
     ],
   },
   {
-    slug: 'reports',
-    name: 'Reports line',
-    service: 'Reports and dashboards',
-    color: 'var(--l-reports)',
+    slug: 'paperwork',
+    name: 'Paperwork line',
+    service: 'Paperwork and onboarding',
+    color: 'var(--l-paperwork)',
     points: [[1140, 540], [800, 540], [600, 340], [760, 180], [1100, 180]],
     stations: [
-      { name: 'Sales', x: 1040, y: 540, side: 's' },
-      { name: 'Ad spend', x: 890, y: 540, side: 's' },
-      { name: 'Bookkeeping', x: 700, y: 440, side: 'e' },
-      { name: 'A weekly report', x: 900, y: 180, side: 'n' },
-      { name: 'Your inbox', x: 1060, y: 180, side: 'n' },
+      { name: 'New client', x: 1040, y: 540, side: 's' },
+      { name: 'Forms sent', x: 890, y: 540, side: 's' },
+      { name: 'What’s missing', x: 700, y: 440, side: 'e' },
+      { name: 'A reminder', x: 900, y: 180, side: 'n' },
+      { name: 'All in', x: 1060, y: 180, side: 'n' },
     ],
   },
 ];
 
-/** The four service lines, in the order of `services` in site.ts. */
+/** The four office-job lines, in the order of `services` in site.ts. */
 export const serviceLines = lines;
 
 /** SVG path for a line, with rounded corners of radius r at every bend. */

@@ -21,13 +21,13 @@
   --glass: rgb(243 241 234 / 0.035);
 
   /* the four lines: one green scheme in four steps, mint to pine */
-  --l-scraping: #b9ecc9;
-  --l-automation: #5ad49f;
-  --l-web: #2fa374;
-  --l-reports: #1c7a56;
+  --l-scheduling: #b9ecc9;
+  --l-billing: #5ad49f;
+  --l-quotes: #2fa374;
+  --l-paperwork: #1c7a56;
   --l-depot: #8f8d86;
   /* the one signal colour the interface itself uses: the jade step */
-  --signal: var(--l-automation);
+  --signal: var(--l-billing);
   --signal-ink: #06281b;
 
   --measure: 1280px;
@@ -362,10 +362,10 @@ html:not(.js) .draw-mark .mark-stroke {
 
 /* ---------- Line colours ---------- */
 
-[data-line='web'] { --c: var(--l-web); }
-[data-line='automation'] { --c: var(--l-automation); }
-[data-line='scraping'] { --c: var(--l-scraping); }
-[data-line='reports'] { --c: var(--l-reports); }
+[data-line='quotes'] { --c: var(--l-quotes); }
+[data-line='billing'] { --c: var(--l-billing); }
+[data-line='scheduling'] { --c: var(--l-scheduling); }
+[data-line='paperwork'] { --c: var(--l-paperwork); }
 [data-line='depot'] { --c: var(--l-depot); }
 
 /* A station marker: a dot in the line's colour inside a white ring, used wherever a line is named. */

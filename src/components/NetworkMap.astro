@@ -62,8 +62,8 @@ const drawn = lines.map((L, i) => ({
 }));
 ---
 
-<svg class:list={['network', cls]} viewBox={`0 0 ${MAP_W} ${MAP_H}`} preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" data-map role="img" aria-label="The four lines Lemni Works runs" aria-describedby="map-desc">
-  <desc id="map-desc">A transit-style map. The Storefront line runs from your site through customers to repeat orders. The Automation line carries an incoming order into your spreadsheet, your email and your team. The Data line watches the sites you choose every night and delivers clean rows to your files. The Reports line takes sales, ad spend and bookkeeping to a weekly report in your inbox. All four meet at one hub, Lemni Works in Wichita.</desc>
+<svg class:list={['network', cls]} viewBox={`0 0 ${MAP_W} ${MAP_H}`} preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" data-map role="img" aria-label="The four office jobs Lemni Works takes off your hands" aria-describedby="map-desc">
+  <desc id="map-desc">A transit-style map. The Quotes line runs from a customer asking, through a quote sent, to a deposit paid. The Billing line takes an emailed bill into QuickBooks, sends a reminder on an unpaid invoice and ends at paid. The Scheduling line goes from a request to a good time, confirmed, on your calendar. The Paperwork line goes from a new client and the forms they are sent to what is still missing, a reminder, and all in. All four meet at one hub, Lemni Works in Wichita.</desc>
 
   {drawn.map((L) => (
     <g class="line-group" data-line={L.slug} style={`--ld: ${L.delay}ms`}>

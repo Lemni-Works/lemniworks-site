@@ -8,10 +8,10 @@ export const site = {
   // PLACEHOLDER: the Worker that receives the contact form.
   workerOrigin: import.meta.env.PUBLIC_WORKER_ORIGIN ?? '{WORKER_ORIGIN}',
   city: 'Wichita, Kansas',
-  title: 'Lemni Works · One studio for the whole shop',
+  title: 'Lemni Works · Less retyping for small-business offices in Wichita',
   description:
-    'Stores, websites, automations and the reports behind them, built by one person in Wichita and handed over with the source. Fixed price, written quote within two business days.',
-  // Confirmed by the owner on 2026-10-22. The written quote window stays at two business days.
+    'I set up the software side of quotes, invoices, scheduling and paperwork for small businesses around Wichita, usually on tools you already pay for. Fixed price, written plan within two business days.',
+  // Confirmed by the owner on 2026-10-22. The written plan window stays at two business days.
   replyWindow: 'one business day',
 } as const;
 
@@ -23,56 +23,63 @@ export const contactEndpoint = /^https:\/\/[^/{}\s]+\/?$/.test(site.workerOrigin
   : null;
 
 export const hero = {
-  headline: 'Websites, automations, data and reports.',
+  headline: 'Your office runs on retyping.',
   lede:
-    'Built for your business by one person in Wichita, and connected so they actually talk to each other. Fixed price. Written quote within two business days.',
-  cta: 'Tell me what you need',
-  quoteLine: 'Written quote within two business days. Fixed price. Payment on delivery.',
+    'It doesn’t have to. I set up the software side of quotes, invoices, scheduling and paperwork for small businesses around Wichita. Fixed price. Written plan within two business days.',
+  cta: 'Tell me what you’re retyping',
   note: `I reply within ${site.replyWindow}. Calls are by appointment, evenings Central.`,
 } as const;
 
+/* The four office jobs, one per line on the map, in the order of `lines` in map.ts.
+   `before` is the owner's problem in their words; `description` is what changes. */
 export const services = [
   {
-    slug: 'web',
-    name: 'Websites and e-commerce',
-    short: 'A store or site that is yours',
+    slug: 'quotes',
+    name: 'Quotes',
+    before: 'Stop retyping every quote.',
     description:
-      'A fast site or online store, designed and built to fit the business, then handed over with the keys. Shopify where it fits, hand-built where it does not.',
-    offer: 'Launch site or store',
+      'The customer’s request comes in through a form, the quote is built from your price list and sent, and a follow-up goes out if nobody answers. No copying details into a spreadsheet.',
+    offer: 'Tell me about your quotes',
     price: 'Quoted per project',
-    upkeep: 'Optional upkeep, quoted separately: updates, new pages, and someone to call.',
+    upkeep: 'Optional upkeep, quoted separately: price changes, new items, and fixes when one of your tools changes.',
   },
   {
-    slug: 'automation',
-    name: 'Workflow automation',
-    short: 'Two tools, made to talk',
+    slug: 'billing',
+    name: 'Billing and bookkeeping',
+    before: 'Stop typing bills into QuickBooks.',
     description:
-      'Two tools you already pay for, made to talk to each other without someone copying and pasting. Orders into the sheet, form entries into the CRM, the weekly email that writes itself.',
-    offer: 'First automation',
+      'Bills that arrive by email land in QuickBooks with the details filled in, bank activity gets sorted by rules you approve, and customers with unpaid invoices get a polite reminder on a schedule.',
+    offer: 'Tell me about your billing',
     price: 'Quoted per project',
-    upkeep: 'Optional upkeep, quoted separately: monitoring and fixes when an API changes.',
+    upkeep: 'Optional upkeep, quoted separately: new vendors and rules, and fixes when one of your tools changes.',
   },
   {
-    slug: 'scraping',
-    name: 'Web scraping and data collection',
-    short: 'Data collected on a schedule',
+    slug: 'scheduling',
+    name: 'Scheduling',
+    before: 'Stop playing phone tag to book a job.',
     description:
-      'A scraper that runs on a schedule and lands clean rows in a spreadsheet, a database or a file you can open. Built to survive small changes to the site it reads.',
-    offer: 'Starter scraper',
+      'Customers pick a time that actually works for you, it lands on your calendar, and they get a confirmation right away and a reminder the day before. The phone rings for the questions that need you.',
+    offer: 'Tell me about your scheduling',
     price: 'Quoted per project',
-    upkeep: 'Optional upkeep, quoted separately: I fix it when the source site changes.',
+    upkeep: 'Optional upkeep, quoted separately: new services and hours, and fixes when one of your tools changes.',
   },
   {
-    slug: 'reports',
-    name: 'Reports and dashboards',
-    short: 'The numbers, laid out once',
+    slug: 'paperwork',
+    name: 'Paperwork and onboarding',
+    before: 'Stop chasing paperwork from memory.',
     description:
-      'The numbers you keep rebuilding by hand, pulled from the source and laid out once. A page or a scheduled PDF, with the queries behind it handed over.',
-    offer: 'One-page report',
+      'Everything you need from a customer or client in one list: what came in, what is still missing, and a reminder that goes out until it arrives. New clients get their requests the day they sign on.',
+    offer: 'Tell me about your paperwork',
     price: 'Quoted per project',
-    upkeep: 'Optional upkeep, quoted separately: new fields and sources as you need them.',
+    upkeep: 'Optional upkeep, quoted separately: new documents and steps, and fixes when one of your tools changes.',
   },
 ] as const;
+
+/* Websites are offered, but only as an add-on to the office work. */
+export const website = {
+  title: 'Need the website too?',
+  body: 'I build those as well, connected to the rest: a request form that feeds your quotes, a booking page that fills your calendar. Fixed price, and you own the site.',
+} as const;
 
 export const notOffered =
   'Not offered: custom mobile apps, Microsoft 365 / SharePoint, architecture and construction software.';
@@ -81,28 +88,28 @@ export const steps = [
   {
     title: 'Send the problem',
     body: contactEndpoint
-      ? 'Use the form below. A few sentences and a rough budget are enough. No call needed to start.'
-      : 'Email a few sentences about the problem and your rough budget. No call needed to start.',
+      ? 'Use the form below. A few sentences about what you retype or chase by hand is enough.'
+      : 'Email a few sentences about what you retype or chase by hand. No call needed to start.',
   },
   {
-    title: 'Written quote within two business days',
-    body: 'Fixed price, delivery date, what is included and what is not. If it is not a fit, I say so.',
+    title: 'I look at how you do it now',
+    body: 'About 20 minutes, on your screen or at your shop: the spreadsheet, the inbox, the QuickBooks file. Most of the real scope shows up here.',
   },
   {
-    title: 'Delivery, with everything that makes it yours',
-    body: 'Source code, a handover note and a short walkthrough. Payment on delivery.',
+    title: 'A written plan within two business days',
+    body: 'What changes, which tools it runs on, a fixed price and a date. If it is not worth automating, I say so.',
   },
   {
-    title: 'Optional upkeep plan',
-    body: 'A monthly plan if you want me to keep it running. Cancel any time.',
+    title: 'Set up, handed over, paid on delivery',
+    body: 'It runs on your accounts, with a short written how-to and a walkthrough. Optional monthly upkeep if you want me to keep it running.',
   },
 ] as const;
 
 export const workNote =
-  'These are shipped products shown as proof of work. Custom app builds are not currently offered.';
+  'These are my own products, shown as proof of work. Custom app builds are not offered as a service.';
 
 export const about = {
-  text: 'I am Zander Erwin. I live in Wichita, have a computer science degree with a math minor, and I like the problems where the thing exists but nobody has made it usable yet: a store that needs building, a site that needs collecting on a schedule, two tools that should talk to each other, a spreadsheet that has outgrown itself.',
+  text: 'I am Zander Erwin. I live in Wichita and have a computer science degree with a math minor. I like the jobs where the work is already being done, just by hand: the quote retyped from a text message, the bill keyed into QuickBooks, the document someone has to remember to ask for again. I set up the part a computer should do and leave your people the part that needs a person.',
   portrait: { src: '/about/portrait.jpg', alt: 'Zander Erwin' },
 } as const;
 

@@ -6,8 +6,8 @@ import { site, email, budgets, contactEndpoint } from '../site';
 <section id="contact" class="section" aria-labelledby="contact-title">
   <div class="wrap contact">
     <div class="intro reveal">
-      <h2 id="contact-title">Tell me what<br />you need.</h2>
-      <p class="muted">In your own words. I read every message myself and reply within {site.replyWindow}.</p>
+      <h2 id="contact-title">Tell me what<br />you retype.</h2>
+      <p class="muted">In your own words: what you type twice, chase by hand or keep in a spreadsheet. I read every message myself and reply within {site.replyWindow}.</p>
       {contactEndpoint && <p class="small dim alt">Prefer email? <a href={`mailto:${email}`}>{email}</a></p>}
     </div>
 
@@ -33,7 +33,7 @@ import { site, email, budgets, contactEndpoint } from '../site';
         </div>
 
         <div class="field">
-          <label for="f-need">What do you need?</label>
+          <label for="f-need">What do you retype or chase by hand?</label>
           <textarea id="f-need" name="message" rows="4" required></textarea>
         </div>
 
@@ -60,7 +60,7 @@ import { site, email, budgets, contactEndpoint } from '../site';
         </div>
       </form>
     </div> : <div class="panel glass reveal mail">
-      <p class="mail-line">Email a few sentences about the problem and your rough budget. I reply within {site.replyWindow}.</p>
+      <p class="mail-line">A few sentences about the work and the tools you use now is enough. I reply within {site.replyWindow}.</p>
       <a class="btn" href={`mailto:${email}`}>
         {email}
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
